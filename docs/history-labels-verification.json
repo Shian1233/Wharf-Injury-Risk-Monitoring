@@ -1,0 +1,7 @@
+{
+  "service": "http://127.0.0.1:8000",
+  "status_labels_removed": true,
+  "report_titles_and_metadata_retained": true,
+  "report_actions_retained": true,
+  "browser_errors": []
+}

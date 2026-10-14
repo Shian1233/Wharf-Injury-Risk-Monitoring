@@ -1,0 +1,17 @@
+{
+  "verified_at": "2026-10-13",
+  "results": [
+    {
+      "model": "deepseek-flash",
+      "connected": true,
+      "reply": "连接成功",
+      "elapsed_seconds": 0.72
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "connected": true,
+      "reply": "连接成功",
+      "elapsed_seconds": 0.94
+    }
+  ]
+}

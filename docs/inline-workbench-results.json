@@ -1,0 +1,27 @@
+{
+  "passed": 5,
+  "results": [
+    {
+      "name": "预测两行与页内指标不弹窗",
+      "passed": true
+    },
+    {
+      "name": "六行业结构不同且使用固定模型",
+      "passed": true
+    },
+    {
+      "name": "曲线页面简洁且计算保留可追溯证据",
+      "passed": true
+    },
+    {
+      "name": "触屏记录行紧凑并按高度分页",
+      "passed": true
+    },
+    {
+      "name": "全部页面多宽度与减少动效",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "base_url": "http://127.0.0.1:8001"
+}

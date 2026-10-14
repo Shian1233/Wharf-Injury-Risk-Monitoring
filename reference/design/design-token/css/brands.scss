@@ -1,0 +1,84 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:color';
+@use 'palette' as *;
+
+/* rgb() 通道四舍五入为整数，避免 color.mix/color.scale 产出带小数的通道值 */
+@function clean-rgb($c) {
+  @return rgb(
+    math.round(color.channel($c, 'red', $space: rgb)),
+    math.round(color.channel($c, 'green', $space: rgb)),
+    math.round(color.channel($c, 'blue', $space: rgb))
+  );
+}
+
+/* ======================================================================== */
+/* ==================== 品牌色注册 Mixin ==================================== */
+/* ======================================================================== */
+/* 使用步骤：
+   1. 用 @ant-design/colors generate(base) 生成 10 级亮色色板
+   2. 用 generate(base, { theme:'dark', backgroundColor:'#1A1A1A' }) 生成暗色色板
+   3. 调用 register-brand mixin：
+
+   @include register-brand(
+     "school-red",
+     (#fff4f0, #ffdfd4, #ffbeab, #fa987f, #ed6d53, #e0432a, #ba2a1a, #94160d, #6e0804, #470202),
+     (#2c1918, #421e1a, #55261f, #732c21, #9b3524, #c23d28, #d8654d, #ef927a, #f8b9a7, #fadbd0)
+   );
+*/
+
+@mixin register-brand($name, $palette-light, $palette-dark) {
+  [data-brand="#{$name}"] {
+    @for $i from 1 through 10 {
+      --iflyv-accent-#{$i}: #{list.nth($palette-light, $i)};
+    }
+  }
+
+  html[data-theme="dark"][data-brand="#{$name}"] {
+    @for $i from 1 through 10 {
+      --iflyv-accent-#{$i}: #{list.nth($palette-dark, $i)};
+    }
+  }
+}
+
+/* ======================================================================== */
+/* ================ 精简品牌接入 Mixin（过渡方案，非正式档） ================== */
+/* ======================================================================== */
+/* 适用场景：接入方历史上只维护 2 档基准色（主色 + hover 深色），常见于早期
+   "域名 → theme → 双变量" 的多租户项目（如每个校区/机构只定义了 primary-p0/p1），
+   尚未用 @ant-design/colors 的 generate(base) 产出完整 10 级色板。
+
+   用本 mixin 从 2 档色插值出近似 10 级亮色色阶，作为接入设计系统的最小成本过渡：
+   - 只需 1~2 个已有色值，不需要额外跑色板生成工具，改造成本最低。
+   - 值是**插值近似**，不追求与 generate() 逐档一致——档位间的色相/饱和度过渡
+     不如算法生成的精细，仅用于快速接入、视觉可用，不是正式规范档位。
+   - **只提供亮色**：多租户场景下这类项目通常本就没有暗色模式；如需暗色，
+     仍应走 generate(base, { theme:'dark', backgroundColor:'#1A1A1A' }) 生成
+     精确暗色板后用 register-brand 注册，本 mixin 不生成暗色档位（未覆盖的
+     data-theme="dark" 会回退到默认品牌色，见 palette.scss 的 accent fallback）。
+
+   正式上线前的建议路径：验证插值效果可用 → 有条件时改用 generate() 生成精确
+   色板 → 切换到标准 register-brand，替换掉 register-brand-lite 调用。
+
+   用法：
+   @include register-brand-lite("some-school", #00489B, #003B7D);
+   // 第三个参数（hover 深色）可省略，省略时用 $primary 自动加深 10% 生成 */
+@mixin register-brand-lite($name, $primary, $primary-hover: null) {
+  $hover: $primary-hover;
+  @if $hover == null {
+    $hover: clean-rgb(color.scale($primary, $lightness: -10%));
+  }
+
+  [data-brand="#{$name}"] {
+    --iflyv-accent-1: #{clean-rgb(color.mix(white, $primary, 92%))};
+    --iflyv-accent-2: #{clean-rgb(color.mix(white, $primary, 75%))};
+    --iflyv-accent-3: #{clean-rgb(color.mix(white, $primary, 50%))};
+    --iflyv-accent-4: #{clean-rgb(color.mix(white, $primary, 25%))};
+    --iflyv-accent-5: #{$hover};
+    --iflyv-accent-6: #{$primary};
+    --iflyv-accent-7: #{clean-rgb(color.mix(black, $primary, 15%))};
+    --iflyv-accent-8: #{clean-rgb(color.mix(black, $primary, 30%))};
+    --iflyv-accent-9: #{clean-rgb(color.mix(black, $primary, 45%))};
+    --iflyv-accent-10: #{clean-rgb(color.mix(black, $primary, 60%))};
+  }
+}

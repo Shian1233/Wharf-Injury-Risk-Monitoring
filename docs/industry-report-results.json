@@ -1,0 +1,12 @@
+{
+  "report_id": "b45d0dd327f0487f958352b4a7c4f0d3",
+  "llm_status": "generated",
+  "body_hanzi": 5527,
+  "elapsed_seconds": 27.3,
+  "model_version": 2,
+  "model_name": "工贸事故风险演化模型",
+  "records": 104,
+  "environment": "独立联调服务，使用已有数据库的一致性副本；未写入8000端口的运行数据",
+  "industry_evidence_in_report": true,
+  "trend_status": "insufficient"
+}

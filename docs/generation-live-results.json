@@ -1,0 +1,19 @@
+{
+  "elapsed_seconds": 35.2,
+  "job_id": "60091a90ab1043ed9dcf41ec869c1342",
+  "status": "completed",
+  "error": null,
+  "id": "03e036d76aa24288ad0c8baf372dc07c",
+  "title": "全国工贸安全生产风险研判及预测分析报告",
+  "body_hanzi": 7746,
+  "llm": {
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
+    "status": "generated",
+    "qualitative_only": true,
+    "excluded_sentences": 11,
+    "grounding": "LLM仅生成定性正文；定量段落由服务器按指标名、实际结果、单位、有效样本和口径直接填入",
+    "attempts": 1
+  },
+  "execution": "updated source in independent worker; no service restart"
+}

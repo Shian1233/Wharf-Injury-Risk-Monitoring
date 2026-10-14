@@ -1,0 +1,12 @@
+.env
+.venv
+runtime
+node_modules
+__pycache__
+.pytest_cache
+tests
+reference/design
+reference/data-standard.xlsx
+reference/requirements.pptx
+docs
+*.zip

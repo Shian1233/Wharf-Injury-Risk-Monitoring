@@ -1,0 +1,570 @@
+{
+  "id": "a5a4b178912747b4bae0960efe4b30a8",
+  "name": "工贸隐患治理与反馈模型",
+  "industry": "工贸",
+  "version": 1,
+  "format": "risk-sd/1.0",
+  "profile_version": "industry-feedback/3.0",
+  "model_family": "industry-feedback/3.0",
+  "status": "情景推演",
+  "description": "事故报告提供行业因素参考，隐患形成与治理闭环推动状态变化，事故信息经时间滞后影响治理。",
+  "parameters": {
+    "production_pressure": {
+      "label": "生产压力",
+      "value": 1,
+      "min": 0.1,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "safety_effort": {
+      "label": "安全投入强度",
+      "value": 1,
+      "min": 0,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "response_time": {
+      "label": "治理响应滞后",
+      "value": 3,
+      "min": 0.25,
+      "max": 24,
+      "unit": "月",
+      "dimension": 1,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "prevention_rate": {
+      "label": "基准隐患消除系数",
+      "value": 0.18,
+      "min": 0,
+      "max": 1,
+      "unit": "1/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "formation_rate": {
+      "label": "基准隐患形成速度",
+      "value": 0.08,
+      "min": 0.001,
+      "max": 1,
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "hazard_response": {
+      "label": "隐患治理响应系数",
+      "value": 0.4,
+      "min": 0,
+      "max": 2,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "feedback_gain": {
+      "label": "事故信息反馈强度",
+      "value": 0.6,
+      "min": 0,
+      "max": 3,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "intensity_scale": {
+      "label": "相对强度换算系数",
+      "value": 0.25,
+      "min": 0.01,
+      "max": 2,
+      "unit": "1/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "intensity_reference": {
+      "label": "风险指数半饱和强度",
+      "value": 0.25,
+      "min": 0.01,
+      "max": 2,
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "exposure_scale": {
+      "label": "相对作业暴露",
+      "value": 1,
+      "min": 0.1,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "exposure_elasticity": {
+      "label": "作业暴露压力弹性",
+      "value": 0.3,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "coupling": {
+      "label": "专业因素联合作用系数",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "process_dust": {
+      "label": "粉尘涉爆",
+      "value": -1,
+      "min": -1,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true,
+      "choices": {
+        "-1": "按报告识别",
+        "0": "不适用",
+        "1": "适用"
+      }
+    },
+    "process_ammonia": {
+      "label": "涉氨制冷",
+      "value": -1,
+      "min": -1,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true,
+      "choices": {
+        "-1": "按报告识别",
+        "0": "不适用",
+        "1": "适用"
+      }
+    },
+    "process_molten": {
+      "label": "高温熔融",
+      "value": -1,
+      "min": -1,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true,
+      "choices": {
+        "-1": "按报告识别",
+        "0": "不适用",
+        "1": "适用"
+      }
+    },
+    "height_reference": {
+      "label": "高处作业风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:height:reference"
+    },
+    "height_enabled": {
+      "label": "高处作业风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:height:enabled"
+    },
+    "height_weight": {
+      "label": "高处作业风险形成权重",
+      "value": 0.25,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "height_elasticity": {
+      "label": "高处作业风险压力弹性",
+      "value": 0.3,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "height_control": {
+      "label": "高处作业风险治理敏感度",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "machine_reference": {
+      "label": "机械设备防护风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:machine:reference"
+    },
+    "machine_enabled": {
+      "label": "机械设备防护风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:machine:enabled"
+    },
+    "machine_weight": {
+      "label": "机械设备防护风险形成权重",
+      "value": 0.25,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "machine_elasticity": {
+      "label": "机械设备防护风险压力弹性",
+      "value": 0.45,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "machine_control": {
+      "label": "机械设备防护风险治理敏感度",
+      "value": 0.55,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "space_reference": {
+      "label": "有限空间作业风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:space:reference"
+    },
+    "space_enabled": {
+      "label": "有限空间作业风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:space:enabled"
+    },
+    "space_weight": {
+      "label": "有限空间作业风险形成权重",
+      "value": 0.2,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "space_elasticity": {
+      "label": "有限空间作业风险压力弹性",
+      "value": 0.2,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "space_control": {
+      "label": "有限空间作业风险治理敏感度",
+      "value": 0.7,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "work_reference": {
+      "label": "危险作业管理风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:work:reference"
+    },
+    "work_enabled": {
+      "label": "危险作业管理风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:work:enabled"
+    },
+    "work_weight": {
+      "label": "危险作业管理风险形成权重",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "work_elasticity": {
+      "label": "危险作业管理风险压力弹性",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "work_control": {
+      "label": "危险作业管理风险治理敏感度",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "special_reference": {
+      "label": "特殊生产工艺风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:special:reference"
+    },
+    "special_enabled": {
+      "label": "特殊生产工艺风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:special:enabled"
+    },
+    "special_weight": {
+      "label": "特殊生产工艺风险形成权重",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "special_elasticity": {
+      "label": "特殊生产工艺风险压力弹性",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "special_control": {
+      "label": "特殊生产工艺风险治理敏感度",
+      "value": 0.6,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    }
+  },
+  "variables": [
+    {
+      "name": "hazard_pressure",
+      "label": "隐患压力",
+      "type": "stock",
+      "role": "core",
+      "unit": "归一化状态",
+      "dimension": 0,
+      "initial": "0.25+0.75*(height_enabled*height_weight*height_reference+machine_enabled*machine_weight*machine_reference+space_enabled*space_weight*space_reference+work_enabled*work_weight*work_reference+special_enabled*special_weight*special_reference)/max(0.001,height_enabled*height_weight+machine_enabled*machine_weight+space_enabled*space_weight+work_enabled*work_weight+special_enabled*special_weight)",
+      "rate": "hazard_formation-hazard_removal",
+      "min": 0,
+      "max": 1000000.0
+    },
+    {
+      "name": "cumulative_load",
+      "label": "累计相对风险负荷",
+      "type": "stock",
+      "role": "core",
+      "unit": "相对负荷",
+      "dimension": 0,
+      "initial": "0",
+      "rate": "accident_intensity",
+      "min": 0,
+      "max": 100000000.0
+    },
+    {
+      "name": "feedback_signal",
+      "label": "滞后事故信息",
+      "type": "stock",
+      "role": "delay",
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "initial": "0",
+      "rate": "(accident_intensity-feedback_signal)/response_time",
+      "min": 0,
+      "max": 1000000.0
+    },
+    {
+      "name": "height_factor",
+      "label": "高处作业风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "height_enabled*height_reference*max(0,1+height_elasticity*(production_pressure-1))/(1+height_control*max(0,governance_level-1))",
+      "measure": "核查高处作业方案、防坠设施和安全带挂设。"
+    },
+    {
+      "name": "machine_factor",
+      "label": "机械设备防护风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "machine_enabled*machine_reference*max(0,1+machine_elasticity*(production_pressure-1))/(1+machine_control*max(0,governance_level-1))",
+      "measure": "完善防护联锁、停机上锁和检修能量隔离。"
+    },
+    {
+      "name": "space_factor",
+      "label": "有限空间作业风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "space_enabled*space_reference*max(0,1+space_elasticity*(production_pressure-1))/(1+space_control*max(0,governance_level-1))",
+      "measure": "落实有限空间辨识、通风检测、监护与应急救援。"
+    },
+    {
+      "name": "work_factor",
+      "label": "危险作业管理风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "work_enabled*work_reference*max(0,1+work_elasticity*(production_pressure-1))/(1+work_control*max(0,governance_level-1))",
+      "measure": "核查危险作业许可、承包协调、岗位资格与监护。"
+    },
+    {
+      "name": "special_factor",
+      "label": "特殊生产工艺风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "special_enabled*special_reference*max(0,1+special_elasticity*(production_pressure-1))/(1+special_control*max(0,governance_level-1))",
+      "measure": "按实际工艺核查粉尘防爆、涉氨检测隔离或熔融金属防水防泄漏。"
+    },
+    {
+      "name": "governance_level",
+      "label": "安全治理水平",
+      "type": "aux",
+      "unit": "倍",
+      "dimension": 0,
+      "formula": "safety_effort*(1+hazard_response*hazard_pressure/(1+hazard_pressure)+feedback_gain*feedback_signal/(intensity_reference+feedback_signal))"
+    },
+    {
+      "name": "factor_load",
+      "label": "专业因素综合作用",
+      "type": "aux",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "(height_weight*height_factor+machine_weight*machine_factor+space_weight*space_factor+work_weight*work_factor+special_weight*special_factor)/max(0.001,height_enabled*height_weight+machine_enabled*machine_weight+space_enabled*space_weight+work_enabled*work_weight+special_enabled*special_weight)+coupling*(work_factor*(height_factor+space_factor))"
+    },
+    {
+      "name": "relative_exposure",
+      "label": "危险作业相对暴露",
+      "type": "aux",
+      "unit": "倍",
+      "dimension": 0,
+      "formula": "exposure_scale*production_pressure**exposure_elasticity"
+    },
+    {
+      "name": "hazard_formation",
+      "label": "隐患形成速度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "formula": "formation_rate*production_pressure*(1+factor_load)"
+    },
+    {
+      "name": "hazard_removal",
+      "label": "隐患消除速度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "formula": "prevention_rate*governance_level*hazard_pressure"
+    },
+    {
+      "name": "accident_intensity",
+      "label": "相对事故强度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "formula": "intensity_scale*relative_exposure*hazard_pressure*(1+factor_load)"
+    },
+    {
+      "name": "risk_index",
+      "label": "综合风险指数",
+      "type": "aux",
+      "unit": "分",
+      "dimension": 0,
+      "formula": "100*accident_intensity/(intensity_reference+accident_intensity)"
+    }
+  ],
+  "feature_labels": {
+    "height": "高处作业风险",
+    "machine": "机械设备防护风险",
+    "space": "有限空间作业风险",
+    "work": "危险作业管理风险",
+    "special": "特殊生产工艺风险"
+  },
+  "quantity_mode": "relative",
+  "count_calibration": null,
+  "assumptions": {
+    "time_unit": "月",
+    "integration_step": 0.05,
+    "coefficient_source": "明确机制假设；未冒充专家评审或回归结果",
+    "index_conversion": "100 × 相对事故强度 ÷（固定半饱和强度 + 相对事故强度）",
+    "initial_pressure": "0.25 + 0.75 × 适用行业因素参考值加权均值；不是实测隐患数量",
+    "delay": "一阶信息平滑；初始新增事故信息为0，三个场景一致",
+    "limitation": "当前结果为情景推演：隐患压力是模拟状态，事故强度为相对量；缺少完整事故口径、连续暴露量和经过验证的发生率，暂不预测事故起数。"
+  }
+}

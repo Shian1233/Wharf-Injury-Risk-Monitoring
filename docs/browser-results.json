@@ -1,0 +1,97 @@
+{
+  "results": [
+    {
+      "name": "广场整页跳转至独立智能体",
+      "passed": true
+    },
+    {
+      "name": "参考布局与真实业务概览",
+      "passed": true
+    },
+    {
+      "name": "应用模型下拉、SD选择与业务导航键盘",
+      "passed": true
+    },
+    {
+      "name": "报告指标与参数直接在页面配置",
+      "passed": true
+    },
+    {
+      "name": "数据库列表与原字段",
+      "passed": true
+    },
+    {
+      "name": "自适应条数与翻页不重复",
+      "passed": true
+    },
+    {
+      "name": "上传与编辑入口",
+      "passed": true
+    },
+    {
+      "name": "日期筛选与四表查询",
+      "passed": true
+    },
+    {
+      "name": "六行业模型及真实仿真",
+      "passed": true
+    },
+    {
+      "name": "曲线范围、真实坐标与历史悬停",
+      "passed": true
+    },
+    {
+      "name": "曲线放大、同步缩放与移动端尺寸",
+      "passed": true
+    },
+    {
+      "name": "固定模型无版本或维护按钮",
+      "passed": true
+    },
+    {
+      "name": "多断点无页面横向溢出",
+      "passed": true
+    },
+    {
+      "name": "H5独立工作台功能切换与键盘",
+      "passed": true
+    },
+    {
+      "name": "验收页真实状态",
+      "passed": true
+    },
+    {
+      "name": "业务页面与配置预览布局",
+      "passed": true
+    },
+    {
+      "name": "智能体报告请求与指标保留",
+      "passed": true
+    },
+    {
+      "name": "报告进度连续、守实且完成后预览",
+      "passed": true
+    },
+    {
+      "name": "任务切页进度保留与失败恢复",
+      "passed": true
+    },
+    {
+      "name": "旧版未版本化脚本缓存隔离",
+      "passed": true
+    },
+    {
+      "name": "脚本加载失败与重试恢复",
+      "passed": true
+    },
+    {
+      "name": "脚本执行异常与重试恢复",
+      "passed": true
+    },
+    {
+      "name": "接口初始化失败与重试恢复",
+      "passed": true
+    }
+  ],
+  "browserErrors": []
+}

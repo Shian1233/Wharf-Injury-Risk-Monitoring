@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>【时间待填】【范围待填】【行业待填】安全生产事故风险研判及预测分析报告</title>
+<style>
+*{box-sizing:border-box;} body{margin:0;background:#e9e9e9;color:#000;font-family:"Times New Roman","SimSun","宋体",serif;font-size:12pt;line-height:1.72;}
+.report{width:210mm;margin:12mm auto;padding:14mm 18mm 22mm 20mm;background:#fff;border-left:1px solid #000;border-right:1px solid #000;}
+h1{margin:20mm 0 5mm;text-align:center;font-family:"SimHei","黑体",sans-serif;font-size:22pt;line-height:1.5;}
+h2{margin:9mm 0 4mm;font-family:"SimHei","黑体",sans-serif;font-size:16pt;line-height:1.4;}
+h3{margin:5mm 0 2.5mm;font-family:"SimHei","黑体",sans-serif;font-size:13pt;line-height:1.4;}
+p{margin:0 0 3mm;text-indent:2em;text-align:justify;}.noindent{text-indent:0}.center{text-align:center}.small{font-size:10pt}
+table{width:100%;border-collapse:collapse;table-layout:fixed;margin:3mm 0 4mm;} th,td{border:1px solid #000;padding:2mm 2.2mm;vertical-align:middle;line-height:1.45;word-break:break-word;} th{text-align:center;font-weight:700;}
+.figure{width:100%;height:48mm;border:1px solid #000;margin:3mm 0 1mm;}.figure.tall{height:62mm;}.figure svg{width:100%;height:100%;display:block;}
+.caption{margin:1mm 0 3mm;text-align:center;text-indent:0;font-size:10.5pt;}
+.cover-sub{text-align:center;text-indent:0;margin-bottom:14mm;}.cover-meta{width:72%;margin:0 auto 12mm;}.cover-meta td:first-child{width:28%;text-align:center;font-weight:700;}
+.toc-title{margin:8mm 0 5mm;text-align:center;font-family:"SimHei","黑体",sans-serif;font-size:18pt;font-weight:700;}
+.toc-row{display:flex;align-items:flex-end;min-height:7mm;line-height:1.3;}.toc-row.level1{font-weight:700;}.toc-row.level2 .toc-text{padding-left:8mm;}.toc-text{white-space:nowrap;}.toc-leader{flex:1;min-width:10mm;border-bottom:1px dotted #000;margin:0 2mm 1mm;}.toc-page{width:18mm;text-align:right;white-space:nowrap;}
+.conclusion p{text-indent:0;padding-left:2em;text-indent:-2em;}
+.config-panel{width:210mm;margin:10mm auto 0;padding:6mm 8mm;background:#fff;border:1px solid #000;font-family:"Microsoft YaHei","SimSun",sans-serif;font-size:10pt;}.config-panel h2{margin:0 0 4mm;font-size:14pt;}.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 6mm;}.config-group{border:1px solid #000;padding:3mm;}.config-group strong{display:block;margin-bottom:2mm;}.config-items{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 3mm;}.config-items label{display:block;}
+@media print{body{background:#fff}.config-panel{display:none}.report{width:auto;margin:0;border:none;padding:14mm 18mm 18mm 20mm}}
+
+.config-panel{position:fixed;z-index:20;top:8mm;right:8mm;width:350px;max-height:88vh;overflow-y:auto;margin:0;padding:3mm;background:#fff;border:1px solid #000;}
+.config-grid{grid-template-columns:1fr;gap:3mm;}
+.config-panel summary{cursor:pointer;font-weight:700;line-height:1.5;}
+.config-panel:not([open]){width:auto;max-width:220px;}
+.config-panel:not([open]) .config-grid{display:none;}
+.config-panel button{margin:2mm 0;padding:1mm 2mm;border:1px solid #000;background:#fff;font-size:10pt;cursor:pointer;}
+.config-panel textarea{display:block;width:100%;resize:vertical;font-size:9pt;}
+.toc-row a{text-decoration:none;color:#000;}
+h2,h3{break-after:avoid;page-break-after:avoid;}
+tr,.figure{break-inside:avoid;page-break-inside:avoid;}
+@media(max-width:900px){.report{width:min(100%,210mm);padding:14mm 7mm 20mm;}.config-panel{right:6px;top:6px;max-width:calc(100vw - 12px);}}
+@media print{.config-panel{display:none !important;}.report{width:auto;margin:0;padding:0;border:none;}a{color:#000;text-decoration:none;}}
+
+/* 封面、目录分别具有完整 A4 高度，整体仍为上下连续的长页面。 */
+.report{
+  width:210mm;
+  margin:12mm auto;
+  padding:0 18mm 0 20mm;
+  background:#fff;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+}
+.cover-section{
+  min-height:297mm;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:76mm 0 43mm;
+}
+.cover-section h1{
+  margin:0;
+  line-height:1.5;
+}
+.cover-section .cover-meta{
+  margin:0 auto;
+}
+.toc-section{
+  min-height:297mm;
+  padding:24mm 0 12mm;
+}
+.toc-section .toc-title{
+  margin:0 0 12mm;
+}
+.toc-section .toc-row{
+  min-height:7.3mm;
+  display:flex;
+  flex-direction:row;
+  align-items:flex-end;
+  width:100%;
+}
+.toc-section .toc-text{
+  flex:0 1 auto;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+.toc-section .toc-leader{
+  flex:1 1 auto;
+  min-width:5mm;
+  margin:0 2mm 1mm;
+}
+.toc-section .toc-page{
+  display:block;
+  flex:0 0 10mm;
+  width:10mm;
+  text-align:right;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  font-family:"Times New Roman",serif;
+}
+.report-body{
+  padding:8mm 0 25mm;
+}
+.report-body > h2:first-child{
+  margin-top:0;
+}
+@media(max-width:900px){
+  .report{width:min(100%,210mm);padding:0 7mm;}
+  .cover-section{padding:64mm 0 36mm;}
+  .toc-section .toc-row{font-size:10.5pt;}
+  .toc-section .toc-page{flex-basis:8mm;width:8mm;}
+}
+@media print{
+  @page{size:A4;margin:0;}
+  .report{width:210mm;margin:0;padding:0 18mm 0 20mm;border:none;}
+  .cover-section,.toc-section{min-height:297mm;}
+  .report-body{padding:8mm 0 20mm;}
+  .config-panel{display:none !important;}
+}
+
+
+/* 封面与目录各一张 A4，正文只做连续流式排版 */
+.cover-section,
+.toc-section{
+  height:297mm;
+  min-height:297mm;
+  max-height:297mm;
+  width:100%;
+  box-sizing:border-box;
+  break-after:page;
+  page-break-after:always;
+}
+.toc-section .toc-page{
+  flex:0 0 25mm;
+  width:25mm;
+  font-family:"Times New Roman","SimSun","宋体",serif;
+  font-size:10.5pt;
+  white-space:nowrap;
+  text-align:right;
+}
+.toc-section .toc-row{min-height:7.3mm;}
+.toc-section .toc-text{min-width:0;}
+.report-body,
+.report-body>*,
+.report-body h2,
+.report-body h3{break-before:auto;page-break-before:auto;}
+.report-body{break-after:auto;page-break-after:auto;}
+@media screen{
+  .cover-section,.toc-section{break-after:auto;page-break-after:auto;}
+}
+@media print{
+  @page{size:A4;margin:0;}
+  .cover-section,.toc-section{
+    height:297mm;
+    min-height:297mm;
+    max-height:297mm;
+    break-after:page !important;
+    page-break-after:always !important;
+  }
+  .report-body{page-break-before:auto;break-before:auto;}
+  .report-body h2,.report-body h3{page-break-before:auto;break-before:auto;}
+}
+
+
+/* 屏幕上明确呈现封面/目录两张A4纸，正文单独连续长纸 */
+@media screen and (min-width:901px){
+  .report{background:transparent;border:none;}
+  .cover-section,.toc-section{
+    width:210mm;
+    margin-left:-20mm;
+    margin-bottom:10mm;
+    padding-left:20mm;
+    padding-right:18mm;
+    background:#fff;
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+  }
+  .report-body{
+    width:210mm;
+    margin-left:-20mm;
+    padding:8mm 18mm 25mm 20mm;
+    background:#fff;
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+  }
+}
+@media print{
+  .cover-section,.toc-section{
+    width:100%;
+    margin:0;
+    padding-left:0;
+    padding-right:0;
+    border:none;
+    break-after:page !important;
+    page-break-after:always !important;
+  }
+  .report-body{
+    width:100%;
+    margin:0;
+    padding:8mm 0 20mm;
+    border:none;
+    background:#fff;
+  }
+}
+</style>
+</head>
+<body>
+<details class="config-panel"><summary>指标配置：6类，每类10项</summary>
+
+<div class="config-grid">
+<div class="config-group" data-indicator-group="G1"><strong>1. 安全生产基础条件指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="企业数量" data-indicator="企业数量" data-key="G1_01" type="checkbox" value="企业数量"/> 企业数量</label><label><input aria-label="从业人员数量" data-indicator="从业人员数量" data-key="G1_02" type="checkbox" value="从业人员数量"/> 从业人员数量</label><label><input aria-label="重点企业数量" data-indicator="重点企业数量" data-key="G1_03" type="checkbox" value="重点企业数量"/> 重点企业数量</label><label><input aria-label="行业产量/产值" data-indicator="行业产量/产值" data-key="G1_04" type="checkbox" value="行业产量/产值"/> 行业产量/产值</label><label><input aria-label="工业增加值" data-indicator="工业增加值" data-key="G1_05" type="checkbox" value="工业增加值"/> 工业增加值</label><label><input aria-label="固定资产投资" data-indicator="固定资产投资" data-key="G1_06" type="checkbox" value="固定资产投资"/> 固定资产投资</label><label><input aria-label="平均气温" data-indicator="平均气温" data-key="G1_07" type="checkbox" value="平均气温"/> 平均气温</label><label><input aria-label="降水量" data-indicator="降水量" data-key="G1_08" type="checkbox" value="降水量"/> 降水量</label><label><input aria-label="高温天数" data-indicator="高温天数" data-key="G1_09" type="checkbox" value="高温天数"/> 高温天数</label><label><input aria-label="极端天气次数" data-indicator="极端天气次数" data-key="G1_10" type="checkbox" value="极端天气次数"/> 极端天气次数</label>
+</div></div>
+<div class="config-group" data-indicator-group="G2"><strong>2. 事故发生特征指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="事故总数" data-indicator="事故总数" data-key="G2_01" type="checkbox" value="事故总数"/> 事故总数</label><label><input aria-label="月度分布" data-indicator="月度分布" data-key="G2_02" type="checkbox" value="月度分布"/> 月度分布</label><label><input aria-label="季度分布" data-indicator="季度分布" data-key="G2_03" type="checkbox" value="季度分布"/> 季度分布</label><label><input aria-label="省级分布" data-indicator="省级分布" data-key="G2_04" type="checkbox" value="省级分布"/> 省级分布</label><label><input aria-label="地市分布" data-indicator="地市分布" data-key="G2_05" type="checkbox" value="地市分布"/> 地市分布</label><label><input aria-label="事故类型分布" data-indicator="事故类型分布" data-key="G2_06" type="checkbox" value="事故类型分布"/> 事故类型分布</label><label><input aria-label="事故等级分布" data-indicator="事故等级分布" data-key="G2_07" type="checkbox" value="事故等级分布"/> 事故等级分布</label><label><input aria-label="作业场所分布" data-indicator="作业场所分布" data-key="G2_08" type="checkbox" value="作业场所分布"/> 作业场所分布</label><label><input aria-label="作业环节分布" data-indicator="作业环节分布" data-key="G2_09" type="checkbox" value="作业环节分布"/> 作业环节分布</label><label><input aria-label="作业活动分布" data-indicator="作业活动分布" data-key="G2_10" type="checkbox" value="作业活动分布"/> 作业活动分布</label>
+</div></div>
+<div class="config-group" data-indicator-group="G3"><strong>3. 事故致因分析指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="直接原因频次" data-indicator="直接原因频次" data-key="G3_01" type="checkbox" value="直接原因频次"/> 直接原因频次</label><label><input aria-label="间接原因频次" data-indicator="间接原因频次" data-key="G3_02" type="checkbox" value="间接原因频次"/> 间接原因频次</label><label><input aria-label="人员因素频次" data-indicator="人员因素频次" data-key="G3_03" type="checkbox" value="人员因素频次"/> 人员因素频次</label><label><input aria-label="设备设施因素频次" data-indicator="设备设施因素频次" data-key="G3_04" type="checkbox" value="设备设施因素频次"/> 设备设施因素频次</label><label><input aria-label="工艺技术因素频次" data-indicator="工艺技术因素频次" data-key="G3_05" type="checkbox" value="工艺技术因素频次"/> 工艺技术因素频次</label><label><input aria-label="环境因素频次" data-indicator="环境因素频次" data-key="G3_06" type="checkbox" value="环境因素频次"/> 环境因素频次</label><label><input aria-label="管理因素频次" data-indicator="管理因素频次" data-key="G3_07" type="checkbox" value="管理因素频次"/> 管理因素频次</label><label><input aria-label="因素关联强度" data-indicator="因素关联强度" data-key="G3_08" type="checkbox" value="因素关联强度"/> 因素关联强度</label><label><input aria-label="关键因素重要度" data-indicator="关键因素重要度" data-key="G3_09" type="checkbox" value="关键因素重要度"/> 关键因素重要度</label><label><input aria-label="典型致因组合数量" data-indicator="典型致因组合数量" data-key="G3_10" type="checkbox" value="典型致因组合数量"/> 典型致因组合数量</label>
+</div></div>
+<div class="config-group" data-indicator-group="G4"><strong>4. 事故后果指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="死亡人数" data-indicator="死亡人数" data-key="G4_01" type="checkbox" value="死亡人数"/> 死亡人数</label><label><input aria-label="重伤人数" data-indicator="重伤人数" data-key="G4_02" type="checkbox" value="重伤人数"/> 重伤人数</label><label><input aria-label="轻伤人数" data-indicator="轻伤人数" data-key="G4_03" type="checkbox" value="轻伤人数"/> 轻伤人数</label><label><input aria-label="失踪人数" data-indicator="失踪人数" data-key="G4_04" type="checkbox" value="失踪人数"/> 失踪人数</label><label><input aria-label="伤亡总人数" data-indicator="伤亡总人数" data-key="G4_05" type="checkbox" value="伤亡总人数"/> 伤亡总人数</label><label><input aria-label="直接经济损失" data-indicator="直接经济损失" data-key="G4_06" type="checkbox" value="直接经济损失"/> 直接经济损失</label><label><input aria-label="平均每起死亡人数" data-indicator="平均每起死亡人数" data-key="G4_07" type="checkbox" value="平均每起死亡人数"/> 平均每起死亡人数</label><label><input aria-label="平均每起受伤人数" data-indicator="平均每起受伤人数" data-key="G4_08" type="checkbox" value="平均每起受伤人数"/> 平均每起受伤人数</label><label><input aria-label="平均每起直接经济损失" data-indicator="平均每起直接经济损失" data-key="G4_09" type="checkbox" value="平均每起直接经济损失"/> 平均每起直接经济损失</label><label><input aria-label="较大及以上事故占比" data-indicator="较大及以上事故占比" data-key="G4_10" type="checkbox" value="较大及以上事故占比"/> 较大及以上事故占比</label>
+</div></div>
+<div class="config-group" data-indicator-group="G5"><strong>5. 风险预测相关指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="当前综合风险指数" data-indicator="当前综合风险指数" data-key="G5_01" type="checkbox" value="当前综合风险指数"/> 当前综合风险指数</label><label><input aria-label="预测末期风险指数" data-indicator="预测末期风险指数" data-key="G5_02" type="checkbox" value="预测末期风险指数"/> 预测末期风险指数</label><label><input aria-label="预测期峰值风险" data-indicator="预测期峰值风险" data-key="G5_03" type="checkbox" value="预测期峰值风险"/> 预测期峰值风险</label><label><input aria-label="预测期最低风险" data-indicator="预测期最低风险" data-key="G5_04" type="checkbox" value="预测期最低风险"/> 预测期最低风险</label><label><input aria-label="峰值出现时间" data-indicator="峰值出现时间" data-key="G5_05" type="checkbox" value="峰值出现时间"/> 峰值出现时间</label><label><input aria-label="综合风险变化率" data-indicator="综合风险变化率" data-key="G5_06" type="checkbox" value="综合风险变化率"/> 综合风险变化率</label><label><input aria-label="高风险持续时间" data-indicator="高风险持续时间" data-key="G5_07" type="checkbox" value="高风险持续时间"/> 高风险持续时间</label><label><input aria-label="主要上升风险类别" data-indicator="主要上升风险类别" data-key="G5_08" type="checkbox" value="主要上升风险类别"/> 主要上升风险类别</label><label><input aria-label="生产压力场景变化率" data-indicator="生产压力场景变化率" data-key="G5_09" type="checkbox" value="生产压力场景变化率"/> 生产压力场景变化率</label><label><input aria-label="安全投入场景变化率" data-indicator="安全投入场景变化率" data-key="G5_10" type="checkbox" value="安全投入场景变化率"/> 安全投入场景变化率</label>
+</div></div>
+<div class="config-group" data-indicator-group="G6"><strong>6. 风险防范措施指标（10项可选）</strong><div class="config-items">
+<label><input aria-label="重点风险治理任务数" data-indicator="重点风险治理任务数" data-key="G6_01" type="checkbox" value="重点风险治理任务数"/> 重点风险治理任务数</label><label><input aria-label="重点区域覆盖数" data-indicator="重点区域覆盖数" data-key="G6_02" type="checkbox" value="重点区域覆盖数"/> 重点区域覆盖数</label><label><input aria-label="隐患整改率" data-indicator="隐患整改率" data-key="G6_03" type="checkbox" value="隐患整改率"/> 隐患整改率</label><label><input aria-label="重大隐患闭环率" data-indicator="重大隐患闭环率" data-key="G6_04" type="checkbox" value="重大隐患闭环率"/> 重大隐患闭环率</label><label><input aria-label="检查覆盖率" data-indicator="检查覆盖率" data-key="G6_05" type="checkbox" value="检查覆盖率"/> 检查覆盖率</label><label><input aria-label="培训完成率" data-indicator="培训完成率" data-key="G6_06" type="checkbox" value="培训完成率"/> 培训完成率</label><label><input aria-label="设备检维修完成率" data-indicator="设备检维修完成率" data-key="G6_07" type="checkbox" value="设备检维修完成率"/> 设备检维修完成率</label><label><input aria-label="特殊作业合规率" data-indicator="特殊作业合规率" data-key="G6_08" type="checkbox" value="特殊作业合规率"/> 特殊作业合规率</label><label><input aria-label="应急演练完成率" data-indicator="应急演练完成率" data-key="G6_09" type="checkbox" value="应急演练完成率"/> 应急演练完成率</label><label><input aria-label="监测异常处置率" data-indicator="监测异常处置率" data-key="G6_10" type="checkbox" value="监测异常处置率"/> 监测异常处置率</label>
+</div></div>
+</div><p class="noindent small" id="metric-status">已选0项；请按数据实际可用情况选择。</p><button id="copy-indicators" type="button">复制已选指标</button><textarea id="indicator-json" placeholder="已选指标配置将在此显示，便于复制给报告生成程序。" readonly="readonly" rows="4"></textarea></details>
+<div class="report">
+<section class="cover-section">
+<h1>【时间待填】【范围待填】【行业待填】<br/>安全生产事故风险研判及预测分析报告</h1>
+
+<table class="cover-meta"><tr><td>编制单位</td><td>【待填】</td></tr><tr><td>报告日期</td><td>【待填】</td></tr></table>
+</section>
+<section class="toc-section">
+<div class="toc-title">目　录</div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-1">1　研判任务与数据范围</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-1">1.1　研判任务</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-2">1.2　数据范围与来源</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-3">1.3　分析方法</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-3">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-2">2　安全生产基础条件</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-1">2.1　相关企业及生产经营情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-2">2.2　地区经济社会发展情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-3">2.3　气候环境条件</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-3">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-4">2.4　基础条件综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-4">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-3">3　现状安全生产总体形势</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-1">3.1　事故总体情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-2">3.2　事故发生特征分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-3">3.3　事故后果分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-3">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-4">3.4　现状形势研判</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-4">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-4">4　事故风险因素识别与关联分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-1">4.1　风险因素识别</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-2">4.2　因素关联关系分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-3">4.3　重点突出问题分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-3">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-4">4.4　事故发生机理综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-4">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-5">5　安全生产风险预测分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-1">5.1　仿真预测场景及参数</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-2">5.2　综合风险趋势预测</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-3">5.3　风险演化路径分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-3">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-4">5.4　预测结果综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-4">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-6">6　风险防范措施与建议</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-1">6.1　重点风险防控</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-1">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-2">6.2　重点领域防控</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-2">【页码待填】</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-3">6.3　持续监测与动态研判</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-3">【页码待填】</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-7">7　结论</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-7">【页码待填】</span></div>
+</section>
+<div class="report-body">
+<h2 data-section-number="1" id="section-1">1　研判任务与数据范围</h2>
+<h3 data-section-number="1.1" id="section-1-1">1.1　研判任务</h3>
+<p data-field="paragraph_001">本报告面向【行业待填】，以【地区待填】为研判范围，事故统计时段为【起始时间待填】至【结束时间待填】，风险预测时段为【预测起始时间待填】至【预测结束时间待填】。研判任务包括安全生产基础条件分析、事故现状分析、事故风险因素识别与关联分析、系统动力学风险预测以及防范措施形成。</p>
+<h3 data-section-number="1.2" id="section-1-2">1.2　数据范围与来源</h3>
+<p>本次分析使用的数据包括事故调查报告及事故基础记录、企业及生产经营数据、地区经济社会数据、气象环境数据，以及可获得的隐患排查、执法检查和安全管理数据。事故记录用于计算事故发生特征、事故后果和致因因素；企业、经济和环境数据用于描述风险所处的基础条件；系统动力学模型所需参数依据数据库、历史统计结果和预设情景配置。</p>
+<h3 data-section-number="1.3" id="section-1-3">1.3　分析方法</h3>
+<p>事故现状分析采用分类汇总、同期比较和结构占比方法；事故致因分析依据结构化原因字段和事故调查报告文本识别风险因素，并利用关联网络计算因素共现关系和关键程度；风险预测调用所选行业对应的系统动力学模型，对基准场景、生产压力增大场景和安全投入减少场景进行连续仿真。</p>
+<h2 data-section-number="2" id="section-2">2　安全生产基础条件</h2>
+<h3 data-section-number="2.1" id="section-2-1">2.1　相关企业及生产经营情况</h3>
+<p data-field="paragraph_004">分析期内，【地区待填】【行业待填】相关企业共【待填】家，从业人员【待填】人，其中重点企业【待填】家。行业生产规模为【待填】，产量或产值为【待填】，与上期相比【上升/下降待填】【待填】%。企业数量、人员规模和生产负荷用于反映区域生产活动强度。分析时同步比较重点企业占比、生产规模变化和高风险作业负荷，识别生产经营强度是否出现阶段性抬升。</p>
+<h3 data-section-number="2.2" id="section-2-2">2.2　地区经济社会发展情况</h3>
+<p data-field="paragraph_005">研判期内，地区生产总值为【待填】，工业增加值为【待填】，固定资产投资为【待填】，与安全生产相关的工业和建设活动总体呈【待填】态势。经济社会指标主要用于判断生产经营活动强度及其变化背景，不直接作为事故多少的判定依据。对主要指标采用同比或环比方式识别变化方向，并结合行业产值、投资和就业变化判断生产活动是否明显扩张。</p>
+<h3 data-section-number="2.3" id="section-2-3">2.3　气候环境条件</h3>
+<p data-field="paragraph_006">分析期内平均气温为【待填】℃，累计降水量为【待填】mm，高温天气【待填】天，强降雨、大风、雷电等极端天气共【待填】次。气候环境指标根据行业特点选取。对预测期可能持续出现的高温、强降雨、雷电或大风天气，应记录持续时间和影响范围，为后续风险情景设置提供外部条件。气象指标用于解释特定时段风险变化，不与事故数量统计重复。</p>
+<h3 data-section-number="2.4" id="section-2-4">2.4　基础条件综合分析</h3>
+<p data-field="paragraph_007">综合企业规模、生产经营强度、地区经济运行和气候环境条件，当前安全生产基础条件总体表现为【待填】。其中，【待填因素】处于相对高位，【待填因素】较上期变化明显，【待填时段】外部环境条件较不利。</p>
+<h2 data-section-number="3" id="section-3">3　现状安全生产总体形势</h2>
+<h3 data-section-number="3.1" id="section-3-1">3.1　事故总体情况</h3>
+<table><tr><th>指标</th><th>本期</th><th>上期/同期</th><th>变化</th></tr><tr><td data-field="accident_summary_1_0">事故起数</td><td data-field="accident_summary_1_1">【待填】</td><td data-field="accident_summary_1_2">【待填】</td><td data-field="accident_summary_1_3">【待填】</td></tr><tr><td data-field="accident_summary_2_0">死亡事故起数</td><td data-field="accident_summary_2_1">【待填】</td><td data-field="accident_summary_2_2">【待填】</td><td data-field="accident_summary_2_3">【待填】</td></tr><tr><td data-field="accident_summary_3_0">一般事故起数</td><td data-field="accident_summary_3_1">【待填】</td><td data-field="accident_summary_3_2">【待填】</td><td data-field="accident_summary_3_3">【待填】</td></tr><tr><td data-field="accident_summary_4_0">较大事故起数</td><td data-field="accident_summary_4_1">【待填】</td><td data-field="accident_summary_4_2">【待填】</td><td data-field="accident_summary_4_3">【待填】</td></tr><tr><td data-field="accident_summary_5_0">重大及以上事故起数</td><td data-field="accident_summary_5_1">【待填】</td><td data-field="accident_summary_5_2">【待填】</td><td data-field="accident_summary_5_3">【待填】</td></tr></table>
+<p data-field="paragraph_008">分析期内共发生生产安全事故【待填】起，其中死亡事故【待填】起，一般事故【待填】起、较大事故【待填】起、重大及以上事故【待填】起。事故总量较【上期/同期待填】变化【待填】%，死亡事故起数变化【待填】%。按事故发生起数衡量，整体变化表现为【待填】；相关人员伤亡和经济损失情况在事故后果分析中单独列示。</p>
+<h3 data-section-number="3.2" id="section-3-2">3.2　事故发生特征分析</h3>
+<div class="figure" data-chart="chart_01"><svg viewbox="0 0 800 260"><line stroke="#000" x1="70" x2="750" y1="215" y2="215"></line><line stroke="#000" x1="70" x2="70" y1="30" y2="215"></line><text font-size="14" x="18" y="42">事故数</text><text font-size="14" x="700" y="245">时间/类别</text></svg></div>
+<p class="caption">图1　生产安全事故发生特征</p>
+<p data-field="paragraph_010">从时间分布看，【待填月份/季度】事故较为集中；从地区分布看，【待填地区】事故起数较高；从事故类型看，【待填类型】占比最高；从作业场所、作业环节和作业活动看，事故主要集中于【待填】。当研判范围为全国时按省份和行业展开，当研判范围为省级时按地市、企业类型和事故类型展开，保证统计层级与任务范围一致。</p>
+<h3 data-section-number="3.3" id="section-3-3">3.3　事故后果分析</h3>
+<p data-field="paragraph_011">事故造成死亡【待填】人、重伤【待填】人、轻伤【待填】人、失踪【待填】人，直接经济损失【待填】万元。按有效事故记录计算，平均每起事故死亡【待填】人、受伤【待填】人，平均直接经济损失【待填】万元。在各事故类型中，【待填类型】的死亡和重伤人数较为集中，【待填类型】的单起经济损失相对较高。对经济损失、重伤和轻伤等缺失字段，分别说明有效统计样本数。</p>
+<h3 data-section-number="3.4" id="section-3-4">3.4　现状形势研判</h3>
+<p data-field="paragraph_012">依据事故发生起数、严重事故比例及伤亡后果变化，当前事故形势判断为【待填】。需要优先加强【待填地区/作业环节】的日常监管，并针对【待填高后果事故类型】保持专项防范。该判断基于历史事故统计，不替代对现存风险因素或未来风险水平的评价。</p>
+<h2 data-section-number="4" id="section-4">4　事故风险因素识别与关联分析</h2>
+<h3 data-section-number="4.1" id="section-4-1">4.1　风险因素识别</h3>
+<p data-field="paragraph_013">基于【待填】起具有完整原因描述或事故调查报告的样本，共识别并归并有效风险因素【待填】项。风险因素包括人员、设施设备、工艺技术、环境和管理等类别，并结合行业特点补充【行业专项因素待填】。统计结果显示，【因素1待填】、【因素2待填】和【因素3待填】出现频率较高，分别涉及【待填】起、【待填】起和【待填】起事故。</p>
+<h3 data-section-number="4.2" id="section-4-2">4.2　因素关联关系分析</h3>
+<div class="figure tall" data-chart="chart_02"><svg viewbox="0 0 800 340"><circle cx="400" cy="170" fill="#000" r="4"></circle></svg></div>
+<p class="caption">图2　事故风险因素关联网络</p>
+<p data-field="paragraph_015">关联分析显示，【因素A待填】与【因素B待填】、【因素C待填】与【因素D待填】的关联强度较高。【待填因素】与多个因素同时连接，在事故关联网络中具有较高重要度；【待填因素组合】主要出现在【事故类型待填】中。</p>
+<h3 data-section-number="4.3" id="section-4-3">4.3　重点突出问题分析</h3>
+<p data-field="paragraph_016">综合因素出现频率、关联强度、网络重要度以及所对应事故后果，当前突出问题主要包括【突出问题1待填】、【突出问题2待填】和【突出问题3待填】。其中，【待填问题】涉及事故数量较多，【待填问题】与多类风险因素存在较强关联，【待填问题】对应的事故后果较重。突出问题按照高频、高关联和高后果三个维度筛选，避免将一般性原因全部列为重点问题。</p>
+<h3 data-section-number="4.4" id="section-4-4">4.4　事故发生机理综合分析</h3>
+<p data-field="paragraph_017">结合调查报告已认定的事故原因，主要致因过程可归纳为【基础管理问题待填】影响【人员/设备运行状态待填】，使【危险状态待填】持续存在，并在【触发事件待填】发生时导致【事故类型待填】。对于仅由共现统计得到的关系，应结合事故经过和证据验证作用方向。事故机理分析侧重解释风险作用过程，为后续SD变量设计和防范措施提供依据。</p>
+<h2 data-section-number="5" id="section-5">5　安全生产风险预测分析</h2>
+<h3 data-section-number="5.1" id="section-5-1">5.1　仿真预测场景及参数</h3>
+<p data-field="paragraph_018">风险预测调用【行业待填】系统动力学模型，预测时段为【待填】，时间步长为【日/月待填】。设置三个固定场景：场景1为基准场景，保持当前生产和安全管理状态；场景2为生产压力增大场景，对产量、作业强度或任务负荷等参数进行上调；场景3为安全投入减少场景，对培训、检维修、隐患治理或防护投入等参数进行下调。</p>
+<h3 data-section-number="5.2" id="section-5-2">5.2　综合风险趋势预测</h3>
+<div class="figure" data-chart="chart_03"><svg viewbox="0 0 800 260"><line stroke="#000" x1="70" x2="750" y1="215" y2="215"></line><line stroke="#000" x1="70" x2="70" y1="30" y2="215"></line><text font-size="14" x="14" y="42">风险指数</text><text font-size="14" x="705" y="245">时间</text></svg></div>
+<p class="caption">图3　三种场景下综合风险变化趋势</p>
+<p data-field="paragraph_020">基准场景下，综合风险指数由【待填】变化至【待填】，预测期峰值为【待填】，出现在【待填时点】。生产压力增大场景末期风险指数为【待填】，较基准场景变化【待填】；安全投入减少场景末期风险指数为【待填】，较基准场景变化【待填】。通过三条风险曲线比较变化幅度、拐点和峰值时段，并检查预测结果与模型参数、实际约束是否一致。</p>
+<h3 data-section-number="5.3" id="section-5-3">5.3　风险演化路径分析</h3>
+<p data-field="paragraph_021">模型结果表明，预测期内风险主要沿【路径1待填】、【路径2待填】和【路径3待填】变化。其中，【待填分类风险】上升幅度最大，【待填分类风险】在预测中后期成为主要风险来源；【待填因素】变化后对综合风险的影响最明显。对每条主要演化路径记录起始状态、关键驱动因素、风险峰值及出现时点，用于定位需要提前干预的阶段。</p>
+<h3 data-section-number="5.4" id="section-5-4">5.4　预测结果综合分析</h3>
+<p data-field="paragraph_022">总体看，未来【预测期待填】综合风险呈【待填】趋势。生产压力增大和安全投入减少均会改变风险水平，其中【待填场景】影响更明显。预测结果显示，【待填分类风险】需要提前控制，【待填因素】属于敏感变量，应在后续治理中保持稳定或持续改善。对于风险峰值出现前的【待填时间段】，建议提前加强检查和资源配置。</p>
+<h2 data-section-number="6" id="section-6">6　风险防范措施与建议</h2>
+<h3 data-section-number="6.1" id="section-6-1">6.1　重点风险防控</h3>
+<p data-field="paragraph_023">针对【待填关键因素】，应将【待填具体失效环节】列入专项治理清单，逐项明确企业责任部门、检查内容、整改时限和复核方式；针对预测中可能持续升高的【分类风险待填】，提前开展【待填控制措施】。优先选取可以核查的治理结果，如重大隐患闭环率、设备检维修完成率、关键岗位培训完成率和特殊作业合规率，避免仅以检查次数衡量治理成效。</p>
+<h3 data-section-number="6.2" id="section-6-2">6.2　重点领域防控</h3>
+<p data-field="paragraph_024">对事故相对集中的【地区/企业类型/作业环节待填】实行差异化监管，对人员伤亡较重的【事故类型待填】提高检查频次和现场管控强度。结合企业规模、生产负荷和气象条件，对【重点企业待填】、【重点时段待填】和【重点作业待填】实施针对性检查，</p>
+<h3 data-section-number="6.3" id="section-6-3">6.3　持续监测与动态研判</h3>
+<p>持续更新企业生产、事故、隐患、监测和气象数据，重点跟踪检查覆盖率、培训完成率、应急演练完成率和监测异常处置率。当事故发生特征、关键风险因素或综合风险指数出现明显变化时，重新执行事故关联分析和系统动力学仿真，更新风险判断和治理重点，实现研判结果随数据变化动态调整。</p>
+<h2 data-section-number="7" id="section-7">7　结论</h2>
+<div class="conclusion"><p data-field="paragraph_026">（1）优先治理方向：将【待填重点风险】作为本轮风险治理的首要对象，依据事故记录中的高后果特征、事故原因证据和风险变化趋势确定治理次序。</p><p data-field="paragraph_027">（2）资源安排：对【待填重点区域/企业/作业环节】实施差异化管理，优先配置【待填安全资源】，落实【待填责任主体】及【待填检查周期】。</p><p data-field="paragraph_028">（3）跟踪评价：以【待填可量化治理指标】检验措施执行情况，在【待填复核时间】复算风险状态，并据此调整下一阶段检查、整改和投入安排。</p></div>
+<p class="center small" style="margin-top:12mm;text-indent:0;">—— 报告结束 ——</p>
+</div>
+</div>
+<script>
+(function(){
+  var controls=Array.from(document.querySelectorAll('.config-panel input[type="checkbox"]'));
+  var status=document.getElementById('metric-status');
+  var textarea=document.getElementById('indicator-json');
+  function update(){
+    var grouped={};
+    controls.forEach(function(el){
+      if(el.checked){var k=el.closest('.config-group').dataset.indicatorGroup;
+        if(!grouped[k])grouped[k]=[];
+        grouped[k].push({key:el.dataset.key,name:el.value});
+      }
+    });
+    var n=controls.filter(function(el){return el.checked;}).length;
+    status.textContent='已选'+n+'项（每类提供10项候选，按实际可用数据勾选）。';
+    textarea.value=JSON.stringify(grouped,null,2);
+  }
+  controls.forEach(function(el){el.addEventListener('change',update);});
+  var btn=document.getElementById('copy-indicators');
+  btn.addEventListener('click',function(){
+    textarea.select();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(textarea.value).then(function(){btn.textContent='已复制';}).catch(function(){btn.textContent='请手动复制下方内容';});}
+    else{btn.textContent='请手动复制下方内容';}
+  });
+  update();
+})();
+</script>
+
+
+</body>
+</html>

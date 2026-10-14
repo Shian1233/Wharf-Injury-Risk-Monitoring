@@ -1,0 +1,32 @@
+{
+  "passed": 6,
+  "results": [
+    {
+      "name": "各行业仅一个固定模型且不显示版本",
+      "passed": true
+    },
+    {
+      "name": "情景输入保留与恢复默认不修改固定模型",
+      "passed": true
+    },
+    {
+      "name": "模型图关系可聚焦且不出现代码或编辑弹窗",
+      "passed": true
+    },
+    {
+      "name": "固定模型真实仿真且计算规则保持展示",
+      "passed": true
+    },
+    {
+      "name": "使用说明和系统设置直接打开",
+      "passed": true
+    },
+    {
+      "name": "报告刷新恢复进度且失败草稿可重试",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "base_url": "http://127.0.0.1:8001",
+  "model_save_requests": 0
+}

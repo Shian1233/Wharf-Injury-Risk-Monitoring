@@ -1,0 +1,31 @@
+{
+  "passed": 6,
+  "results": [
+    {
+      "name": "六行业可视化编辑往返保留完整模型",
+      "passed": true
+    },
+    {
+      "name": "参数引用保护与中文计算关系编辑保存",
+      "passed": true
+    },
+    {
+      "name": "规则校验拒绝未闭合括号并保留修改",
+      "passed": true
+    },
+    {
+      "name": "版本详情以中文表格展示",
+      "passed": true
+    },
+    {
+      "name": "使用说明入口与常驻操作无需展开",
+      "passed": true
+    },
+    {
+      "name": "报告刷新恢复进度且草稿明确提示失败",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "model_saves": "intercepted; real models unchanged; validation used live API"
+}

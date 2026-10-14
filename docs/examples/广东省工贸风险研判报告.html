@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>广东省工贸安全生产事故风险研判及预测分析报告</title>
+<style>
+*{box-sizing:border-box;} body{margin:0;background:#e9e9e9;color:#000;font-family:"Times New Roman","SimSun","宋体",serif;font-size:12pt;line-height:1.72;}
+.report{width:210mm;margin:12mm auto;padding:14mm 18mm 22mm 20mm;background:#fff;border-left:1px solid #000;border-right:1px solid #000;}
+h1{margin:20mm 0 5mm;text-align:center;font-family:"SimHei","黑体",sans-serif;font-size:22pt;line-height:1.5;}
+h2{margin:9mm 0 4mm;font-family:"SimHei","黑体",sans-serif;font-size:16pt;line-height:1.4;}
+h3{margin:5mm 0 2.5mm;font-family:"SimHei","黑体",sans-serif;font-size:13pt;line-height:1.4;}
+p{margin:0 0 3mm;text-indent:2em;text-align:justify;}.noindent{text-indent:0}.center{text-align:center}.small{font-size:10pt}
+table{width:100%;border-collapse:collapse;table-layout:fixed;margin:3mm 0 4mm;} th,td{border:1px solid #000;padding:2mm 2.2mm;vertical-align:middle;line-height:1.45;word-break:break-word;} th{text-align:center;font-weight:700;}
+.figure{width:100%;height:48mm;border:1px solid #000;margin:3mm 0 1mm;}.figure.tall{height:62mm;}.figure svg{width:100%;height:100%;display:block;}
+.caption{margin:1mm 0 3mm;text-align:center;text-indent:0;font-size:10.5pt;}
+.cover-sub{text-align:center;text-indent:0;margin-bottom:14mm;}.cover-meta{width:72%;margin:0 auto 12mm;}.cover-meta td:first-child{width:28%;text-align:center;font-weight:700;}
+.toc-title{margin:8mm 0 5mm;text-align:center;font-family:"SimHei","黑体",sans-serif;font-size:18pt;font-weight:700;}
+.toc-row{display:flex;align-items:flex-end;min-height:7mm;line-height:1.3;}.toc-row.level1{font-weight:700;}.toc-row.level2 .toc-text{padding-left:8mm;}.toc-text{white-space:nowrap;}.toc-leader{flex:1;min-width:10mm;border-bottom:1px dotted #000;margin:0 2mm 1mm;}.toc-page{width:18mm;text-align:right;white-space:nowrap;}
+.conclusion p{text-indent:0;padding-left:2em;text-indent:-2em;}
+.config-panel{width:210mm;margin:10mm auto 0;padding:6mm 8mm;background:#fff;border:1px solid #000;font-family:"Microsoft YaHei","SimSun",sans-serif;font-size:10pt;}.config-panel h2{margin:0 0 4mm;font-size:14pt;}.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 6mm;}.config-group{border:1px solid #000;padding:3mm;}.config-group strong{display:block;margin-bottom:2mm;}.config-items{display:grid;grid-template-columns:1fr 1fr;gap:1.5mm 3mm;}.config-items label{display:block;}
+@media print{body{background:#fff}.config-panel{display:none}.report{width:auto;margin:0;border:none;padding:14mm 18mm 18mm 20mm}}
+
+.config-panel{position:fixed;z-index:20;top:8mm;right:8mm;width:350px;max-height:88vh;overflow-y:auto;margin:0;padding:3mm;background:#fff;border:1px solid #000;}
+.config-grid{grid-template-columns:1fr;gap:3mm;}
+.config-panel summary{cursor:pointer;font-weight:700;line-height:1.5;}
+.config-panel:not([open]){width:auto;max-width:220px;}
+.config-panel:not([open]) .config-grid{display:none;}
+.config-panel button{margin:2mm 0;padding:1mm 2mm;border:1px solid #000;background:#fff;font-size:10pt;cursor:pointer;}
+.config-panel textarea{display:block;width:100%;resize:vertical;font-size:9pt;}
+.toc-row a{text-decoration:none;color:#000;}
+h2,h3{break-after:avoid;page-break-after:avoid;}
+tr,.figure{break-inside:avoid;page-break-inside:avoid;}
+@media(max-width:900px){.report{width:min(100%,210mm);padding:14mm 7mm 20mm;}.config-panel{right:6px;top:6px;max-width:calc(100vw - 12px);}}
+@media print{.config-panel{display:none !important;}.report{width:auto;margin:0;padding:0;border:none;}a{color:#000;text-decoration:none;}}
+
+/* 封面、目录分别具有完整 A4 高度，整体仍为上下连续的长页面。 */
+.report{
+  width:210mm;
+  margin:12mm auto;
+  padding:0 18mm 0 20mm;
+  background:#fff;
+  border-left:1px solid #000;
+  border-right:1px solid #000;
+}
+.cover-section{
+  min-height:297mm;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:76mm 0 43mm;
+}
+.cover-section h1{
+  margin:0;
+  line-height:1.5;
+}
+.cover-section .cover-meta{
+  margin:0 auto;
+}
+.toc-section{
+  min-height:297mm;
+  padding:24mm 0 12mm;
+}
+.toc-section .toc-title{
+  margin:0 0 12mm;
+}
+.toc-section .toc-row{
+  min-height:7.3mm;
+  display:flex;
+  flex-direction:row;
+  align-items:flex-end;
+  width:100%;
+}
+.toc-section .toc-text{
+  flex:0 1 auto;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+.toc-section .toc-leader{
+  flex:1 1 auto;
+  min-width:5mm;
+  margin:0 2mm 1mm;
+}
+.toc-section .toc-page{
+  display:block;
+  flex:0 0 10mm;
+  width:10mm;
+  text-align:right;
+  white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  font-family:"Times New Roman",serif;
+}
+.report-body{
+  padding:8mm 0 25mm;
+}
+.report-body > h2:first-child{
+  margin-top:0;
+}
+@media(max-width:900px){
+  .report{width:min(100%,210mm);padding:0 7mm;}
+  .cover-section{padding:64mm 0 36mm;}
+  .toc-section .toc-row{font-size:10.5pt;}
+  .toc-section .toc-page{flex-basis:8mm;width:8mm;}
+}
+@media print{
+  @page{size:A4;margin:0;}
+  .report{width:210mm;margin:0;padding:0 18mm 0 20mm;border:none;}
+  .cover-section,.toc-section{min-height:297mm;}
+  .report-body{padding:8mm 0 20mm;}
+  .config-panel{display:none !important;}
+}
+
+
+/* 封面与目录各一张 A4，正文只做连续流式排版 */
+.cover-section,
+.toc-section{
+  height:297mm;
+  min-height:297mm;
+  max-height:297mm;
+  width:100%;
+  box-sizing:border-box;
+  break-after:page;
+  page-break-after:always;
+}
+.toc-section .toc-page{
+  flex:0 0 25mm;
+  width:25mm;
+  font-family:"Times New Roman","SimSun","宋体",serif;
+  font-size:10.5pt;
+  white-space:nowrap;
+  text-align:right;
+}
+.toc-section .toc-row{min-height:7.3mm;}
+.toc-section .toc-text{min-width:0;}
+.report-body,
+.report-body>*,
+.report-body h2,
+.report-body h3{break-before:auto;page-break-before:auto;}
+.report-body{break-after:auto;page-break-after:auto;}
+@media screen{
+  .cover-section,.toc-section{break-after:auto;page-break-after:auto;}
+}
+@media print{
+  @page{size:A4;margin:0;}
+  .cover-section,.toc-section{
+    height:297mm;
+    min-height:297mm;
+    max-height:297mm;
+    break-after:page !important;
+    page-break-after:always !important;
+  }
+  .report-body{page-break-before:auto;break-before:auto;}
+  .report-body h2,.report-body h3{page-break-before:auto;break-before:auto;}
+}
+
+
+/* 屏幕上明确呈现封面/目录两张A4纸，正文单独连续长纸 */
+@media screen and (min-width:901px){
+  .report{background:transparent;border:none;}
+  .cover-section,.toc-section{
+    width:210mm;
+    margin-left:-20mm;
+    margin-bottom:10mm;
+    padding-left:20mm;
+    padding-right:18mm;
+    background:#fff;
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+  }
+  .report-body{
+    width:210mm;
+    margin-left:-20mm;
+    padding:8mm 18mm 25mm 20mm;
+    background:#fff;
+    border-left:1px solid #000;
+    border-right:1px solid #000;
+  }
+}
+@media print{
+  .cover-section,.toc-section{
+    width:100%;
+    margin:0;
+    padding-left:0;
+    padding-right:0;
+    border:none;
+    break-after:page !important;
+    page-break-after:always !important;
+  }
+  .report-body{
+    width:100%;
+    margin:0;
+    padding:8mm 0 20mm;
+    border:none;
+    background:#fff;
+  }
+}
+</style>
+<style>@page{size:A4;margin:16mm 18mm 18mm 20mm;}@media print{.report{width:auto;margin:0;padding:0;border:none}.cover-section,.toc-section{height:263mm;min-height:263mm;max-height:263mm;padding-left:0;padding-right:0}.report-body{padding:0}h2,h3{break-after:avoid}p{orphans:3;widows:3}table{width:calc(100% - 2px);font-size:10pt;table-layout:fixed}.figure{width:calc(100% - 2px)}th,td{word-break:break-word}thead{display:table-header-group}}</style></head>
+<body>
+<div class="report">
+<section class="cover-section">
+<h1>广东省工贸<br/>安全生产事故风险研判及预测分析报告</h1><p class="cover-sub">分析期间：2011-01-01 至 2026-07-31</p>
+<table class="cover-meta"><tr><td>编制单位</td><td>风险研判与预测智能体</td></tr><tr><td>报告日期</td><td>2026-10-13</td></tr></table>
+</section>
+<section class="toc-section">
+<div class="toc-title">目　录</div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-1">1　研判任务与数据范围</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1">3</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-1">1.1　研判任务</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-1">3</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-2">1.2　数据范围与来源</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-2">3</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-1-3">1.3　分析方法</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-1-3">3</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-2">2　安全生产基础条件</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2">4</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-1">2.1　相关企业及生产经营情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-1">4</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-2">2.2　地区经济社会发展情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-2">4</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-3">2.3　气候环境条件</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-3">4</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-2-4">2.4　基础条件综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-2-4">4</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-3">3　现状安全生产总体形势</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3">5</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-1">3.1　事故总体情况</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-1">5</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-2">3.2　事故发生特征分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-2">5</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-3">3.3　事故后果分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-3">6</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-3-4">3.4　现状形势研判</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-3-4">6</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-4">4　事故风险因素识别与关联分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4">6</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-1">4.1　风险因素识别</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-1">6</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-2">4.2　因素关联关系分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-2">7</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-3">4.3　重点突出问题分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-3">7</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-4-4">4.4　事故发生机理综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-4-4">7</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-5">5　安全生产风险预测分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5">8</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-1">5.1　仿真预测场景及参数</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-1">8</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-2">5.2　综合风险趋势预测</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-2">8</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-3">5.3　风险演化路径分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-3">9</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-5-4">5.4　预测结果综合分析</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-5-4">9</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-6">6　风险防范措施与建议</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6">9</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-1">6.1　重点风险防控</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-1">9</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-2">6.2　重点领域防控</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-2">10</span></div>
+<div class="toc-row level2"><span class="toc-text"><a href="#section-6-3">6.3　持续监测与动态研判</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-6-3">10</span></div>
+<div class="toc-row level1"><span class="toc-text"><a href="#section-7">7　结论</a></span><span class="toc-leader"></span><span class="toc-page" data-page-for="section-7">12</span></div>
+</section>
+<div class="report-body">
+<h2 data-section-number="1" id="section-1">1　研判任务与数据范围</h2>
+<h3 data-section-number="1.1" id="section-1-1">1.1　研判任务</h3>
+<p data-field="paragraph_001">本次研判面向广东省工贸行业安全生产风险，分析期覆盖多年跨度，旨在识别事故集中特征、致因结构与治理短板，为应急管理部门提供决策参考。研判对象限定为已纳入事故记录的工贸行业事件，不涉及其他行业门类。需要特别说明的是，本次分析所依据的事故样本并非区域全量事故，而是来源于现有记录中可提取的部分，样本代表性有限，不能据此推断全省工贸行业事故的完整规模与分布。因此，本报告的所有结论均为基于现有样本的定性判断，不具备统计推断意义，后续需在补齐基础数据后重新评估。</p>
+<h3 data-section-number="1.2" id="section-1-2">1.2　数据范围与来源</h3>
+<p data-field="paragraph_002">统计范围为广东省工贸，2011-01-01至2026-07-31。本次读取77条报告记录，按同事故报告归并后为74个事故样本，重复报告3条。基础字段完整率为97.3%，仅评价字段填写情况，不代表区域采集完整。同地区同行业另有23条记录因发生日期缺失未纳入本次时段统计。数据范围与来源方面，本次分析涉及的事故记录按省份、行业、事故名称和发生日期进行了合并去重，以降低同一事故多源报告导致的重复计数风险。记录字段涵盖事故发生时间、地市、事故类型、事故等级、作业场所、作业环节、作业活动、直接原因、间接原因以及人员伤亡和经济损失等信息。然而，企业注册信息、从业人员规模、安全投入金额、产量产值等经济指标在当前数据中均为空值，无法纳入分析。气候环境数据同样缺失，包括气温、降水量、高温天数和极端天气次数等指标均不可用。这意味着本次研判无法建立事故与气象条件、企业规模或安全投入之间的定量关联，相关分析只能停留在事故记录本身的特征描述层面。</p>
+<h3 data-section-number="1.3" id="section-1-3">1.3　分析方法</h3>
+<p data-field="paragraph_003">分析方法上，本次研判采用事故记录的频次统计、分组分布和因素共现分析相结合的方式。对事故按月度和季度进行时间分布统计，按地市和事故类型进行空间与类别分布统计，对作业场所、作业环节和作业活动进行场景分布统计。在致因分析方面，对直接原因和间接原因字段中的因素标记进行频次计数，并构建因素共现网络，计算各因素之间的支持度、置信度和提升度。需要强调的是，共现关系仅反映因素在同一事故记录中同时出现的频率，不代表因素之间存在因果关系。因素标记来源于原始记录的结构化提取，未进行自由文本的同义归并，可能存在同一含义不同表述被分别计数的情况。此外，初始仿真模型尚未经过专家机理校验，动态速率参数为假设值，仿真结果仅用于情景比较，不作为已验收的预测结论。</p>
+<h2 data-section-number="2" id="section-2">2　安全生产基础条件</h2>
+<h3 data-section-number="2.1" id="section-2-1">2.1　相关企业及生产经营情况</h3>
+<p data-field="paragraph_004">企业及生产经营方面的基础数据在当前分析中完全缺失。企业数量、从业人员数量、重点企业数量等关键底数指标均无法获取，行业产量或产值、工业增加值、固定资产投资等经济指标同样不可用。这意味着无法计算事故相对于企业基数或从业人员规模的发生率，也无法判断事故记录是否集中在特定规模或特定类型的企业中。缺少企业层面的安全投入总额数据，使得无法评估安全投入与事故风险之间的关联。建议在后续工作中优先补齐企业注册信息、从业人员规模和安全投入数据，建立企业基础台账，为事故率计算和风险分级提供分母支撑。在底数补齐之前，任何关于事故频率高低或风险大小的判断都应保持审慎。</p>
+<h3 data-section-number="2.2" id="section-2-2">2.2　地区经济社会发展情况</h3>
+<p data-field="paragraph_005">经济社会情况方面，当前数据未提供可用于分析的指标。工业增加值、固定资产投资等经济数据在现有标准中仅有增速类指标，无法直接替代绝对量，且增速数据本身也未纳入本次分析。缺少经济规模数据意味着无法将事故记录与区域经济活动的强度和结构进行关联分析，也无法判断事故是否集中在特定经济活跃区域或特定产业类型。从事故记录的地市分布来看，样本高度集中于个别地市，但这一分布是否反映真实风险差异还是数据采集偏差，在当前数据条件下无法区分。建议在后续工作中接入统计部门的工业经济数据，建立经济指标与事故记录的关联分析框架，以便更准确地识别高风险区域和行业。</p>
+<h3 data-section-number="2.3" id="section-2-3">2.3　气候环境条件</h3>
+<p data-field="paragraph_006">气候环境方面的数据在当前分析中完全缺失。平均气温、降水量、高温天数和极端天气次数等指标均不可用，无法分析气象条件对事故发生的影响。工贸行业中的高处作业、起重吊装、电气作业等环节对气象条件较为敏感，高温、大风、暴雨等极端天气可能显著增加作业风险，但本次分析无法验证这一假设。建议在后续工作中接入气象部门的历史观测数据，按站点和时段与事故记录进行匹配，分析不同气象条件下事故发生的差异。同时需要注意，气象数据的空间代表性有限，站点观测值不能直接代表整个区域的天气状况，在分析时应明确空间尺度和时间窗口的匹配规则。</p>
+<h3 data-section-number="2.4" id="section-2-4">2.4　基础条件综合分析</h3>
+<p data-field="paragraph_007">基础条件综合分析表明，本次研判所依赖的数据基础存在明显短板。企业底数、从业人员规模、安全投入、经济指标和气候环境数据均不可用，导致无法构建完整的风险分析框架。当前可用的数据仅限于事故记录本身，包括事故发生的时间、地点、类型、等级、作业场景和致因因素等信息。这些数据虽然能够揭示事故的集中特征和致因结构，但无法回答事故为什么会发生、在哪些企业更容易发生、以及风险随时间如何演变等关键问题。</p>
+<h2 data-section-number="3" id="section-3">3　现状安全生产总体形势</h2>
+<h3 data-section-number="3.1" id="section-3-1">3.1　事故总体情况</h3>
+<table><tr><th>指标</th><th>本期</th><th>上期/同期</th><th>变化</th></tr><tr><td data-field="accident_summary_1_0">事故起数</td><td data-field="accident_summary_1_1">74</td><td data-field="accident_summary_1_2">无可比期</td><td data-field="accident_summary_1_3">无可比期</td></tr><tr><td data-field="accident_summary_2_0">死亡事故起数</td><td data-field="accident_summary_2_1">55</td><td data-field="accident_summary_2_2">无可比期</td><td data-field="accident_summary_2_3">无可比期</td></tr><tr><td data-field="accident_summary_3_0">一般事故起数</td><td data-field="accident_summary_3_1">74</td><td data-field="accident_summary_3_2">无可比期</td><td data-field="accident_summary_3_3">无可比期</td></tr><tr><td data-field="accident_summary_4_0">较大事故起数</td><td data-field="accident_summary_4_1">0</td><td data-field="accident_summary_4_2">无可比期</td><td data-field="accident_summary_4_3">无可比期</td></tr><tr><td data-field="accident_summary_5_0">重大及以上事故起数</td><td data-field="accident_summary_5_1">0</td><td data-field="accident_summary_5_2">无可比期</td><td data-field="accident_summary_5_3">无可比期</td></tr></table>
+<p data-field="paragraph_008">事故总数为74起，有效样本74条；口径：按省份、行业、事故名称和发生日期合并同事故报告。事故总体情况方面，本次分析共纳入一定数量的事故记录，全部集中在广东省工贸行业。从事故等级来看，所有记录均为一般事故，未出现较大及以上等级的事故记录。这一分布可能反映实际情况，也可能与数据采集范围或报告标准有关，需要审慎解读。从地市分布来看，事故记录高度集中于东莞市，其余地市仅有零星记录。这种高度集中的分布可能反映真实的产业集聚和风险集中，也可能与数据采集来源的覆盖范围有关。需要特别指出的是，当前未确认分析期内事故采集的完整性，不能将无记录月份视为零事故。事故记录的月度分布显示，部分月份记录较为集中，但这一集中趋势是否具有统计意义，在当前样本条件下无法判断。</p>
+<h3 data-section-number="3.2" id="section-3-2">3.2　事故发生特征分析</h3>
+<div class="figure" data-chart="chart_01" style="height:48mm"><svg viewbox="0 0 800 260" xmlns="http://www.w3.org/2000/svg"><text font-size="18" x="4" y="44">高处坠落</text><rect fill="#1E3264" height="17" width="490.00" x="230" y="28"></rect><text font-size="18" x="730.00" y="44">24</text><text font-size="18" x="4" y="69">机械伤害</text><rect fill="#1E3264" height="17" width="265.42" x="230" y="53"></rect><text font-size="18" x="505.42" y="69">13</text><text font-size="18" x="4" y="94">触电</text><rect fill="#1E3264" height="17" width="245.00" x="230" y="78"></rect><text font-size="18" x="485.00" y="94">12</text><text font-size="18" x="4" y="119">物体打击</text><rect fill="#1E3264" height="17" width="224.58" x="230" y="103"></rect><text font-size="18" x="464.58" y="119">11</text><text font-size="18" x="4" y="144">起重伤害</text><rect fill="#1E3264" height="17" width="163.33" x="230" y="128"></rect><text font-size="18" x="403.33" y="144">8</text><text font-size="18" x="4" y="169">车辆伤害</text><rect fill="#1E3264" height="17" width="122.50" x="230" y="153"></rect><text font-size="18" x="362.50" y="169">6</text></svg></div>
+<p class="caption">图1　生产安全事故发生特征</p>
+<p data-field="paragraph_010">事故发生特征方面，从作业场所分布来看，建筑施工现场脚手架及临边作业面、电气设备及配电线路或临时用电作业点、施工现场构件安装或材料作业区是事故记录最为集中的场所。从作业环节来看，高处作业面、吊装搬运或材料堆放区域、机械设备作业区域是主要的事故发生环节。从作业活动来看，吊装搬运或装卸作业、脚手架或临边高处作业、电气安装检修或带电作业是事故记录最为集中的活动类型。需要说明的是，作业场所、环节和活动的分类来源于原始记录的结构化提取，分类粒度和归并规则可能影响分布结果，在解读时应考虑分类体系的影响。</p>
+<h3 data-section-number="3.3" id="section-3-3">3.3　事故后果分析</h3>
+<p data-field="paragraph_011">死亡人数为57.0人，有效样本72条；口径：有效已知字段求和，缺失排除。直接经济损失为609.6万元，有效样本5条；口径：有效已知字段求和，缺失排除。事故后果方面，从人员伤亡来看，死亡人数在有效样本中占有相当比例，重伤人数相对较少，轻伤和失踪人数在有效记录中未见报告。死亡事故占比在有效样本中处于较高水平，说明事故的后果严重程度不容忽视。直接经济损失数据仅在少数记录中有报告，样本量极为有限，无法据此推算整体损失水平。平均每起事故的死亡人数和受伤人数在有效样本中处于较低水平，但这并不意味着事故后果轻微，因为死亡事故的占比本身较高。需要特别指出的是，伤亡总人数因死亡或受伤人数存在缺失而无法计算，直接经济损失的样本覆盖率极低，相关结论应极为审慎。建议在后续工作中加强事故后果数据的完整采集，特别是经济损失和伤害程度的标准化记录。</p>
+<h3 data-section-number="3.4" id="section-3-4">3.4　现状形势研判</h3>
+<p data-field="paragraph_012">事故后果的严重程度较高，死亡事故占比较大，说明一旦发生事故，造成人员死亡的概率不容忽视。事故致因呈现多因素交织的特征，人员因素、管理因素和设备设施因素在绝大多数事故记录中同时出现，说明事故的发生往往是多个因素共同作用的结果，而非单一原因所致。然而，由于企业底数、从业人员规模和安全投入等基础数据的缺失，无法判断当前风险水平相对于区域经济规模和产业结构的合理性，也无法评估现有安全监管措施的充分性。建议在补齐基础数据后重新进行形势研判。</p>
+<h2 data-section-number="4" id="section-4">4　事故风险因素识别与关联分析</h2>
+<h3 data-section-number="4.1" id="section-4-1">4.1　风险因素识别</h3>
+<p data-field="paragraph_013">管理因素频次为72起，有效样本74条；口径：原原因字段有效标记计数，空值不代表无该因素。风险因素识别方面，从事故记录的原因字段提取来看，人员因素、管理因素、设备设施因素、工艺技术因素和环境因素均有不同程度的标记。其中，人员因素和管理因素的标记频次最高，设备设施因素次之，工艺技术因素和环境因素的标记频次相对较低。这一分布表明，人的不安全行为和管理缺陷是事故记录中最常被识别的原因类型。需要说明的是，原因字段的标记来源于原始记录的结构化提取，空值不代表该因素不存在，仅表示记录中未标记该因素。因此，各因素的频次差异可能部分反映记录习惯而非真实的风险因素分布。建议在后续工作中统一原因分类标准，提高原因标记的规范性和完整性。</p>
+<h3 data-section-number="4.2" id="section-4-2">4.2　因素关联关系分析</h3>
+<div class="figure tall" data-chart="chart_02"><svg viewbox="0 0 800 340" xmlns="http://www.w3.org/2000/svg"><line stroke="#AAB5CF" stroke-width="4.6" x1="620.0" x2="467.9837387624884" y1="170.0" y2="74.89434837048464"></line><line stroke="#AAB5CF" stroke-width="4.45" x1="620.0" x2="467.98373876248843" y1="170.0" y2="265.10565162951536"></line><line stroke="#AAB5CF" stroke-width="4.35" x1="467.9837387624884" x2="467.98373876248843" y1="74.89434837048464" y2="265.10565162951536"></line><line stroke="#AAB5CF" stroke-width="3.15" x1="620.0" x2="222.01626123751157" y1="170.0" y2="228.77852522924732"></line><line stroke="#AAB5CF" stroke-width="3.1" x1="222.01626123751157" x2="467.9837387624884" y1="228.77852522924732" y2="74.89434837048464"></line><line stroke="#AAB5CF" stroke-width="3.0" x1="222.01626123751157" x2="467.98373876248843" y1="228.77852522924732" y2="265.10565162951536"></line><line stroke="#AAB5CF" stroke-width="2.9" x1="620.0" x2="222.01626123751157" y1="170.0" y2="111.2214747707527"></line><line stroke="#AAB5CF" stroke-width="2.9" x1="222.01626123751157" x2="467.9837387624884" y1="111.2214747707527" y2="74.89434837048464"></line><line stroke="#AAB5CF" stroke-width="2.75" x1="222.01626123751157" x2="467.98373876248843" y1="111.2214747707527" y2="265.10565162951536"></line><line stroke="#AAB5CF" stroke-width="2.2" x1="222.01626123751157" x2="222.01626123751157" y1="228.77852522924732" y2="111.2214747707527"></line><circle cx="620.0" cy="170.0" fill="#ECF0F8" r="38" stroke="#1E3264"></circle><text font-size="18" text-anchor="middle" x="620.0" y="176.0">人员</text><text font-size="18" text-anchor="middle" x="620.0" y="226.0">74起</text><circle cx="467.98373876248843" cy="265.10565162951536" fill="#ECF0F8" r="38" stroke="#1E3264"></circle><text font-size="18" text-anchor="middle" x="467.98373876248843" y="271.10565162951536">设备设施</text><text font-size="18" text-anchor="middle" x="467.98373876248843" y="321.10565162951536">69起</text><circle cx="222.01626123751157" cy="228.77852522924732" fill="#ECF0F8" r="38" stroke="#1E3264"></circle><text font-size="18" text-anchor="middle" x="222.01626123751157" y="234.77852522924732">工艺技术</text><text font-size="18" text-anchor="middle" x="222.01626123751157" y="284.7785252292473">43起</text><circle cx="222.01626123751157" cy="111.2214747707527" fill="#ECF0F8" r="38" stroke="#1E3264"></circle><text font-size="18" text-anchor="middle" x="222.01626123751157" y="117.2214747707527">环境</text><text font-size="18" text-anchor="middle" x="222.01626123751157" y="167.2214747707527">38起</text><circle cx="467.9837387624884" cy="74.89434837048464" fill="#ECF0F8" r="38" stroke="#1E3264"></circle><text font-size="18" text-anchor="middle" x="467.9837387624884" y="80.89434837048464">管理</text><text font-size="18" text-anchor="middle" x="467.9837387624884" y="130.89434837048464">72起</text></svg></div>
+<p class="caption">图2　事故风险因素关联网络</p>
+<p data-field="paragraph_015">关联关系方面，因素共现网络显示，人员因素与管理因素、人员因素与设备设施因素之间的共现频次最高，支持度和置信度均处于较高水平。管理因素与设备设施因素之间的共现关系同样紧密。工艺技术因素与管理因素、工艺技术因素与设备设施因素之间也存在较强的共现关系。环境因素与管理因素的共现关系中，置信度达到较高水平，但支持度相对较低。从提升度来看，大多数因素对的提升度接近于一，说明因素之间的共现关系主要表现为基础频率的叠加，而非显著的关联增强。环境因素与工艺技术因素之间的提升度略高于其他因素对，但幅度有限。总体而言，共现网络揭示的是因素在事故记录中的共同出现模式，不能据此推断因素之间的因果传导路径。</p>
+<h3 data-section-number="4.3" id="section-4-3">4.3　重点突出问题分析</h3>
+<p data-field="paragraph_016">突出问题方面，从事故记录的特征分析可以识别出几个值得关注的突出问题。第一，高处坠落事故在事故类型中占比最高，对应的作业场所和作业活动也高度集中，说明高处作业的风险管控存在系统性短板。第二，死亡事故占比较高，说明事故的后果严重程度不容忽视，尤其是在一般事故等级下仍造成较多死亡，反映出部分作业场景的致死风险较高。第三，人员因素和管理因素在事故致因中的标记频次最高，说明人的不安全行为和管理缺陷是事故发生的核心致因，但这一判断受限于原因标记的规范性。第四，事故记录高度集中于个别地市，但无法判断这是真实风险差异还是数据采集偏差。第五，企业底数、安全投入和气候环境等基础数据的缺失，严重制约了风险分析的深度和广度。</p>
+<h3 data-section-number="4.4" id="section-4-4">4.4　事故发生机理综合分析</h3>
+<p data-field="paragraph_017">事故发生机理方面，基于因素共现网络和致因组合的分析，事故的发生通常涉及人员、管理、设备设施等多个因素的共同作用。人员因素与管理因素的高频共现表明，人的不安全行为往往与管理制度的缺失或执行不到位同时出现，二者可能相互强化。设备设施因素与人员因素、管理因素的紧密共现说明，设备缺陷或维护不足往往与人的操作行为和管理监督共同构成事故条件。工艺技术因素和环境因素的标记频次相对较低，但其与管理因素的共现置信度较高，说明当工艺技术或环境因素被识别为原因时，通常也伴随着管理方面的问题。需要强调的是，上述机理分析基于共现关系推断，未经专家机理校验，不能作为事故因果链的确定描述。建议在后续工作中结合典型案例的深度调查，验证和完善事故机理模型。</p>
+<h2 data-section-number="5" id="section-5">5　安全生产风险预测分析</h2>
+<h3 data-section-number="5.1" id="section-5-1">5.1　仿真预测场景及参数</h3>
+<p data-field="paragraph_018">仿真模型为工贸风险演化初始模型 V1，本次定量研判采用基准场景。RK4，时间步长0.05月。基准场景：生产压力=1.0，安全投入强度=1.0。生产压力增大：生产压力=1.2，安全投入强度=1.0。安全投入减少：生产压力=1.0，安全投入强度=0.8。生产压力场景的变化率表明，生产强度的变化对风险指数有一定影响；安全投入场景的变化率表明，安全投入的调整对风险指数的影响相对较小。需要特别强调的是，初始模型未经专家机理校验，动态速率参数为假设值，仿真结果仅用于情景之间的相对比较，不代表实际的风险预测。模型中的阈值设定为用户假设，不代表事故概率或风险等级的实际分界。在模型未经校验之前，仿真结果不应作为决策的唯一依据，而应与其他分析结果结合使用。</p>
+<h3 data-section-number="5.2" id="section-5-2">5.2　综合风险趋势预测</h3>
+<div class="figure" data-chart="chart_03"><svg viewbox="0 0 800 260" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" points="60.00,70.87 276.67,77.12 493.33,82.16 710.00,86.22" stroke="#1E3264" stroke-width="2.5"></polyline><text fill="#1E3264" font-size="18" x="70" y="28">基准场景</text><polyline fill="none" points="60.00,70.87 276.67,72.95 493.33,74.63 710.00,75.98" stroke="#FC7819" stroke-width="2.5"></polyline><text fill="#FC7819" font-size="18" x="300" y="28">生产压力增大</text><polyline fill="none" points="60.00,70.87 276.67,75.90 493.33,79.99 710.00,83.31" stroke="#23B283" stroke-width="2.5"></polyline><text fill="#23B283" font-size="18" x="530" y="28">安全投入减少</text><line stroke="#555" x1="60" x2="710" y1="210" y2="210"></line><text font-size="16" x="748" y="240">月</text><text font-size="16" text-anchor="middle" x="60.0" y="240">0</text><text font-size="16" text-anchor="middle" x="385.0" y="240">1.5</text><text font-size="16" text-anchor="middle" x="710.0" y="240">3</text><text font-size="18" x="5" y="216">0.0</text><text font-size="18" x="5" y="176">23.0</text><text font-size="18" x="5" y="136">46.0</text><text font-size="18" x="5" y="96">69.0</text><text font-size="18" x="5" y="56">92.0</text></svg></div>
+<p class="caption">图3　三种场景下综合风险变化趋势</p>
+<p data-field="paragraph_020">当前综合风险指数为80.0指数，有效样本74条；口径：SD数值积分；阈值为用户假设，不代表事故概率。预测末期风险指数为71.1762指数，有效样本74条；口径：SD数值积分；阈值为用户假设，不代表事故概率。风险趋势方面，基于当前仿真模型的数值积分结果，综合风险指数在预测期内呈现一定程度的下降趋势，变化率为负值，表明模型情景下风险有所缓解。预测期峰值风险与当前风险指数持平，预测期最低风险低于当前水平，峰值出现时间位于预测期初段。高风险持续时间有限，主要上升风险类别未识别出上升类别。然而，上述趋势结果高度依赖于模型的假设参数和情景设定，在模型未经校验的情况下，趋势的方向和幅度均存在较大不确定性。此外，事故记录的时间分布显示部分月份记录集中，但未确认采集完整性，不能据此判断风险的真实时间趋势。建议将仿真趋势作为情景参考而非预测结论，在数据补齐和模型校验后重新评估。</p>
+<h3 data-section-number="5.3" id="section-5-3">5.3　风险演化路径分析</h3>
+<p data-field="paragraph_021">风险演化路径方面，当前模型未识别出主要上升风险类别，说明在现有情景设定下，各类风险因素未呈现显著上升趋势。从因素共现网络的结构来看，人员因素和管理因素处于网络的中心位置，其变化可能对整体风险水平产生较大影响。设备设施因素与人员、管理因素的紧密关联表明，设备状态的改善或恶化可能通过影响人的操作行为和管理负荷间接影响风险水平。工艺技术因素和环境因素虽然重要度较低，但其与管理因素的共现置信度较高，说明这些因素的变化可能通过管理渠道传导至整体风险。需要强调的是，上述演化路径的推断基于共现网络的结构特征，未经动态模型的验证，不能作为风险演化的确定描述。建议在后续工作中建立因素之间的动态传导模型，验证演化路径的合理性。</p>
+<h3 data-section-number="5.4" id="section-5-4">5.4　预测结果综合分析</h3>
+<p data-field="paragraph_022">事故起数预测暂不可计算：未确认分析期事故采集完整性，不能将无记录月份视为零事故。预测结果综合分析方面，当前仿真模型给出的风险指数变化率和峰值时间等结果，仅代表在特定假设条件下的情景推演，不代表实际的风险预测。模型未经过专家机理校验，动态参数为假设值，且关键驱动因素的数据缺失，这些限制使得预测结果的可靠性有限。从事故记录的实际分布来看，部分月份和季度的记录集中可能反映真实的风险波动，也可能反映数据采集的不均匀。在未确认采集完整性的情况下，不能将无记录月份视为零事故，也不能将记录集中月份直接解读为风险高峰。建议将仿真结果作为情景比较的工具，而非决策的唯一依据，在数据补齐和模型校验后重新进行预测分析。</p>
+<h2 data-section-number="6" id="section-6">6　风险防范措施与建议</h2>
+<h3 data-section-number="6.1" id="section-6-1">6.1　重点风险防控</h3>
+<p data-field="paragraph_023">重点风险治理任务数为5项，有效样本74条；口径：每类已识别原因对应一项治理建议。重点风险防控方面，基于事故记录的特征分析，建议将高处坠落、机械伤害、触电、物体打击、起重伤害和车辆伤害作为重点防控的事故类型。在作业场景方面，建筑施工现场脚手架及临边作业面、电气设备及配电线路或临时用电作业点、施工现场构件安装或材料作业区是重点防控场所。在作业活动方面，吊装搬运或装卸作业、脚手架或临边高处作业、电气安装检修或带电作业是重点防控活动。建议针对上述重点类型、场所和活动，制定专项防控措施，加强现场监督检查和作业人员培训。同时，鉴于人员因素和管理因素在事故致因中的核心地位，应将人的不安全行为纠正和管理制度落实作为防控工作的重中之重。</p>
+<h3 data-section-number="6.2" id="section-6-2">6.2　重点领域防控</h3>
+<p data-field="paragraph_024">重点领域防控方面，从事故记录的地市分布来看，样本高度集中于个别地市，建议在数据采集完整性确认之前，对这些地市的事故记录进行重点核查，判断是否存在数据采集偏差或真实的风险集中。从事故类型的集中度来看，高处坠落事故的占比最高，建议将高处作业作为重点防控领域，特别是建筑施工现场的脚手架和临边作业。电气作业和吊装作业的事故记录也较为集中，建议将临时用电、电气检修和起重吊装作为重点防控环节。在防控措施方面，建议结合事故致因分析，从人员培训、管理制度、设备维护和工艺改进等多个维度综合施策，避免单一措施导致的防控盲区。</p>
+<h3 data-section-number="6.3" id="section-6-3">6.3　持续监测与动态研判</h3>
+<p data-field="paragraph_025">动态监测方面，当前数据中缺少隐患整改率、重大隐患闭环率、检查覆盖率、培训完成率、设备检维修完成率、特殊作业合规率和应急演练完成率等过程指标，无法评估安全监管和企业安全管理的动态执行情况。监测异常处置率同样不可用，无法判断异常情况的响应效率。建议在后续工作中建立动态监测指标体系，将上述过程指标纳入常规采集范围，实现对安全管理工作执行情况的持续跟踪。同时，建议将事故记录与监测指标进行关联分析，识别过程指标与事故风险之间的关联模式。在监测数据积累到一定规模后，可以建立预警模型，实现对风险上升趋势的早期识别和及时干预。</p>
+<p>表：本次选定定量指标与有效样本</p><table><thead><tr><th>指标</th><th>计算结果</th><th>有效样本</th><th>统计口径</th></tr></thead><tbody><tr><td>事故总数</td><td>74起</td><td>74</td><td>按省份、行业、事故名称和发生日期合并同事故报告</td></tr><tr><td>月度分布</td><td>2024-09:7；2025-06:5；2025-07:5；2025-05:4；2025-04:4；2025-12:3；2025-09:3；2025-08:3；2024-05:3；2025-10:2；2024-12:2；2024-06:2；2024-11:2；2024-01:2；2024-03:2；2026-01:1；2026-06:1；2026-03:1；2021-07:1；2023-11:1；2019-04:1；2025-03:1；2024-10:1；2024-08:1；2023-04:1；2024-04:1；2022-05:1；2024-07:1；2023-08:1；2024-02:1；2020-09:1；2020-11:1；2023-10:1；2022-08:1；2023-05:1；2023-07:1；2026-04:1；2021-05:1；2023-09:1；2022-03:1起</td><td>74</td><td>按原字段分组统计</td></tr><tr><td>事故类型分布</td><td>高处坠落:24；机械伤害:13；触电:12；物体打击:11；起重伤害:8；车辆伤害:6起</td><td>74</td><td>按原字段分组统计</td></tr><tr><td>管理因素频次</td><td>72起</td><td>74</td><td>原原因字段有效标记计数，空值不代表无该因素</td></tr><tr><td>死亡人数</td><td>57.0人</td><td>72</td><td>有效已知字段求和，缺失排除</td></tr><tr><td>直接经济损失</td><td>609.6万元</td><td>5</td><td>有效已知字段求和，缺失排除</td></tr><tr><td>当前综合风险指数</td><td>80.0指数</td><td>74</td><td>SD数值积分；阈值为用户假设，不代表事故概率</td></tr><tr><td>预测末期风险指数</td><td>71.1762指数</td><td>74</td><td>SD数值积分；阈值为用户假设，不代表事故概率</td></tr><tr><td>重点风险治理任务数</td><td>5项</td><td>74</td><td>每类已识别原因对应一项治理建议</td></tr></tbody></table><h2 data-section-number="7" id="section-7">7　结论</h2>
+<div class="conclusion"><p data-field="paragraph_026">治理方向方面，基于事故致因分析，建议从人员、管理、设备设施、工艺技术和环境五个维度制定治理措施。在人员维度，重点加强高处作业、电气作业和吊装作业人员的安全培训和资质管理，提高作业人员的安全意识和操作技能。在管理维度，重点完善作业审批制度、现场监督制度和安全责任制，确保管理制度在执行层面得到有效落实。在设备设施维度，重点加强脚手架、起重设备、电气设备和机械设备的定期检查和维护保养，及时消除设备缺陷。在工艺技术维度，重点优化高风险作业的工艺流程和操作方法，降低作业过程中的固有风险。在环境维度，重点改善作业现场的照明、通风和作业空间条件，减少环境因素对作业安全的不利影响。</p><p data-field="paragraph_027">在企业台账方面，建议协调市场监管部门获取企业注册信息，建立工贸行业企业基础数据库。在从业人员方面，建议通过社保或税务数据获取从业人员规模信息。在安全投入方面，建议建立企业安全投入的定期报告制度。在气候环境方面，建议接入气象部门的历史观测数据。同时，建议保留一定资源用于动态监测体系的建设和仿真模型的校验完善。</p><p data-field="paragraph_028">跟踪评价方面，建议建立常态化的跟踪评价机制，定期更新事故记录和基础数据，持续监测事故类型结构、作业场景分布和致因因素的变化趋势。在评价指标方面，建议在事故起数和伤亡人数等结果指标的基础上，增加隐患整改率、培训完成率和特殊作业合规率等过程指标，形成结果与过程相结合的评价体系。在评价方法方面，建议在描述性统计的基础上，逐步引入关联分析和趋势分析，在数据条件成熟后开展定量风险评估。在评价周期方面，建议按季度进行跟踪分析，按年度进行综合评估，及时发现风险变化并调整防控策略。需要强调的是，跟踪评价应以数据完整性为前提，在采集完整性未确认之前，评价结论应保持审慎，避免过度解读。</p></div>
+<p class="center small" style="margin-top:12mm;text-indent:0;">—— 报告结束 ——</p>
+</div>
+</div>
+</body>
+</html>

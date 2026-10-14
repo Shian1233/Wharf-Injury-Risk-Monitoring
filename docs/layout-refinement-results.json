@@ -1,0 +1,24 @@
+{
+  "passed": 4,
+  "results": [
+    {
+      "name": "原始资料为首个独立标签且不占用记录列表",
+      "passed": true
+    },
+    {
+      "name": "计算规则完整展开且始终位于模型图下",
+      "passed": true
+    },
+    {
+      "name": "61个真实采样点绘制、悬停与导出一致",
+      "passed": true
+    },
+    {
+      "name": "窄屏标签、计算规则与曲线保持可用",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "base_url": "http://127.0.0.1:8001",
+  "samples_per_month": 20
+}

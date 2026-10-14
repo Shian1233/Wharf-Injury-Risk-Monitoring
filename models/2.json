@@ -1,0 +1,541 @@
+{
+  "id": "00dd58dde1134eff89c3b2c6baa64262",
+  "name": "金属非金属矿山隐患治理与反馈模型",
+  "industry": "金属非金属矿山",
+  "version": 1,
+  "format": "risk-sd/1.0",
+  "profile_version": "industry-feedback/3.0",
+  "model_family": "industry-feedback/3.0",
+  "status": "情景推演",
+  "description": "事故报告提供行业因素参考，隐患形成与治理闭环推动状态变化，事故信息经时间滞后影响治理。",
+  "parameters": {
+    "production_pressure": {
+      "label": "生产压力",
+      "value": 1,
+      "min": 0.1,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "safety_effort": {
+      "label": "安全投入强度",
+      "value": 1,
+      "min": 0,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "response_time": {
+      "label": "治理响应滞后",
+      "value": 3,
+      "min": 0.25,
+      "max": 24,
+      "unit": "月",
+      "dimension": 1,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "prevention_rate": {
+      "label": "基准隐患消除系数",
+      "value": 0.18,
+      "min": 0,
+      "max": 1,
+      "unit": "1/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true
+    },
+    "formation_rate": {
+      "label": "基准隐患形成速度",
+      "value": 0.08,
+      "min": 0.001,
+      "max": 1,
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "hazard_response": {
+      "label": "隐患治理响应系数",
+      "value": 0.4,
+      "min": 0,
+      "max": 2,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "feedback_gain": {
+      "label": "事故信息反馈强度",
+      "value": 0.6,
+      "min": 0,
+      "max": 3,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "intensity_scale": {
+      "label": "相对强度换算系数",
+      "value": 0.25,
+      "min": 0.01,
+      "max": 2,
+      "unit": "1/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "intensity_reference": {
+      "label": "风险指数半饱和强度",
+      "value": 0.25,
+      "min": 0.01,
+      "max": 2,
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "exposure_scale": {
+      "label": "相对作业暴露",
+      "value": 1,
+      "min": 0.1,
+      "max": 3,
+      "unit": "倍",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "exposure_elasticity": {
+      "label": "作业暴露压力弹性",
+      "value": 0.3,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "coupling": {
+      "label": "专业因素联合作用系数",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "mine_scope": {
+      "label": "矿山类型",
+      "value": 0,
+      "min": 0,
+      "max": 3,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "scenario": true,
+      "choices": {
+        "0": "按报告识别",
+        "1": "地下矿山",
+        "2": "露天矿山",
+        "3": "尾矿库"
+      }
+    },
+    "stope_reference": {
+      "label": "采空区与顶板风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:stope:reference"
+    },
+    "stope_enabled": {
+      "label": "采空区与顶板风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:stope:enabled"
+    },
+    "stope_weight": {
+      "label": "采空区与顶板风险形成权重",
+      "value": 0.25,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "stope_elasticity": {
+      "label": "采空区与顶板风险压力弹性",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "stope_control": {
+      "label": "采空区与顶板风险治理敏感度",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "slope_reference": {
+      "label": "边坡稳定风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:slope:reference"
+    },
+    "slope_enabled": {
+      "label": "边坡稳定风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:slope:enabled"
+    },
+    "slope_weight": {
+      "label": "边坡稳定风险形成权重",
+      "value": 0.25,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "slope_elasticity": {
+      "label": "边坡稳定风险压力弹性",
+      "value": 0.3,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "slope_control": {
+      "label": "边坡稳定风险治理敏感度",
+      "value": 0.35,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "drainage_reference": {
+      "label": "排水及水害风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:drainage:reference"
+    },
+    "drainage_enabled": {
+      "label": "排水及水害风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:drainage:enabled"
+    },
+    "drainage_weight": {
+      "label": "排水及水害风险形成权重",
+      "value": 0.2,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "drainage_elasticity": {
+      "label": "排水及水害风险压力弹性",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "drainage_control": {
+      "label": "排水及水害风险治理敏感度",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "blast_reference": {
+      "label": "爆破作业风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:blast:reference"
+    },
+    "blast_enabled": {
+      "label": "爆破作业风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:blast:enabled"
+    },
+    "blast_weight": {
+      "label": "爆破作业风险形成权重",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "blast_elasticity": {
+      "label": "爆破作业风险压力弹性",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "blast_control": {
+      "label": "爆破作业风险治理敏感度",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "transport_reference": {
+      "label": "运输提升风险参考值",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:transport:reference"
+    },
+    "transport_enabled": {
+      "label": "运输提升风险适用开关",
+      "value": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定",
+      "calibrate": "feedback:transport:enabled"
+    },
+    "transport_weight": {
+      "label": "运输提升风险形成权重",
+      "value": 0.15,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "transport_elasticity": {
+      "label": "运输提升风险压力弹性",
+      "value": 0.5,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    },
+    "transport_control": {
+      "label": "运输提升风险治理敏感度",
+      "value": 0.4,
+      "min": 0,
+      "max": 1,
+      "unit": "",
+      "dimension": 0,
+      "source": "机制假设，尚未经历史数据或专家标定"
+    }
+  },
+  "variables": [
+    {
+      "name": "hazard_pressure",
+      "label": "隐患压力",
+      "type": "stock",
+      "role": "core",
+      "unit": "归一化状态",
+      "dimension": 0,
+      "initial": "0.25+0.75*(stope_enabled*stope_weight*stope_reference+slope_enabled*slope_weight*slope_reference+drainage_enabled*drainage_weight*drainage_reference+blast_enabled*blast_weight*blast_reference+transport_enabled*transport_weight*transport_reference)/max(0.001,stope_enabled*stope_weight+slope_enabled*slope_weight+drainage_enabled*drainage_weight+blast_enabled*blast_weight+transport_enabled*transport_weight)",
+      "rate": "hazard_formation-hazard_removal",
+      "min": 0,
+      "max": 1000000.0
+    },
+    {
+      "name": "cumulative_load",
+      "label": "累计相对风险负荷",
+      "type": "stock",
+      "role": "core",
+      "unit": "相对负荷",
+      "dimension": 0,
+      "initial": "0",
+      "rate": "accident_intensity",
+      "min": 0,
+      "max": 100000000.0
+    },
+    {
+      "name": "feedback_signal",
+      "label": "滞后事故信息",
+      "type": "stock",
+      "role": "delay",
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "initial": "0",
+      "rate": "(accident_intensity-feedback_signal)/response_time",
+      "min": 0,
+      "max": 1000000.0
+    },
+    {
+      "name": "stope_factor",
+      "label": "采空区与顶板风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "stope_enabled*stope_reference*max(0,1+stope_elasticity*(production_pressure-1))/(1+stope_control*max(0,governance_level-1))",
+      "measure": "核查采空区处置、地压监测与巷道支护。"
+    },
+    {
+      "name": "slope_factor",
+      "label": "边坡稳定风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "slope_enabled*slope_reference*max(0,1+slope_elasticity*(production_pressure-1))/(1+slope_control*max(0,governance_level-1))",
+      "measure": "核查边坡或坝体稳定、位移监测及排水条件。"
+    },
+    {
+      "name": "drainage_factor",
+      "label": "排水及水害风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "drainage_enabled*drainage_reference*max(0,1+drainage_elasticity*(production_pressure-1))/(1+drainage_control*max(0,governance_level-1))",
+      "measure": "检查排水系统、水位监测与防汛应急能力。"
+    },
+    {
+      "name": "blast_factor",
+      "label": "爆破作业风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "blast_enabled*blast_reference*max(0,1+blast_elasticity*(production_pressure-1))/(1+blast_control*max(0,governance_level-1))",
+      "measure": "核查爆破设计、警戒、盲炮处理和爆破器材管理。"
+    },
+    {
+      "name": "transport_factor",
+      "label": "运输提升风险",
+      "type": "aux",
+      "role": "factor",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "transport_enabled*transport_reference*max(0,1+transport_elasticity*(production_pressure-1))/(1+transport_control*max(0,governance_level-1))",
+      "measure": "核查提升保护、运输线路、车辆维护与人车分流。"
+    },
+    {
+      "name": "governance_level",
+      "label": "安全治理水平",
+      "type": "aux",
+      "unit": "倍",
+      "dimension": 0,
+      "formula": "safety_effort*(1+hazard_response*hazard_pressure/(1+hazard_pressure)+feedback_gain*feedback_signal/(intensity_reference+feedback_signal))"
+    },
+    {
+      "name": "factor_load",
+      "label": "专业因素综合作用",
+      "type": "aux",
+      "unit": "相对量",
+      "dimension": 0,
+      "formula": "(stope_weight*stope_factor+slope_weight*slope_factor+drainage_weight*drainage_factor+blast_weight*blast_factor+transport_weight*transport_factor)/max(0.001,stope_enabled*stope_weight+slope_enabled*slope_weight+drainage_enabled*drainage_weight+blast_enabled*blast_weight+transport_enabled*transport_weight)+coupling*(drainage_factor*(stope_factor+slope_factor))"
+    },
+    {
+      "name": "relative_exposure",
+      "label": "危险作业相对暴露",
+      "type": "aux",
+      "unit": "倍",
+      "dimension": 0,
+      "formula": "exposure_scale*production_pressure**exposure_elasticity"
+    },
+    {
+      "name": "hazard_formation",
+      "label": "隐患形成速度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "formula": "formation_rate*production_pressure*(1+factor_load)"
+    },
+    {
+      "name": "hazard_removal",
+      "label": "隐患消除速度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "归一化状态/月",
+      "dimension": -1,
+      "formula": "prevention_rate*governance_level*hazard_pressure"
+    },
+    {
+      "name": "accident_intensity",
+      "label": "相对事故强度",
+      "type": "aux",
+      "role": "flow",
+      "unit": "相对强度/月",
+      "dimension": -1,
+      "formula": "intensity_scale*relative_exposure*hazard_pressure*(1+factor_load)"
+    },
+    {
+      "name": "risk_index",
+      "label": "综合风险指数",
+      "type": "aux",
+      "unit": "分",
+      "dimension": 0,
+      "formula": "100*accident_intensity/(intensity_reference+accident_intensity)"
+    }
+  ],
+  "feature_labels": {
+    "stope": "采空区与顶板风险",
+    "slope": "边坡稳定风险",
+    "drainage": "排水及水害风险",
+    "blast": "爆破作业风险",
+    "transport": "运输提升风险"
+  },
+  "quantity_mode": "relative",
+  "count_calibration": null,
+  "assumptions": {
+    "time_unit": "月",
+    "integration_step": 0.05,
+    "coefficient_source": "明确机制假设；未冒充专家评审或回归结果",
+    "index_conversion": "100 × 相对事故强度 ÷（固定半饱和强度 + 相对事故强度）",
+    "initial_pressure": "0.25 + 0.75 × 适用行业因素参考值加权均值；不是实测隐患数量",
+    "delay": "一阶信息平滑；初始新增事故信息为0，三个场景一致",
+    "limitation": "当前结果为情景推演：隐患压力是模拟状态，事故强度为相对量；缺少完整事故口径、连续暴露量和经过验证的发生率，暂不预测事故起数。"
+  }
+}

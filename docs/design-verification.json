@@ -1,0 +1,20 @@
+{
+  "edition": "design",
+  "preview_url": "http://127.0.0.1:8001/agent",
+  "source_url": "http://127.0.0.1:8000/agent",
+  "source_unchanged": true,
+  "independent_runtime": true,
+  "browser_checks_passed": 46,
+  "suites": {
+    "browser-results.json": 23,
+    "fixed-model-results.json": 6,
+    "inline-workbench-results.json": 5,
+    "layout-refinement-results.json": 4,
+    "adaptive-records-results.json": 4,
+    "design-edition-results.json": 4
+  },
+  "pdf_export_verified": true,
+  "new_llm_report_generated_this_turn": false,
+  "launcher_start_and_restart_verified": true,
+  "sampling_points_per_month": 20
+}

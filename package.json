@@ -1,0 +1,1 @@
+{"name":"risk-analysis-agent","private":true,"version":"1.0.0","description":"Native web client and browser-based A4 PDF rendering","scripts":{"test:ui":"node tests/browser.cjs","check":"node --check frontend/app.js"},"dependencies":{"playwright":"1.62.1"}}

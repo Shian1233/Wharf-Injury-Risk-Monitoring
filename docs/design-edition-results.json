@@ -1,0 +1,23 @@
+{
+  "passed": 4,
+  "results": [
+    {
+      "name": "设计样式使用内容哈希，页面保留四个真实概览",
+      "passed": true
+    },
+    {
+      "name": "报告历史移除状态标签且保留可用操作",
+      "passed": true
+    },
+    {
+      "name": "常用桌面高度直接显示仿真操作，左右面板对齐",
+      "passed": true
+    },
+    {
+      "name": "窄屏可滚动至指标、生成按钮和报告预览",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "base_url": "http://127.0.0.1:8001"
+}

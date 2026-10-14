@@ -1,0 +1,11 @@
+{
+  "reviewer": "填写实际审核专家姓名",
+  "cases": [
+    {
+      "case_id": "替换为实际独立样本编号",
+      "recommendations_match": false,
+      "content_match": false,
+      "evidence": "填写专家审核意见和依据文件路径；此文件是格式样例，不是验收数据"
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "date": "2026-10-13",
+  "viewports": [
+    [
+      1440,
+      943
+    ],
+    [
+      1024,
+      943
+    ],
+    [
+      768,
+      943
+    ],
+    [
+      393,
+      850
+    ],
+    [
+      320,
+      850
+    ]
+  ],
+  "views": [
+    "reports",
+    "database",
+    "models"
+  ],
+  "layout_comparison": [
+    {
+      "width": 1440,
+      "view": "reports",
+      "horizontalChanges": []
+    },
+    {
+      "width": 1440,
+      "view": "database",
+      "horizontalChanges": []
+    },
+    {
+      "width": 1440,
+      "view": "models",
+      "horizontalChanges": []
+    },
+    {
+      "width": 1024,
+      "view": "reports",
+      "horizontalChanges": []
+    },
+    {
+      "width": 1024,
+      "view": "database",
+      "horizontalChanges": []
+    },
+    {
+      "width": 1024,
+      "view": "models",
+      "horizontalChanges": []
+    },
+    {
+      "width": 768,
+      "view": "reports",
+      "horizontalChanges": []
+    },
+    {
+      "width": 768,
+      "view": "database",
+      "horizontalChanges": []
+    },
+    {
+      "width": 768,
+      "view": "models",
+      "horizontalChanges": []
+    },
+    {
+      "width": 393,
+      "view": "reports",
+      "horizontalChanges": []
+    },
+    {
+      "width": 393,
+      "view": "database",
+      "horizontalChanges": []
+    },
+    {
+      "width": 393,
+      "view": "models",
+      "horizontalChanges": []
+    },
+    {
+      "width": 320,
+      "view": "reports",
+      "horizontalChanges": []
+    },
+    {
+      "width": 320,
+      "view": "database",
+      "horizontalChanges": []
+    },
+    {
+      "width": 320,
+      "view": "models",
+      "horizontalChanges": []
+    }
+  ],
+  "browser_errors": [],
+  "interaction": {
+    "hover": {
+      "before": "rgb(30, 50, 100)",
+      "after": "rgb(26, 63, 136)"
+    },
+    "keyboardFocus": {
+      "visible": true,
+      "outline": "2px"
+    },
+    "fonts": [
+      {
+        "family": "PuHui",
+        "status": "loaded"
+      },
+      {
+        "family": "douyinNum",
+        "status": "loaded"
+      }
+    ],
+    "textContrast": [
+      {
+        "selector": ".workbench-heading p",
+        "foreground": "rgb(98, 106, 115)",
+        "background": "rgb(242, 245, 247)",
+        "ratio": 5.01
+      },
+      {
+        "selector": ".field label",
+        "foreground": "rgb(75, 83, 92)",
+        "background": "rgb(255, 255, 255)",
+        "ratio": 7.8
+      },
+      {
+        "selector": ".workbench-footer",
+        "foreground": "rgb(98, 106, 115)",
+        "background": "rgb(242, 245, 247)",
+        "ratio": 5.01
+      },
+      {
+        "selector": ".business-tab.active",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(30, 50, 100)",
+        "ratio": 12.39
+      },
+      {
+        "selector": ".report-submit .primary",
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(26, 63, 136)",
+        "ratio": 9.95
+      }
+    ],
+    "menuMotion": {
+      "name": "popover-enter",
+      "duration": "0.3s"
+    },
+    "reducedMotion": "none"
+  },
+  "source_references": {
+    "catalog": "https://github.com/VoltAgent/awesome-design-md",
+    "styles": [
+      "linear.app",
+      "ibm"
+    ],
+    "platform_stylesheet": "https://gest-dev7.fifedu.com/static/gest-cumt-homepage/static/css/index-Bs50xvFj.css",
+    "platform_css_http": 200,
+    "platform_full_browser_load": "timed out; no claim of full platform integration"
+  }
+}

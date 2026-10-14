@@ -1,0 +1,2576 @@
+{
+  "parameters": {
+    "industry": "工贸",
+    "region": "广东省",
+    "start": "2011-01-01",
+    "end": "2026-07-31",
+    "q": "",
+    "months": 3,
+    "scenario": "基准场景",
+    "model_id": "8d9c6d02d6844044924c89f689875b66",
+    "parameters": {},
+    "indicators": [
+      "事故总数",
+      "月度分布",
+      "事故类型分布",
+      "管理因素频次",
+      "死亡人数",
+      "直接经济损失",
+      "当前综合风险指数",
+      "预测末期风险指数",
+      "重点风险治理任务数"
+    ],
+    "threshold": 60,
+    "coverage_confirmed": false,
+    "use_llm": true
+  },
+  "statistics": {
+    "count": 74,
+    "record_count": 77,
+    "duplicate_reports": 3,
+    "conflicting_fields": 0,
+    "source_manifest_sha256": "ab09f6db15d8b1feb3c5289e514fe33835be6c63f240e2e82b13a41ee1dc094e",
+    "deduplication_rule": "省份、行业、规范化事故名称、发生日期相同的报告归为同一事故；不同事故记录完整保留。数字冲突字段暂不统计，需复核。",
+    "dated_count": 74,
+    "undated": 0,
+    "undated_excluded": 23,
+    "totals": {
+      "死亡人数": 57.0,
+      "受伤人数": 25.0,
+      "重伤人数": 15.0,
+      "轻伤人数": 0.0,
+      "失踪人数": 0.0,
+      "直接经济损失": 609.6
+    },
+    "known": {
+      "死亡人数": 72,
+      "受伤人数": 74,
+      "重伤人数": 65,
+      "轻伤人数": 65,
+      "失踪人数": 74,
+      "直接经济损失": 5,
+      "死亡事故": 55
+    },
+    "coverage": 97.3,
+    "cause_samples": 74,
+    "factor_counts": {
+      "人员": 74,
+      "设备设施": 69,
+      "工艺技术": 43,
+      "环境": 38,
+      "管理": 72
+    },
+    "distributions": {
+      "month": [
+        {
+          "name": "2024-09",
+          "value": 7
+        },
+        {
+          "name": "2025-06",
+          "value": 5
+        },
+        {
+          "name": "2025-07",
+          "value": 5
+        },
+        {
+          "name": "2025-05",
+          "value": 4
+        },
+        {
+          "name": "2025-04",
+          "value": 4
+        },
+        {
+          "name": "2025-12",
+          "value": 3
+        },
+        {
+          "name": "2025-09",
+          "value": 3
+        },
+        {
+          "name": "2025-08",
+          "value": 3
+        },
+        {
+          "name": "2024-05",
+          "value": 3
+        },
+        {
+          "name": "2025-10",
+          "value": 2
+        },
+        {
+          "name": "2024-12",
+          "value": 2
+        },
+        {
+          "name": "2024-06",
+          "value": 2
+        },
+        {
+          "name": "2024-11",
+          "value": 2
+        },
+        {
+          "name": "2024-01",
+          "value": 2
+        },
+        {
+          "name": "2024-03",
+          "value": 2
+        },
+        {
+          "name": "2026-01",
+          "value": 1
+        },
+        {
+          "name": "2026-06",
+          "value": 1
+        },
+        {
+          "name": "2026-03",
+          "value": 1
+        },
+        {
+          "name": "2021-07",
+          "value": 1
+        },
+        {
+          "name": "2023-11",
+          "value": 1
+        },
+        {
+          "name": "2019-04",
+          "value": 1
+        },
+        {
+          "name": "2025-03",
+          "value": 1
+        },
+        {
+          "name": "2024-10",
+          "value": 1
+        },
+        {
+          "name": "2024-08",
+          "value": 1
+        },
+        {
+          "name": "2023-04",
+          "value": 1
+        },
+        {
+          "name": "2024-04",
+          "value": 1
+        },
+        {
+          "name": "2022-05",
+          "value": 1
+        },
+        {
+          "name": "2024-07",
+          "value": 1
+        },
+        {
+          "name": "2023-08",
+          "value": 1
+        },
+        {
+          "name": "2024-02",
+          "value": 1
+        },
+        {
+          "name": "2020-09",
+          "value": 1
+        },
+        {
+          "name": "2020-11",
+          "value": 1
+        },
+        {
+          "name": "2023-10",
+          "value": 1
+        },
+        {
+          "name": "2022-08",
+          "value": 1
+        },
+        {
+          "name": "2023-05",
+          "value": 1
+        },
+        {
+          "name": "2023-07",
+          "value": 1
+        },
+        {
+          "name": "2026-04",
+          "value": 1
+        },
+        {
+          "name": "2021-05",
+          "value": 1
+        },
+        {
+          "name": "2023-09",
+          "value": 1
+        },
+        {
+          "name": "2022-03",
+          "value": 1
+        }
+      ],
+      "quarter": [
+        {
+          "name": "2025 Q2",
+          "value": 13
+        },
+        {
+          "name": "2025 Q3",
+          "value": 11
+        },
+        {
+          "name": "2024 Q3",
+          "value": 9
+        },
+        {
+          "name": "2024 Q2",
+          "value": 6
+        },
+        {
+          "name": "2025 Q4",
+          "value": 5
+        },
+        {
+          "name": "2024 Q4",
+          "value": 5
+        },
+        {
+          "name": "2024 Q1",
+          "value": 5
+        },
+        {
+          "name": "2023 Q3",
+          "value": 3
+        },
+        {
+          "name": "2026 Q1",
+          "value": 2
+        },
+        {
+          "name": "2026 Q2",
+          "value": 2
+        },
+        {
+          "name": "2023 Q4",
+          "value": 2
+        },
+        {
+          "name": "2023 Q2",
+          "value": 2
+        },
+        {
+          "name": "2021 Q3",
+          "value": 1
+        },
+        {
+          "name": "2019 Q2",
+          "value": 1
+        },
+        {
+          "name": "2025 Q1",
+          "value": 1
+        },
+        {
+          "name": "2022 Q2",
+          "value": 1
+        },
+        {
+          "name": "2020 Q3",
+          "value": 1
+        },
+        {
+          "name": "2020 Q4",
+          "value": 1
+        },
+        {
+          "name": "2022 Q3",
+          "value": 1
+        },
+        {
+          "name": "2021 Q2",
+          "value": 1
+        },
+        {
+          "name": "2022 Q1",
+          "value": 1
+        }
+      ],
+      "province": [
+        {
+          "name": "广东省",
+          "value": 74
+        }
+      ],
+      "city": [
+        {
+          "name": "东莞市",
+          "value": 68
+        },
+        {
+          "name": "茂名市",
+          "value": 2
+        },
+        {
+          "name": "佛山市",
+          "value": 1
+        },
+        {
+          "name": "汕头市",
+          "value": 1
+        },
+        {
+          "name": "阳春市",
+          "value": 1
+        },
+        {
+          "name": "江门市",
+          "value": 1
+        }
+      ],
+      "type": [
+        {
+          "name": "高处坠落",
+          "value": 24
+        },
+        {
+          "name": "机械伤害",
+          "value": 13
+        },
+        {
+          "name": "触电",
+          "value": 12
+        },
+        {
+          "name": "物体打击",
+          "value": 11
+        },
+        {
+          "name": "起重伤害",
+          "value": 8
+        },
+        {
+          "name": "车辆伤害",
+          "value": 6
+        }
+      ],
+      "level": [
+        {
+          "name": "一般",
+          "value": 74
+        }
+      ],
+      "place": [
+        {
+          "name": "建筑施工现场脚手架及临边作业面",
+          "value": 14
+        },
+        {
+          "name": "电气设备、配电线路或临时用电作业点",
+          "value": 12
+        },
+        {
+          "name": "施工现场构件安装或材料作业区",
+          "value": 9
+        },
+        {
+          "name": "机械设备检维修、清理或排故作业点",
+          "value": 8
+        },
+        {
+          "name": "起重吊装作业区",
+          "value": 7
+        },
+        {
+          "name": "厂区、园区装卸及车辆作业区",
+          "value": 6
+        },
+        {
+          "name": "建筑物屋面或楼顶高处作业面",
+          "value": 6
+        },
+        {
+          "name": "生产车间机械设备作业区",
+          "value": 5
+        },
+        {
+          "name": "建筑施工或设备检维修高处作业面",
+          "value": 4
+        },
+        {
+          "name": "生产、装卸或物料堆放作业区",
+          "value": 2
+        },
+        {
+          "name": "船舶制造或维修吊装作业区",
+          "value": 1
+        }
+      ],
+      "stage": [
+        {
+          "name": "高处作业面",
+          "value": 24
+        },
+        {
+          "name": "吊装、搬运或材料堆放区域",
+          "value": 19
+        },
+        {
+          "name": "机械设备作业区域",
+          "value": 13
+        },
+        {
+          "name": "电气设备或线路作业区域",
+          "value": 12
+        },
+        {
+          "name": "厂区、园区或作业道路",
+          "value": 6
+        }
+      ],
+      "activity": [
+        {
+          "name": "吊装、搬运或装卸作业",
+          "value": 19
+        },
+        {
+          "name": "脚手架或临边高处作业",
+          "value": 14
+        },
+        {
+          "name": "电气安装、检修或带电作业",
+          "value": 12
+        },
+        {
+          "name": "临边、登高或高处施工",
+          "value": 10
+        },
+        {
+          "name": "设备检修、维修或清理作业",
+          "value": 7
+        },
+        {
+          "name": "车辆运输、倒车或装卸作业",
+          "value": 6
+        },
+        {
+          "name": "机械设备操作作业",
+          "value": 6
+        }
+      ],
+      "direct": [
+        {
+          "name": "有直接原因记录",
+          "value": 74
+        }
+      ],
+      "indirect": [
+        {
+          "name": "有间接原因记录",
+          "value": 74
+        }
+      ],
+      "factor": [
+        {
+          "name": "人员",
+          "value": 74
+        },
+        {
+          "name": "管理",
+          "value": 72
+        },
+        {
+          "name": "设备设施",
+          "value": 69
+        },
+        {
+          "name": "工艺技术",
+          "value": 43
+        },
+        {
+          "name": "环境",
+          "value": 38
+        }
+      ]
+    },
+    "monthly": {
+      "2019-04": 1,
+      "2020-09": 1,
+      "2020-11": 1,
+      "2021-05": 1,
+      "2021-07": 1,
+      "2022-03": 1,
+      "2022-05": 1,
+      "2022-08": 1,
+      "2023-04": 1,
+      "2023-05": 1,
+      "2023-07": 1,
+      "2023-08": 1,
+      "2023-09": 1,
+      "2023-10": 1,
+      "2023-11": 1,
+      "2024-01": 2,
+      "2024-02": 1,
+      "2024-03": 2,
+      "2024-04": 1,
+      "2024-05": 3,
+      "2024-06": 2,
+      "2024-07": 1,
+      "2024-08": 1,
+      "2024-09": 7,
+      "2024-10": 1,
+      "2024-11": 2,
+      "2024-12": 2,
+      "2025-03": 1,
+      "2025-04": 4,
+      "2025-05": 4,
+      "2025-06": 5,
+      "2025-07": 5,
+      "2025-08": 3,
+      "2025-09": 3,
+      "2025-10": 2,
+      "2025-12": 3,
+      "2026-01": 1,
+      "2026-03": 1,
+      "2026-04": 1,
+      "2026-06": 1
+    },
+    "network": {
+      "nodes": [
+        {
+          "id": "人员",
+          "count": 74,
+          "importance": 222
+        },
+        {
+          "id": "设备设施",
+          "count": 69,
+          "importance": 211
+        },
+        {
+          "id": "工艺技术",
+          "count": 43,
+          "importance": 149
+        },
+        {
+          "id": "环境",
+          "count": 38,
+          "importance": 135
+        },
+        {
+          "id": "管理",
+          "count": 72,
+          "importance": 219
+        }
+      ],
+      "links": [
+        {
+          "source": "人员",
+          "target": "管理",
+          "count": 72,
+          "support": 97.3,
+          "confidence": 97.3,
+          "lift": 1.0
+        },
+        {
+          "source": "人员",
+          "target": "设备设施",
+          "count": 69,
+          "support": 93.24,
+          "confidence": 93.24,
+          "lift": 1.0
+        },
+        {
+          "source": "管理",
+          "target": "设备设施",
+          "count": 67,
+          "support": 90.54,
+          "confidence": 93.06,
+          "lift": 0.998
+        },
+        {
+          "source": "人员",
+          "target": "工艺技术",
+          "count": 43,
+          "support": 58.11,
+          "confidence": 58.11,
+          "lift": 1.0
+        },
+        {
+          "source": "工艺技术",
+          "target": "管理",
+          "count": 42,
+          "support": 56.76,
+          "confidence": 97.67,
+          "lift": 1.0039
+        },
+        {
+          "source": "工艺技术",
+          "target": "设备设施",
+          "count": 40,
+          "support": 54.05,
+          "confidence": 93.02,
+          "lift": 0.9976
+        },
+        {
+          "source": "人员",
+          "target": "环境",
+          "count": 38,
+          "support": 51.35,
+          "confidence": 51.35,
+          "lift": 1.0
+        },
+        {
+          "source": "环境",
+          "target": "管理",
+          "count": 38,
+          "support": 51.35,
+          "confidence": 100.0,
+          "lift": 1.0278
+        },
+        {
+          "source": "环境",
+          "target": "设备设施",
+          "count": 35,
+          "support": 47.3,
+          "confidence": 92.11,
+          "lift": 0.9878
+        },
+        {
+          "source": "工艺技术",
+          "target": "环境",
+          "count": 24,
+          "support": 32.43,
+          "confidence": 55.81,
+          "lift": 1.0869
+        }
+      ]
+    },
+    "combinations": 10,
+    "sources": [
+      {
+        "id": "86c1bf6f2ba64f64b6c340b7fc77d053",
+        "编号": "M0038",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_49525.html"
+      },
+      {
+        "id": "7361a47a056341139049ecb68f58b78f",
+        "编号": "M0040",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_45360.html"
+      },
+      {
+        "id": "c3a053a5d3e34864be5873f090e2c8bb",
+        "编号": "M0041",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4578161.html"
+      },
+      {
+        "id": "377bb74eaaa747d3a71ffc5c55b02986",
+        "编号": "M0043",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4573568.html"
+      },
+      {
+        "id": "e60de654257d4d7c95fe8c281efbcca4",
+        "编号": "M0044",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4562567.html"
+      },
+      {
+        "id": "4d505a54138d486989e9ee8dde1c2e47",
+        "编号": "M0045",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4562565.html"
+      },
+      {
+        "id": "92fd931d08d842079afe57ab2c82929c",
+        "编号": "M0047",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4540986.html"
+      },
+      {
+        "id": "fc8ff1ba5fc546c9acb5f78128dc693e",
+        "编号": "M0048",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4533023.html"
+      },
+      {
+        "id": "ec543742ad4548c7b6b61704728885f0",
+        "编号": "M0049",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4532168.html"
+      },
+      {
+        "id": "e1c32f6fe7c642c0b773d48c6b0a63f4",
+        "编号": "M0050",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4528196.html"
+      },
+      {
+        "id": "f4a64be472ca44c08b012c54b11f208a",
+        "编号": "M0051",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4528061.html"
+      },
+      {
+        "id": "8ba8aea57eff4dad94e55ac28975d82a",
+        "编号": "M0057",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4526425.html"
+      },
+      {
+        "id": "eaf69cf0d6374e1e812f2189279fdf36",
+        "编号": "M0059",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4522441.html"
+      },
+      {
+        "id": "63503db069504e42a81da9c1a086dc2b",
+        "编号": "M0060",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4522439.html"
+      },
+      {
+        "id": "ddeeee94e09740b39b6ff7967b03e588",
+        "编号": "M0061",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4517413.html"
+      },
+      {
+        "id": "3ee216b08bc54678aac4e532b358b481",
+        "编号": "M0064",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4515159.html"
+      },
+      {
+        "id": "78236deaebfa40b0833e33dee55cb3f1",
+        "编号": "M0068",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4497280.html"
+      },
+      {
+        "id": "9bd0a8a4d3b84485ba2ffdb3b5ca6111",
+        "编号": "M0069",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4490138.html"
+      },
+      {
+        "id": "0d837c07036a4048bf0c8ac4fcea2938",
+        "编号": "M0070",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4489591.html"
+      },
+      {
+        "id": "507fc11a7f9f48dfa2cc25b0e5259c51",
+        "编号": "M0071",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4474626.html"
+      },
+      {
+        "id": "9468971abd3c4232a7e1173567c93157",
+        "编号": "M0072",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4474624.html"
+      },
+      {
+        "id": "9aaeae020b904c2289cb29ecb1f457c0",
+        "编号": "M0073",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4472673.html"
+      },
+      {
+        "id": "32db59d1e10a4336b4520f3dc8bd2e1c",
+        "编号": "M0074",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4472667.html"
+      },
+      {
+        "id": "5b2adb7d67dd4d66a38a160fca0ad966",
+        "编号": "M0075",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4464329.html"
+      },
+      {
+        "id": "1b129974d5244e428d3af6173c2c45b3",
+        "编号": "M0076",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4461075.html"
+      },
+      {
+        "id": "01bd845ca0ad41d1a18769c9e14bc062",
+        "编号": "M0077",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4459169.html"
+      },
+      {
+        "id": "750d1d20b4fb43c7977e92d737a4a1be",
+        "编号": "M0078",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_44923.html"
+      },
+      {
+        "id": "14bea98cf6be4d67a7fa687aa3e6c5be",
+        "编号": "M0079",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4453303.html"
+      },
+      {
+        "id": "63183e472b1243efbc4bdddc0fc1050c",
+        "编号": "M0080",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4452304.html"
+      },
+      {
+        "id": "342588eb23884a798d8370cb67735eb6",
+        "编号": "M0081",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4452106.html"
+      },
+      {
+        "id": "da07921f589646d3a7e327bb7a0c11b9",
+        "编号": "M0082",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4447817.html"
+      },
+      {
+        "id": "1327f89b0d424aa7b90b51feb036bfbf",
+        "编号": "M0083",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4444466.html"
+      },
+      {
+        "id": "1e5d0c5adb764533a29afe1c96fedd88",
+        "编号": "M0085",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4433018.html"
+      },
+      {
+        "id": "756001196ce245ac9a0481fdaebeb537",
+        "编号": "M0086",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4425327.html"
+      },
+      {
+        "id": "00c46d88668d49d0b9ba8150a345a761",
+        "编号": "M0087",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4425325.html"
+      },
+      {
+        "id": "468f06f76a51421e9d5ca3898b03c4a5",
+        "编号": "M0089",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4415338.html"
+      },
+      {
+        "id": "3b556eef4b124285830a5985c61e2823",
+        "编号": "M0090",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4397980.html"
+      },
+      {
+        "id": "7d04831a21da4735b29fefc4aa824d78",
+        "编号": "M0092",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4384497.html"
+      },
+      {
+        "id": "758a469e2edd4f4ea35f783c067d4b24",
+        "编号": "M0093",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4377872.html"
+      },
+      {
+        "id": "9423184651cb4b58a1d48009bbc94149",
+        "编号": "M0095",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4371422.html"
+      },
+      {
+        "id": "4b19c131130849ad9f8d4864fd6371b2",
+        "编号": "M0096",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4361097.html"
+      },
+      {
+        "id": "a89c6be6c72649688f52cacc8c15d6c2",
+        "编号": "M0097",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4360449.html"
+      },
+      {
+        "id": "463a6f374c44493ba54b1b782b8d7864",
+        "编号": "M0098",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4360446.html"
+      },
+      {
+        "id": "36d6fc55e433454a8b1d4627bcdeb698",
+        "编号": "M0099",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4353391.html"
+      },
+      {
+        "id": "5634e394cee3420fb7dddd57dfd1143b",
+        "编号": "M0100",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4353246.html"
+      },
+      {
+        "id": "10e789ed89e5483eab9051052965ba77",
+        "编号": "M0103",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4352133.html"
+      },
+      {
+        "id": "4df85f4c22714e11b5e45f046f064430",
+        "编号": "M0106",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4352126.html"
+      },
+      {
+        "id": "4a429ddb8e74478c92116d85fe124818",
+        "编号": "M0107",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4345340.html"
+      },
+      {
+        "id": "ec5c8a81c0c04f279e182c6f3df43236",
+        "编号": "M0109",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4333268.html"
+      },
+      {
+        "id": "4e16cda7ade94d5eae36ddd1d88b3d7a",
+        "编号": "M0113",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4330914.html"
+      },
+      {
+        "id": "be3c523992da402ca7454520ed49bfc9",
+        "编号": "M0115",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4324275.html"
+      },
+      {
+        "id": "c8abeed2b6fa4335a1704fe49fe5cc86",
+        "编号": "M0117",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4313697.html"
+      },
+      {
+        "id": "ee7c9c81172340488899215a37d86477",
+        "编号": "M0118",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4312963.html"
+      },
+      {
+        "id": "623db82df8ae4e7bb4aceb58ab79e651",
+        "编号": "M0120",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4299445.html"
+      },
+      {
+        "id": "ed4bf414903d411ba520dfbb29a352cf",
+        "编号": "M0121",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4298536.html"
+      },
+      {
+        "id": "6fa11ca06308428a9febbfcfe1728d7e",
+        "编号": "M0126",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4263137.html"
+      },
+      {
+        "id": "e49ada26941f47b3aa7fa43a4a9f230e",
+        "编号": "M0128",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4250645.html"
+      },
+      {
+        "id": "aab7f9eebf76488b83bed1bad5281b1c",
+        "编号": "M0129",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4247674.html"
+      },
+      {
+        "id": "b7035627497949d38dc232b8605522e1",
+        "编号": "M0132",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4230638.html"
+      },
+      {
+        "id": "0aca5e32556a41eda7972dc9f159b29f",
+        "编号": "M0135",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4217951.html"
+      },
+      {
+        "id": "d2c1a9523e774b318e9d6ce260534ecc",
+        "编号": "M0136",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4212850.html"
+      },
+      {
+        "id": "12c36586860a4c578070384abbbcc262",
+        "编号": "M0137",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4207929.html"
+      },
+      {
+        "id": "96fbe5e9bca84970847f0a1b551a1ca3",
+        "编号": "M0140",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4202039.html"
+      },
+      {
+        "id": "88bbfd64e2d2458e838118dc6d892b7e",
+        "编号": "M0141",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4199667.html"
+      },
+      {
+        "id": "ef7c9fc92d8743fba508d7ce1c3c0b8e",
+        "编号": "M0145",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4181078.html"
+      },
+      {
+        "id": "9c0bd7b7349f4357bde58813d58356ac",
+        "编号": "M0039",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_45522.html"
+      },
+      {
+        "id": "9fd5913c14c0466e96c14248e66fda74",
+        "编号": "M0055",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4526431.html"
+      },
+      {
+        "id": "816035fb5ee44f0bbf9e91b5ad9b047d",
+        "编号": "M0056",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4526429.html"
+      },
+      {
+        "id": "3401f4ee25d94059bba4e37bace1fc01",
+        "编号": "M0063",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4515163.html"
+      },
+      {
+        "id": "1a66cf0c211440beaf767490c0dc8215",
+        "编号": "M0065",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4505427.html"
+      },
+      {
+        "id": "686beea91dc34139b2ec0ff48eb68781",
+        "编号": "M0066",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4500913.html"
+      },
+      {
+        "id": "cba6f7625ae84a96ac84e5cc72df2b60",
+        "编号": "M0088",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4419873.html"
+      },
+      {
+        "id": "53e2c3c83259407491a14f4a5096db93",
+        "编号": "M0111",
+        "报告源": "http://dgsafety.dg.gov.cn/ztzl/aqsczdlyxxgkzl/scaqsgdcbg/content/post_4331606.html"
+      },
+      {
+        "id": "bb26e7e0f63f4fe3a864ef03646211ff",
+        "编号": "M0160",
+        "报告源": "https://www.pjq.gov.cn/jmpjqyjj/attachment/0/351/351183/3359674.pdf"
+      }
+    ],
+    "source_count": 74,
+    "scope": {
+      "industry": "工贸",
+      "region": "广东省",
+      "start": "2011-01-01",
+      "end": "2026-07-31"
+    },
+    "data_note": "统计对象为已导入事故调查报告样本；未确认采集完整性，不能解释为区域事故全量。"
+  },
+  "foundation": {
+    "企业数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "家",
+      "method": "信用代码/企业名称去重，取最新场所记录",
+      "status": "unavailable",
+      "reason": "企业数据为空"
+    },
+    "从业人员数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "人",
+      "method": "有效字段求和",
+      "status": "unavailable",
+      "reason": "无有效从业人数数据"
+    },
+    "重点企业数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "家",
+      "method": "重大危险源企业，按企业键去重",
+      "status": "unavailable",
+      "reason": "企业数据为空"
+    },
+    "平均气温": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "℃",
+      "method": "气象记录算术均值，非空间加权",
+      "status": "unavailable",
+      "reason": "无有效气温数据"
+    },
+    "降水量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "mm",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需要指定同站点、非重叠统计时段后方可累计"
+    },
+    "高温天数": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "站日",
+      "method": "最高温度≥35℃，同站同日去重",
+      "status": "unavailable",
+      "reason": "气候环境数据为空"
+    },
+    "极端天气次数": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "条",
+      "method": "存在极端天气标记的观测记录",
+      "status": "unavailable",
+      "reason": "气候环境数据为空"
+    },
+    "企业安全投入总额": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "万元",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需统一安全投入单位并指定不重叠统计期"
+    },
+    "行业产量/产值": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需要统一产量单位、统计期和企业口径"
+    },
+    "工业增加值": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "当前标准提供第二产业增加值及规上工业增加值增速，不能直接替代工业增加值"
+    },
+    "固定资产投资": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "标准提供固定资产投资增速，未提供投资额"
+    },
+    "_counts": {
+      "enterprises": 0,
+      "climate": 0,
+      "economy": 0
+    }
+  },
+  "indicators": {
+    "企业数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "家",
+      "method": "信用代码/企业名称去重，取最新场所记录",
+      "status": "unavailable",
+      "reason": "企业数据为空"
+    },
+    "从业人员数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "人",
+      "method": "有效字段求和",
+      "status": "unavailable",
+      "reason": "无有效从业人数数据"
+    },
+    "重点企业数量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "家",
+      "method": "重大危险源企业，按企业键去重",
+      "status": "unavailable",
+      "reason": "企业数据为空"
+    },
+    "行业产量/产值": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需要统一产量单位、统计期和企业口径"
+    },
+    "工业增加值": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "当前标准提供第二产业增加值及规上工业增加值增速，不能直接替代工业增加值"
+    },
+    "固定资产投资": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "标准提供固定资产投资增速，未提供投资额"
+    },
+    "平均气温": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "℃",
+      "method": "气象记录算术均值，非空间加权",
+      "status": "unavailable",
+      "reason": "无有效气温数据"
+    },
+    "降水量": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "mm",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需要指定同站点、非重叠统计时段后方可累计"
+    },
+    "高温天数": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "站日",
+      "method": "最高温度≥35℃，同站同日去重",
+      "status": "unavailable",
+      "reason": "气候环境数据为空"
+    },
+    "极端天气次数": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "条",
+      "method": "存在极端天气标记的观测记录",
+      "status": "unavailable",
+      "reason": "气候环境数据为空"
+    },
+    "企业安全投入总额": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "万元",
+      "method": "",
+      "status": "unavailable",
+      "reason": "需统一安全投入单位并指定不重叠统计期"
+    },
+    "事故总数": {
+      "value": 74,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按省份、行业、事故名称和发生日期合并同事故报告",
+      "status": "available",
+      "reason": ""
+    },
+    "月度分布": {
+      "value": [
+        {
+          "name": "2024-09",
+          "value": 7
+        },
+        {
+          "name": "2025-06",
+          "value": 5
+        },
+        {
+          "name": "2025-07",
+          "value": 5
+        },
+        {
+          "name": "2025-05",
+          "value": 4
+        },
+        {
+          "name": "2025-04",
+          "value": 4
+        },
+        {
+          "name": "2025-12",
+          "value": 3
+        },
+        {
+          "name": "2025-09",
+          "value": 3
+        },
+        {
+          "name": "2025-08",
+          "value": 3
+        },
+        {
+          "name": "2024-05",
+          "value": 3
+        },
+        {
+          "name": "2025-10",
+          "value": 2
+        },
+        {
+          "name": "2024-12",
+          "value": 2
+        },
+        {
+          "name": "2024-06",
+          "value": 2
+        },
+        {
+          "name": "2024-11",
+          "value": 2
+        },
+        {
+          "name": "2024-01",
+          "value": 2
+        },
+        {
+          "name": "2024-03",
+          "value": 2
+        },
+        {
+          "name": "2026-01",
+          "value": 1
+        },
+        {
+          "name": "2026-06",
+          "value": 1
+        },
+        {
+          "name": "2026-03",
+          "value": 1
+        },
+        {
+          "name": "2021-07",
+          "value": 1
+        },
+        {
+          "name": "2023-11",
+          "value": 1
+        },
+        {
+          "name": "2019-04",
+          "value": 1
+        },
+        {
+          "name": "2025-03",
+          "value": 1
+        },
+        {
+          "name": "2024-10",
+          "value": 1
+        },
+        {
+          "name": "2024-08",
+          "value": 1
+        },
+        {
+          "name": "2023-04",
+          "value": 1
+        },
+        {
+          "name": "2024-04",
+          "value": 1
+        },
+        {
+          "name": "2022-05",
+          "value": 1
+        },
+        {
+          "name": "2024-07",
+          "value": 1
+        },
+        {
+          "name": "2023-08",
+          "value": 1
+        },
+        {
+          "name": "2024-02",
+          "value": 1
+        },
+        {
+          "name": "2020-09",
+          "value": 1
+        },
+        {
+          "name": "2020-11",
+          "value": 1
+        },
+        {
+          "name": "2023-10",
+          "value": 1
+        },
+        {
+          "name": "2022-08",
+          "value": 1
+        },
+        {
+          "name": "2023-05",
+          "value": 1
+        },
+        {
+          "name": "2023-07",
+          "value": 1
+        },
+        {
+          "name": "2026-04",
+          "value": 1
+        },
+        {
+          "name": "2021-05",
+          "value": 1
+        },
+        {
+          "name": "2023-09",
+          "value": 1
+        },
+        {
+          "name": "2022-03",
+          "value": 1
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "季度分布": {
+      "value": [
+        {
+          "name": "2025 Q2",
+          "value": 13
+        },
+        {
+          "name": "2025 Q3",
+          "value": 11
+        },
+        {
+          "name": "2024 Q3",
+          "value": 9
+        },
+        {
+          "name": "2024 Q2",
+          "value": 6
+        },
+        {
+          "name": "2025 Q4",
+          "value": 5
+        },
+        {
+          "name": "2024 Q4",
+          "value": 5
+        },
+        {
+          "name": "2024 Q1",
+          "value": 5
+        },
+        {
+          "name": "2023 Q3",
+          "value": 3
+        },
+        {
+          "name": "2026 Q1",
+          "value": 2
+        },
+        {
+          "name": "2026 Q2",
+          "value": 2
+        },
+        {
+          "name": "2023 Q4",
+          "value": 2
+        },
+        {
+          "name": "2023 Q2",
+          "value": 2
+        },
+        {
+          "name": "2021 Q3",
+          "value": 1
+        },
+        {
+          "name": "2019 Q2",
+          "value": 1
+        },
+        {
+          "name": "2025 Q1",
+          "value": 1
+        },
+        {
+          "name": "2022 Q2",
+          "value": 1
+        },
+        {
+          "name": "2020 Q3",
+          "value": 1
+        },
+        {
+          "name": "2020 Q4",
+          "value": 1
+        },
+        {
+          "name": "2022 Q3",
+          "value": 1
+        },
+        {
+          "name": "2021 Q2",
+          "value": 1
+        },
+        {
+          "name": "2022 Q1",
+          "value": 1
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "省级分布": {
+      "value": [
+        {
+          "name": "广东省",
+          "value": 74
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "地市分布": {
+      "value": [
+        {
+          "name": "东莞市",
+          "value": 68
+        },
+        {
+          "name": "茂名市",
+          "value": 2
+        },
+        {
+          "name": "佛山市",
+          "value": 1
+        },
+        {
+          "name": "汕头市",
+          "value": 1
+        },
+        {
+          "name": "阳春市",
+          "value": 1
+        },
+        {
+          "name": "江门市",
+          "value": 1
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "事故类型分布": {
+      "value": [
+        {
+          "name": "高处坠落",
+          "value": 24
+        },
+        {
+          "name": "机械伤害",
+          "value": 13
+        },
+        {
+          "name": "触电",
+          "value": 12
+        },
+        {
+          "name": "物体打击",
+          "value": 11
+        },
+        {
+          "name": "起重伤害",
+          "value": 8
+        },
+        {
+          "name": "车辆伤害",
+          "value": 6
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "事故等级分布": {
+      "value": [
+        {
+          "name": "一般",
+          "value": 74
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "作业场所分布": {
+      "value": [
+        {
+          "name": "建筑施工现场脚手架及临边作业面",
+          "value": 14
+        },
+        {
+          "name": "电气设备、配电线路或临时用电作业点",
+          "value": 12
+        },
+        {
+          "name": "施工现场构件安装或材料作业区",
+          "value": 9
+        },
+        {
+          "name": "机械设备检维修、清理或排故作业点",
+          "value": 8
+        },
+        {
+          "name": "起重吊装作业区",
+          "value": 7
+        },
+        {
+          "name": "厂区、园区装卸及车辆作业区",
+          "value": 6
+        },
+        {
+          "name": "建筑物屋面或楼顶高处作业面",
+          "value": 6
+        },
+        {
+          "name": "生产车间机械设备作业区",
+          "value": 5
+        },
+        {
+          "name": "建筑施工或设备检维修高处作业面",
+          "value": 4
+        },
+        {
+          "name": "生产、装卸或物料堆放作业区",
+          "value": 2
+        },
+        {
+          "name": "船舶制造或维修吊装作业区",
+          "value": 1
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "作业环节分布": {
+      "value": [
+        {
+          "name": "高处作业面",
+          "value": 24
+        },
+        {
+          "name": "吊装、搬运或材料堆放区域",
+          "value": 19
+        },
+        {
+          "name": "机械设备作业区域",
+          "value": 13
+        },
+        {
+          "name": "电气设备或线路作业区域",
+          "value": 12
+        },
+        {
+          "name": "厂区、园区或作业道路",
+          "value": 6
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "作业活动分布": {
+      "value": [
+        {
+          "name": "吊装、搬运或装卸作业",
+          "value": 19
+        },
+        {
+          "name": "脚手架或临边高处作业",
+          "value": 14
+        },
+        {
+          "name": "电气安装、检修或带电作业",
+          "value": 12
+        },
+        {
+          "name": "临边、登高或高处施工",
+          "value": 10
+        },
+        {
+          "name": "设备检修、维修或清理作业",
+          "value": 7
+        },
+        {
+          "name": "车辆运输、倒车或装卸作业",
+          "value": 6
+        },
+        {
+          "name": "机械设备操作作业",
+          "value": 6
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "按原字段分组统计",
+      "status": "available",
+      "reason": ""
+    },
+    "事故月份集中度": {
+      "value": 0.0394,
+      "sample_count": 74,
+      "unit": "HHI",
+      "method": "按年月频率平方和",
+      "status": "available",
+      "reason": ""
+    },
+    "直接原因频次": {
+      "value": [
+        {
+          "name": "有直接原因记录",
+          "value": 74
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "有对应原因描述的记录数，未作自由文本同义归并",
+      "status": "available",
+      "reason": ""
+    },
+    "间接原因频次": {
+      "value": [
+        {
+          "name": "有间接原因记录",
+          "value": 74
+        }
+      ],
+      "sample_count": 74,
+      "unit": "起",
+      "method": "有对应原因描述的记录数，未作自由文本同义归并",
+      "status": "available",
+      "reason": ""
+    },
+    "人员因素频次": {
+      "value": 74,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "原原因字段有效标记计数，空值不代表无该因素",
+      "status": "available",
+      "reason": ""
+    },
+    "设备设施因素频次": {
+      "value": 69,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "原原因字段有效标记计数，空值不代表无该因素",
+      "status": "available",
+      "reason": ""
+    },
+    "工艺技术因素频次": {
+      "value": 43,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "原原因字段有效标记计数，空值不代表无该因素",
+      "status": "available",
+      "reason": ""
+    },
+    "环境因素频次": {
+      "value": 38,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "原原因字段有效标记计数，空值不代表无该因素",
+      "status": "available",
+      "reason": ""
+    },
+    "管理因素频次": {
+      "value": 72,
+      "sample_count": 74,
+      "unit": "起",
+      "method": "原原因字段有效标记计数，空值不代表无该因素",
+      "status": "available",
+      "reason": ""
+    },
+    "因素关联强度": {
+      "value": [
+        {
+          "source": "人员",
+          "target": "管理",
+          "count": 72,
+          "support": 97.3,
+          "confidence": 97.3,
+          "lift": 1.0
+        },
+        {
+          "source": "人员",
+          "target": "设备设施",
+          "count": 69,
+          "support": 93.24,
+          "confidence": 93.24,
+          "lift": 1.0
+        },
+        {
+          "source": "管理",
+          "target": "设备设施",
+          "count": 67,
+          "support": 90.54,
+          "confidence": 93.06,
+          "lift": 0.998
+        },
+        {
+          "source": "人员",
+          "target": "工艺技术",
+          "count": 43,
+          "support": 58.11,
+          "confidence": 58.11,
+          "lift": 1.0
+        },
+        {
+          "source": "工艺技术",
+          "target": "管理",
+          "count": 42,
+          "support": 56.76,
+          "confidence": 97.67,
+          "lift": 1.0039
+        },
+        {
+          "source": "工艺技术",
+          "target": "设备设施",
+          "count": 40,
+          "support": 54.05,
+          "confidence": 93.02,
+          "lift": 0.9976
+        },
+        {
+          "source": "人员",
+          "target": "环境",
+          "count": 38,
+          "support": 51.35,
+          "confidence": 51.35,
+          "lift": 1.0
+        },
+        {
+          "source": "环境",
+          "target": "管理",
+          "count": 38,
+          "support": 51.35,
+          "confidence": 100.0,
+          "lift": 1.0278
+        },
+        {
+          "source": "环境",
+          "target": "设备设施",
+          "count": 35,
+          "support": 47.3,
+          "confidence": 92.11,
+          "lift": 0.9878
+        },
+        {
+          "source": "工艺技术",
+          "target": "环境",
+          "count": 24,
+          "support": 32.43,
+          "confidence": 55.81,
+          "lift": 1.0869
+        }
+      ],
+      "sample_count": 74,
+      "unit": "提升度",
+      "method": "共同标记频率/边缘标记频率乘积；共现不表示因果",
+      "status": "available",
+      "reason": ""
+    },
+    "关键因素重要度": {
+      "value": [
+        {
+          "id": "人员",
+          "count": 74,
+          "importance": 222
+        },
+        {
+          "id": "设备设施",
+          "count": 69,
+          "importance": 211
+        },
+        {
+          "id": "工艺技术",
+          "count": 43,
+          "importance": 149
+        },
+        {
+          "id": "环境",
+          "count": 38,
+          "importance": 135
+        },
+        {
+          "id": "管理",
+          "count": 72,
+          "importance": 219
+        }
+      ],
+      "sample_count": 74,
+      "unit": "加权度",
+      "method": "网络边共现频次之和",
+      "status": "available",
+      "reason": ""
+    },
+    "典型致因组合数量": {
+      "value": 10,
+      "sample_count": 74,
+      "unit": "组",
+      "method": "原因标记集合去重",
+      "status": "available",
+      "reason": ""
+    },
+    "风险因素样本覆盖率": {
+      "value": 100.0,
+      "sample_count": 74,
+      "unit": "%",
+      "method": "有直接或间接原因描述的样本/全部样本",
+      "status": "available",
+      "reason": ""
+    },
+    "死亡人数": {
+      "value": 57.0,
+      "sample_count": 72,
+      "unit": "人",
+      "method": "有效已知字段求和，缺失排除",
+      "status": "available",
+      "reason": ""
+    },
+    "重伤人数": {
+      "value": 15.0,
+      "sample_count": 65,
+      "unit": "人",
+      "method": "有效已知字段求和，缺失排除",
+      "status": "available",
+      "reason": ""
+    },
+    "轻伤人数": {
+      "value": 0.0,
+      "sample_count": 65,
+      "unit": "人",
+      "method": "有效已知字段求和，缺失排除",
+      "status": "available",
+      "reason": ""
+    },
+    "失踪人数": {
+      "value": 0.0,
+      "sample_count": 74,
+      "unit": "人",
+      "method": "有效已知字段求和，缺失排除",
+      "status": "available",
+      "reason": ""
+    },
+    "伤亡总人数": {
+      "value": null,
+      "sample_count": 74,
+      "unit": "人",
+      "method": "死亡人数+受伤人数，重/轻伤不重复加总",
+      "status": "unavailable",
+      "reason": "死亡或受伤人数存在缺失"
+    },
+    "直接经济损失": {
+      "value": 609.6,
+      "sample_count": 5,
+      "unit": "万元",
+      "method": "有效已知字段求和，缺失排除",
+      "status": "available",
+      "reason": ""
+    },
+    "平均每起死亡人数": {
+      "value": 0.792,
+      "sample_count": 72,
+      "unit": "人/起",
+      "method": "有效字段总和/该字段有效样本数",
+      "status": "available",
+      "reason": ""
+    },
+    "平均每起受伤人数": {
+      "value": 0.338,
+      "sample_count": 74,
+      "unit": "人/起",
+      "method": "有效字段总和/该字段有效样本数",
+      "status": "available",
+      "reason": ""
+    },
+    "平均每起直接经济损失": {
+      "value": 121.92,
+      "sample_count": 5,
+      "unit": "万元/起",
+      "method": "有效字段总和/该字段有效样本数",
+      "status": "available",
+      "reason": ""
+    },
+    "较大及以上事故占比": {
+      "value": 0.0,
+      "sample_count": 74,
+      "unit": "%",
+      "method": "较大、重大、特别重大事故/等级已知事故",
+      "status": "available",
+      "reason": ""
+    },
+    "死亡事故占比": {
+      "value": 76.39,
+      "sample_count": 72,
+      "unit": "%",
+      "method": "死亡人数>0事故/死亡字段有效事故",
+      "status": "available",
+      "reason": ""
+    },
+    "当前综合风险指数": {
+      "value": 80.0,
+      "sample_count": 74,
+      "unit": "指数",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "预测末期风险指数": {
+      "value": 71.1762,
+      "sample_count": 74,
+      "unit": "指数",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "预测期峰值风险": {
+      "value": 80.0,
+      "sample_count": 74,
+      "unit": "指数",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "预测期最低风险": {
+      "value": 71.1762,
+      "sample_count": 74,
+      "unit": "指数",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "峰值出现时间": {
+      "value": 0,
+      "sample_count": 74,
+      "unit": "月",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "综合风险变化率": {
+      "value": -11.03,
+      "sample_count": 74,
+      "unit": "%",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "高风险持续时间": {
+      "value": 3,
+      "sample_count": 74,
+      "unit": "月",
+      "method": "SD数值积分；阈值为用户假设，不代表事故概率",
+      "status": "available",
+      "reason": ""
+    },
+    "主要上升风险类别": {
+      "value": "无上升类别",
+      "sample_count": 74,
+      "unit": "",
+      "method": "SD期末与初值比较",
+      "status": "available",
+      "reason": ""
+    },
+    "生产压力场景变化率": {
+      "value": 8.26,
+      "sample_count": 74,
+      "unit": "%",
+      "method": "该情景期末相对基准情景期末变化",
+      "status": "available",
+      "reason": ""
+    },
+    "安全投入场景变化率": {
+      "value": 2.35,
+      "sample_count": 74,
+      "unit": "%",
+      "method": "该情景期末相对基准情景期末变化",
+      "status": "available",
+      "reason": ""
+    },
+    "预测事故起数": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "当前字段或样本不能支持该指标"
+    },
+    "重点风险治理任务数": {
+      "value": 5,
+      "sample_count": 74,
+      "unit": "项",
+      "method": "每类已识别原因对应一项治理建议",
+      "status": "available",
+      "reason": ""
+    },
+    "重点区域覆盖数": {
+      "value": 1,
+      "sample_count": 74,
+      "unit": "省级区域",
+      "method": "报告涉及的已知省级区域数",
+      "status": "available",
+      "reason": ""
+    },
+    "隐患整改率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "重大隐患闭环率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "检查覆盖率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "培训完成率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "设备检维修完成率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "特殊作业合规率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "应急演练完成率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "监测异常处置率": {
+      "value": null,
+      "sample_count": 0,
+      "unit": "",
+      "method": "",
+      "status": "unavailable",
+      "reason": "原字段未同时提供已完成数量与应完成数量，不能推算完成率"
+    },
+    "建议证据覆盖率": {
+      "value": 100,
+      "sample_count": 5,
+      "unit": "%",
+      "method": "每条生成建议链接到对应原因字段证据；不表示专家一致性",
+      "status": "available",
+      "reason": ""
+    }
+  },
+  "simulation": {
+    "id": "e64b651f035b47c7b41d1e838414b4fc",
+    "model_id": "8d9c6d02d6844044924c89f689875b66",
+    "model_version": 1,
+    "model_name": "工贸风险演化初始模型",
+    "model_status": "待业务标定",
+    "method": "RK4，时间步长0.05月",
+    "scenarios": [
+      {
+        "name": "基准场景",
+        "parameters": {
+          "production_pressure": 1.0,
+          "safety_effort": 1.0,
+          "response_time": 6.0,
+          "prevention_rate": 0.05,
+          "personnel_initial": 100.0,
+          "equipment_initial": 93.24324324324324,
+          "process_initial": 58.108108108108105,
+          "environment_initial": 51.351351351351354,
+          "management_initial": 97.29729729729729
+        },
+        "points": [
+          {
+            "month": 0,
+            "personnel_risk": 100.0,
+            "equipment_risk": 93.243243,
+            "process_risk": 58.108108,
+            "environment_risk": 51.351351,
+            "management_risk": 97.297297,
+            "risk_index": 80.0
+          },
+          {
+            "month": 1.0,
+            "personnel_risk": 95.504577,
+            "equipment_risk": 89.051565,
+            "process_risk": 55.495903,
+            "environment_risk": 49.042891,
+            "management_risk": 92.923372,
+            "risk_index": 76.403661
+          },
+          {
+            "month": 2.0,
+            "personnel_risk": 91.884869,
+            "equipment_risk": 85.676432,
+            "process_risk": 53.392559,
+            "environment_risk": 47.184122,
+            "management_risk": 89.401495,
+            "risk_index": 73.507896
+          },
+          {
+            "month": 3.0,
+            "personnel_risk": 88.970287,
+            "equipment_risk": 82.958781,
+            "process_risk": 51.698951,
+            "environment_risk": 45.687445,
+            "management_risk": 86.565685,
+            "risk_index": 71.17623
+          }
+        ]
+      },
+      {
+        "name": "生产压力增大",
+        "parameters": {
+          "production_pressure": 1.2,
+          "safety_effort": 1.0,
+          "response_time": 6.0,
+          "prevention_rate": 0.05,
+          "personnel_initial": 100.0,
+          "equipment_initial": 93.24324324324324,
+          "process_initial": 58.108108108108105,
+          "environment_initial": 51.351351351351354,
+          "management_initial": 97.29729729729729
+        },
+        "points": [
+          {
+            "month": 0,
+            "personnel_risk": 100.0,
+            "equipment_risk": 93.243243,
+            "process_risk": 58.108108,
+            "environment_risk": 51.351351,
+            "management_risk": 97.297297,
+            "risk_index": 80.0
+          },
+          {
+            "month": 1.0,
+            "personnel_risk": 98.501526,
+            "equipment_risk": 91.846017,
+            "process_risk": 57.237373,
+            "environment_risk": 50.581864,
+            "management_risk": 95.839322,
+            "risk_index": 78.80122
+          },
+          {
+            "month": 2.0,
+            "personnel_risk": 97.294956,
+            "equipment_risk": 90.720973,
+            "process_risk": 56.536258,
+            "environment_risk": 49.962275,
+            "management_risk": 94.665363,
+            "risk_index": 77.835965
+          },
+          {
+            "month": 3.0,
+            "personnel_risk": 96.323429,
+            "equipment_risk": 89.815089,
+            "process_risk": 55.971722,
+            "environment_risk": 49.463382,
+            "management_risk": 93.720093,
+            "risk_index": 77.058743
+          }
+        ]
+      },
+      {
+        "name": "安全投入减少",
+        "parameters": {
+          "production_pressure": 1.0,
+          "safety_effort": 0.8,
+          "response_time": 6.0,
+          "prevention_rate": 0.05,
+          "personnel_initial": 100.0,
+          "equipment_initial": 93.24324324324324,
+          "process_initial": 58.108108108108105,
+          "environment_initial": 51.351351351351354,
+          "management_initial": 97.29729729729729
+        },
+        "points": [
+          {
+            "month": 0,
+            "personnel_risk": 100.0,
+            "equipment_risk": 93.243243,
+            "process_risk": 58.108108,
+            "environment_risk": 51.351351,
+            "management_risk": 97.297297,
+            "risk_index": 80.0
+          },
+          {
+            "month": 1.0,
+            "personnel_risk": 96.386272,
+            "equipment_risk": 89.873686,
+            "process_risk": 56.008239,
+            "environment_risk": 49.495653,
+            "management_risk": 93.781237,
+            "risk_index": 77.109017
+          },
+          {
+            "month": 2.0,
+            "personnel_risk": 93.44726,
+            "equipment_risk": 87.133256,
+            "process_risk": 54.300435,
+            "environment_risk": 47.986431,
+            "management_risk": 90.921658,
+            "risk_index": 74.757808
+          },
+          {
+            "month": 3.0,
+            "personnel_risk": 91.056989,
+            "equipment_risk": 84.90449,
+            "process_risk": 52.911494,
+            "environment_risk": 46.758994,
+            "management_risk": 88.595989,
+            "risk_index": 72.845591
+          }
+        ]
+      }
+    ],
+    "calibration": [
+      {
+        "parameter": "personnel_initial",
+        "field": "人员原因",
+        "value": 100.0,
+        "numerator": 74,
+        "denominator": 74,
+        "method": "原调查报告原因标记比例；空标记不代表排除该原因"
+      },
+      {
+        "parameter": "equipment_initial",
+        "field": "设施设备原因",
+        "value": 93.24324324324324,
+        "numerator": 69,
+        "denominator": 74,
+        "method": "原调查报告原因标记比例；空标记不代表排除该原因"
+      },
+      {
+        "parameter": "process_initial",
+        "field": "工艺技术原因",
+        "value": 58.108108108108105,
+        "numerator": 43,
+        "denominator": 74,
+        "method": "原调查报告原因标记比例；空标记不代表排除该原因"
+      },
+      {
+        "parameter": "environment_initial",
+        "field": "环境原因",
+        "value": 51.351351351351354,
+        "numerator": 38,
+        "denominator": 74,
+        "method": "原调查报告原因标记比例；空标记不代表排除该原因"
+      },
+      {
+        "parameter": "management_initial",
+        "field": "管理原因",
+        "value": 97.29729729729729,
+        "numerator": 72,
+        "denominator": 74,
+        "method": "原调查报告原因标记比例；空标记不代表排除该原因"
+      }
+    ],
+    "stock_names": [
+      "personnel_risk",
+      "equipment_risk",
+      "process_risk",
+      "environment_risk",
+      "management_risk"
+    ],
+    "threshold": 60,
+    "warning": "初始模型未经专家机理校验，动态速率参数为假设；仿真用于情景比较，不作为已验收预测结果。",
+    "created_at": "2026-10-12T18:50:10.669437+00:00",
+    "scope": {
+      "industry": "工贸",
+      "region": "广东省",
+      "start": "2011-01-01",
+      "end": "2026-07-31"
+    }
+  },
+  "simulation_error": "",
+  "forecast": {
+    "status": "unavailable",
+    "reason": "未确认分析期事故采集完整性，不能将无记录月份视为零事故。",
+    "points": [],
+    "validation": null
+  },
+  "llm": {
+    "provider": "DeepSeek",
+    "model": "deepseek-chat",
+    "status": "generated",
+    "qualitative_only": true,
+    "excluded_sentences": 7,
+    "grounding": "LLM仅生成定性正文；定量段落由服务器按指标名、实际结果、单位、有效样本和口径直接填入",
+    "attempts": 1
+  },
+  "body_hanzi": 6539,
+  "model_snapshot": {
+    "id": "8d9c6d02d6844044924c89f689875b66",
+    "name": "工贸风险演化初始模型",
+    "industry": "工贸",
+    "version": 1,
+    "status": "待业务标定",
+    "description": "基于事故原因标记比例的五维风险存量模型，响应时间及治理速率为显式假设；指数不是事故概率。",
+    "format": "risk-sd/1.0",
+    "parameters": {
+      "production_pressure": {
+        "value": 1.0,
+        "min": 0.1,
+        "max": 3.0,
+        "label": "生产压力",
+        "unit": "倍",
+        "source": "情景假设"
+      },
+      "safety_effort": {
+        "value": 1.0,
+        "min": 0.0,
+        "max": 3.0,
+        "label": "安全投入强度",
+        "unit": "倍",
+        "source": "情景假设"
+      },
+      "response_time": {
+        "value": 6.0,
+        "min": 1.0,
+        "max": 36.0,
+        "label": "风险调整时间",
+        "unit": "月",
+        "source": "待专家标定假设"
+      },
+      "prevention_rate": {
+        "value": 0.05,
+        "min": 0.0,
+        "max": 1.0,
+        "label": "治理速率",
+        "unit": "1/月",
+        "source": "待专家标定假设"
+      },
+      "personnel_initial": {
+        "value": 0.0,
+        "min": 0.0,
+        "max": 100.0,
+        "label": "人员初始指数",
+        "unit": "指数",
+        "source": "运行时事故原因标记比例标定",
+        "calibrate": "人员原因"
+      },
+      "equipment_initial": {
+        "value": 0.0,
+        "min": 0.0,
+        "max": 100.0,
+        "label": "设备设施初始指数",
+        "unit": "指数",
+        "source": "运行时事故原因标记比例标定",
+        "calibrate": "设施设备原因"
+      },
+      "process_initial": {
+        "value": 0.0,
+        "min": 0.0,
+        "max": 100.0,
+        "label": "工艺技术初始指数",
+        "unit": "指数",
+        "source": "运行时事故原因标记比例标定",
+        "calibrate": "工艺技术原因"
+      },
+      "environment_initial": {
+        "value": 0.0,
+        "min": 0.0,
+        "max": 100.0,
+        "label": "环境初始指数",
+        "unit": "指数",
+        "source": "运行时事故原因标记比例标定",
+        "calibrate": "环境原因"
+      },
+      "management_initial": {
+        "value": 0.0,
+        "min": 0.0,
+        "max": 100.0,
+        "label": "管理初始指数",
+        "unit": "指数",
+        "source": "运行时事故原因标记比例标定",
+        "calibrate": "管理原因"
+      }
+    },
+    "variables": [
+      {
+        "name": "personnel_risk",
+        "label": "人员风险",
+        "type": "stock",
+        "unit": "指数",
+        "initial": "personnel_initial",
+        "min": 0,
+        "max": 100,
+        "rate": "(personnel_initial*production_pressure-personnel_risk)/response_time-prevention_rate*safety_effort*personnel_risk"
+      },
+      {
+        "name": "equipment_risk",
+        "label": "设备设施风险",
+        "type": "stock",
+        "unit": "指数",
+        "initial": "equipment_initial",
+        "min": 0,
+        "max": 100,
+        "rate": "(equipment_initial*production_pressure-equipment_risk)/response_time-prevention_rate*safety_effort*equipment_risk"
+      },
+      {
+        "name": "process_risk",
+        "label": "工艺技术风险",
+        "type": "stock",
+        "unit": "指数",
+        "initial": "process_initial",
+        "min": 0,
+        "max": 100,
+        "rate": "(process_initial*production_pressure-process_risk)/response_time-prevention_rate*safety_effort*process_risk"
+      },
+      {
+        "name": "environment_risk",
+        "label": "环境风险",
+        "type": "stock",
+        "unit": "指数",
+        "initial": "environment_initial",
+        "min": 0,
+        "max": 100,
+        "rate": "(environment_initial*production_pressure-environment_risk)/response_time-prevention_rate*safety_effort*environment_risk"
+      },
+      {
+        "name": "management_risk",
+        "label": "管理风险",
+        "type": "stock",
+        "unit": "指数",
+        "initial": "management_initial",
+        "min": 0,
+        "max": 100,
+        "rate": "(management_initial*production_pressure-management_risk)/response_time-prevention_rate*safety_effort*management_risk"
+      },
+      {
+        "name": "risk_index",
+        "label": "综合风险指数",
+        "type": "aux",
+        "unit": "指数",
+        "formula": "(personnel_risk+equipment_risk+process_risk+environment_risk+management_risk)/5"
+      }
+    ],
+    "created_at": "2026-10-12T17:47:48.679550+00:00"
+  }
+}

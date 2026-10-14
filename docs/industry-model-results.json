@@ -1,0 +1,702 @@
+{
+  "created_at": "2026-10-13T10:15:03.336149+00:00",
+  "data_source": "已有事故数据库的SQLite一致性副本；未改动用户数据",
+  "validation": "真实样本计算与功能验证，不构成预测准确性或业务验收",
+  "results": [
+    {
+      "industry": "煤矿",
+      "model_id": "61f0e939267e48daa200a49ed5c41a42",
+      "version": 2,
+      "records": 8,
+      "distinct_incidents": 7,
+      "matched": 7,
+      "channels": [
+        {
+          "key": "gas",
+          "label": "瓦斯与煤尘",
+          "count": 4,
+          "share": 57.142857,
+          "weight": 0.4166666666666667,
+          "weight_numerator": 5,
+          "weight_denominator": 12,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "煤与瓦斯突出",
+              "excerpt": "煤与瓦斯突出",
+              "record_id": "ee38e74855ad47498e4708e2f62938c4",
+              "number": "M0013"
+            },
+            {
+              "field": "事故类型",
+              "term": "瓦斯",
+              "excerpt": "瓦斯爆炸",
+              "record_id": "64aafa67dce2470cb290402ae125d9cb",
+              "number": "M0004"
+            },
+            {
+              "field": "事故类型",
+              "term": "瓦斯",
+              "excerpt": "瓦斯爆炸",
+              "record_id": "96b5cdd460bf4d6b8b4ca46c67e2b1a2",
+              "number": "M0009"
+            }
+          ]
+        },
+        {
+          "key": "roof",
+          "label": "顶板与地压",
+          "count": 1,
+          "share": 14.285714,
+          "weight": 0.16666666666666666,
+          "weight_numerator": 2,
+          "weight_denominator": 12,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "坍塌",
+              "excerpt": "坍塌",
+              "record_id": "225242dc5f9345c4b24c34b87f4bd1da",
+              "number": "M0006"
+            }
+          ]
+        },
+        {
+          "key": "water",
+          "label": "水害",
+          "count": 2,
+          "share": 28.571429,
+          "weight": 0.25,
+          "weight_numerator": 3,
+          "weight_denominator": 12,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "透水",
+              "excerpt": "透水（水害）",
+              "record_id": "6f9fa8f31c1e4d409ef7678796cfc385",
+              "number": "M0003"
+            },
+            {
+              "field": "事故类型",
+              "term": "透水",
+              "excerpt": "透水（水害）",
+              "record_id": "d5c124fe95214f6d8b71834d4ef3c835",
+              "number": "M0005"
+            }
+          ]
+        },
+        {
+          "key": "transport",
+          "label": "机电与运输",
+          "count": 1,
+          "share": 14.285714,
+          "weight": 0.16666666666666666,
+          "weight_numerator": 2,
+          "weight_denominator": 12,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "直接原因",
+              "term": "绞车",
+              "excerpt": "到爆炸浓度； 10 号煤层提升下山采掘作业点提升绞车信号装置失爆，操作时产生电火花、引爆瓦斯；在爆炸冲击波高温作用下， + 1220",
+              "record_id": "9ea0b236d2ca4acf968b1e29d7399486",
+              "number": "M0012"
+            }
+          ]
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 48.571429,
+      "final": {
+        "基准场景": 40.133485,
+        "生产压力增大": 45.739854,
+        "安全投入减少": 41.655664
+      },
+      "source_manifest_sha256": "317975c16a7840b2e5afa22e8ddced7bd39b2e243e46a4c0eeac200fc71fec35",
+      "count_forecast": "unavailable"
+    },
+    {
+      "industry": "金属非金属矿山",
+      "model_id": "c2701189e7794985aa7be887391a048e",
+      "version": 2,
+      "records": 11,
+      "distinct_incidents": 11,
+      "matched": 11,
+      "channels": [
+        {
+          "key": "slope",
+          "label": "边坡与冒顶",
+          "count": 11,
+          "share": 100.0,
+          "weight": 0.75,
+          "weight_numerator": 12,
+          "weight_denominator": 16,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "坍塌",
+              "excerpt": "坍塌",
+              "record_id": "d0082919b6444b9ea9a57cb453242bf6",
+              "number": "M0001"
+            },
+            {
+              "field": "事故类型",
+              "term": "坍塌",
+              "excerpt": "坍塌",
+              "record_id": "1633516017cd42c28d45c55310a40b7d",
+              "number": "M0029"
+            },
+            {
+              "field": "事故类型",
+              "term": "坍塌",
+              "excerpt": "坍塌",
+              "record_id": "551f9e3250ee40bfb363bab88262737e",
+              "number": "M0042"
+            }
+          ]
+        },
+        {
+          "key": "stope",
+          "label": "采空区与地压",
+          "count": 1,
+          "share": 9.090909,
+          "weight": 0.125,
+          "weight_numerator": 2,
+          "weight_denominator": 16,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "直接原因",
+              "term": "采空区",
+              "excerpt": "直接原因：铜坑矿已封闭的采空区冒落带范围内的 445m 水平二盘区北面的Ⅴ号盲空区顶板岩体发生大面积冒落、 坍",
+              "record_id": "d0082919b6444b9ea9a57cb453242bf6",
+              "number": "M0001"
+            }
+          ]
+        },
+        {
+          "key": "blast",
+          "label": "爆破与运输",
+          "count": 0,
+          "share": 0.0,
+          "weight": 0.0625,
+          "weight_numerator": 1,
+          "weight_denominator": 16,
+          "trend": null,
+          "evidence": []
+        },
+        {
+          "key": "water",
+          "label": "水害与尾矿",
+          "count": 0,
+          "share": 0.0,
+          "weight": 0.0625,
+          "weight_numerator": 1,
+          "weight_denominator": 16,
+          "trend": null,
+          "evidence": []
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 80.909091,
+      "final": {
+        "基准场景": 66.72106,
+        "生产压力增大": 69.662787,
+        "安全投入减少": 69.27931
+      },
+      "source_manifest_sha256": "f71bd6f9dcf7c0d9dd2d22b182c87ef3b93b659173bcbd2c146c8009c5b3c3eb",
+      "count_forecast": "unavailable"
+    },
+    {
+      "industry": "石油天然气开采",
+      "model_id": "e4420bfa547b4b1fa58f6cc722583a3a",
+      "version": 2,
+      "records": 2,
+      "distinct_incidents": 2,
+      "matched": 2,
+      "channels": [
+        {
+          "key": "well",
+          "label": "井控失稳",
+          "count": 0,
+          "share": 0.0,
+          "weight": 0.16666666666666666,
+          "weight_numerator": 1,
+          "weight_denominator": 6,
+          "trend": null,
+          "evidence": []
+        },
+        {
+          "key": "leak",
+          "label": "泄漏与火爆",
+          "count": 1,
+          "share": 50.0,
+          "weight": 0.3333333333333333,
+          "weight_numerator": 2,
+          "weight_denominator": 6,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "火灾",
+              "excerpt": "火灾",
+              "record_id": "b9a8300f8da24362a5c22239c1dbcb76",
+              "number": "M0165"
+            }
+          ]
+        },
+        {
+          "key": "toxic",
+          "label": "中毒与窒息",
+          "count": 1,
+          "share": 50.0,
+          "weight": 0.3333333333333333,
+          "weight_numerator": 2,
+          "weight_denominator": 6,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "中毒",
+              "excerpt": "中毒和窒息",
+              "record_id": "764b287f44294721bb12c6ea0c1bc8e4",
+              "number": "M0164"
+            }
+          ]
+        },
+        {
+          "key": "operation",
+          "label": "井场作业",
+          "count": 0,
+          "share": 0.0,
+          "weight": 0.16666666666666666,
+          "weight_numerator": 1,
+          "weight_denominator": 6,
+          "trend": null,
+          "evidence": []
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 46.666667,
+      "final": {
+        "基准场景": 38.567416,
+        "生产压力增大": 43.949251,
+        "安全投入减少": 40.028568
+      },
+      "source_manifest_sha256": "76c5a90a1d7b09dcf6067ce5376a0cdd8c2aa41a5e5ac1702323d8a53344d015",
+      "count_forecast": "unavailable"
+    },
+    {
+      "industry": "化工",
+      "model_id": "46c97db4a57d4b428d25aafa88ab2561",
+      "version": 2,
+      "records": 8,
+      "distinct_incidents": 8,
+      "matched": 8,
+      "channels": [
+        {
+          "key": "reaction",
+          "label": "反应与工艺失控",
+          "count": 0,
+          "share": 0.0,
+          "weight": 0.07692307692307693,
+          "weight_numerator": 1,
+          "weight_denominator": 13,
+          "trend": null,
+          "evidence": []
+        },
+        {
+          "key": "leak",
+          "label": "泄漏与火爆",
+          "count": 6,
+          "share": 75.0,
+          "weight": 0.5384615384615384,
+          "weight_numerator": 7,
+          "weight_denominator": 13,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "25dc6eb5593c4c96839efc2aaaba40a9",
+              "number": "M0007"
+            },
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "a87fbfdb3f484c3eb7d4ea4d257d3295",
+              "number": "M0031"
+            },
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "72c4877181614deb8c404b1f37a941ac",
+              "number": "M0008"
+            }
+          ]
+        },
+        {
+          "key": "toxic",
+          "label": "中毒与窒息",
+          "count": 1,
+          "share": 12.5,
+          "weight": 0.15384615384615385,
+          "weight_numerator": 2,
+          "weight_denominator": 13,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "中毒",
+              "excerpt": "中毒和窒息",
+              "record_id": "8509bc1529524888816eaec53e3fa831",
+              "number": "M0150"
+            }
+          ]
+        },
+        {
+          "key": "operation",
+          "label": "特殊与检维修作业",
+          "count": 2,
+          "share": 25.0,
+          "weight": 0.23076923076923078,
+          "weight_numerator": 3,
+          "weight_denominator": 13,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "高处坠落",
+              "excerpt": "高处坠落",
+              "record_id": "1307a0b9dba54ce49a1446d0201fd212",
+              "number": "M0152"
+            },
+            {
+              "field": "事故类型",
+              "term": "车辆伤害",
+              "excerpt": "车辆伤害",
+              "record_id": "da9b870befa84b94ac3c3a187510d1d6",
+              "number": "M0149"
+            }
+          ]
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 58.461538,
+      "final": {
+        "基准场景": 48.264995,
+        "生产压力增大": 55.037212,
+        "安全投入减少": 50.104045
+      },
+      "source_manifest_sha256": "edb3387b198df5cb52e76e9d304992e98e8c141701cef469548bcca6bceb3aa3",
+      "count_forecast": "unavailable"
+    },
+    {
+      "industry": "烟花爆竹",
+      "model_id": "16b540a15a0142abbf5646dbb66303f6",
+      "version": 2,
+      "records": 4,
+      "distinct_incidents": 4,
+      "matched": 4,
+      "channels": [
+        {
+          "key": "mix",
+          "label": "药物混配",
+          "count": 1,
+          "share": 25.0,
+          "weight": 0.18181818181818182,
+          "weight_numerator": 2,
+          "weight_denominator": 11,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "直接原因",
+              "term": "受潮",
+              "excerpt": "直接原因：原材料受潮与金属材料混合后发生化学反应产生热量聚热达到燃点导致98#工房内的药物自燃引发爆",
+              "record_id": "726cdc3c0c58481abd6b77db5bbf214d",
+              "number": "M0162"
+            }
+          ]
+        },
+        {
+          "key": "press",
+          "label": "装药与成型",
+          "count": 1,
+          "share": 25.0,
+          "weight": 0.18181818181818182,
+          "weight_numerator": 2,
+          "weight_denominator": 11,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "直接原因",
+              "term": "装药",
+              "excerpt": "取第12桶药送往B609存药洞过程中，在彩菊车间装药一线B610空筒中转工房外廊道上，因未释放人体静电，导致静电聚集并放电引燃其右手",
+              "record_id": "caa3feb744d2401693b6f0369cd10b5d",
+              "number": "M0148"
+            }
+          ]
+        },
+        {
+          "key": "storage",
+          "label": "储存与运输",
+          "count": 1,
+          "share": 25.0,
+          "weight": 0.18181818181818182,
+          "weight_numerator": 2,
+          "weight_denominator": 11,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "直接原因",
+              "term": "搬运",
+              "excerpt": "接原因：熊国生、潘雪梅非法组织爆竹生产，潘雪梅在搬运爆竹半成品经过堂屋时操作不当，引起燃烧爆炸。",
+              "record_id": "43e600274dce4859a915d416c46c0adc",
+              "number": "M0161"
+            }
+          ]
+        },
+        {
+          "key": "spread",
+          "label": "燃爆与殉爆",
+          "count": 4,
+          "share": 100.0,
+          "weight": 0.45454545454545453,
+          "weight_numerator": 5,
+          "weight_denominator": 11,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "caa3feb744d2401693b6f0369cd10b5d",
+              "number": "M0148"
+            },
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "726cdc3c0c58481abd6b77db5bbf214d",
+              "number": "M0162"
+            },
+            {
+              "field": "事故类型",
+              "term": "爆炸",
+              "excerpt": "其他爆炸",
+              "record_id": "38a253a75fca417ba55222efe1ce8454",
+              "number": "M0163"
+            }
+          ]
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 67.272727,
+      "final": {
+        "基准场景": 55.509432,
+        "生产压力增大": 59.395094,
+        "安全投入减少": 57.630785
+      },
+      "source_manifest_sha256": "00406c8b2a8bbec43ec9e45a1021f941a75d9a59d0baa529941a6c2fa199fd8e",
+      "count_forecast": "unavailable"
+    },
+    {
+      "industry": "工贸",
+      "model_id": "8d9c6d02d6844044924c89f689875b66",
+      "version": 2,
+      "records": 107,
+      "distinct_incidents": 104,
+      "matched": 104,
+      "channels": [
+        {
+          "key": "mechanical",
+          "label": "机械与起重",
+          "count": 40,
+          "share": 38.461538,
+          "weight": 0.3416666666666667,
+          "weight_numerator": 41,
+          "weight_denominator": 120,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "车辆伤害",
+              "excerpt": "车辆伤害",
+              "record_id": "14c1c0735773463ebb26e99f4e064001",
+              "number": "M0016"
+            },
+            {
+              "field": "事故类型",
+              "term": "起重伤害",
+              "excerpt": "起重伤害",
+              "record_id": "0c6340a870544a9d94fbe461cb152e51",
+              "number": "M0017"
+            },
+            {
+              "field": "事故类型",
+              "term": "机械伤害",
+              "excerpt": "机械伤害",
+              "record_id": "631a8e70d76b49b080763bf26417fd42",
+              "number": "M0018"
+            }
+          ]
+        },
+        {
+          "key": "height",
+          "label": "高处与物体打击",
+          "count": 55,
+          "share": 52.884615,
+          "weight": 0.4666666666666667,
+          "weight_numerator": 56,
+          "weight_denominator": 120,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "高处坠落",
+              "excerpt": "高处坠落",
+              "record_id": "6a08f017084a492db56e8ebafbbc791a",
+              "number": "M0014"
+            },
+            {
+              "field": "事故类型",
+              "term": "物体打击",
+              "excerpt": "物体打击",
+              "record_id": "b7d1fd9fc99c4fe4ad4a48abf3058b9d",
+              "number": "M0015"
+            },
+            {
+              "field": "事故类型",
+              "term": "高处坠落",
+              "excerpt": "高处坠落",
+              "record_id": "55731f2cf4f94273b989fc2f5c58e4c9",
+              "number": "M0022"
+            }
+          ]
+        },
+        {
+          "key": "electric",
+          "label": "电气与触电",
+          "count": 13,
+          "share": 12.5,
+          "weight": 0.11666666666666667,
+          "weight_numerator": 14,
+          "weight_denominator": 120,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "触电",
+              "excerpt": "触电",
+              "record_id": "ea57d4d3ba6a49b79730166f128e3868",
+              "number": "M0027"
+            },
+            {
+              "field": "事故类型",
+              "term": "触电",
+              "excerpt": "触电",
+              "record_id": "e1c32f6fe7c642c0b773d48c6b0a63f4",
+              "number": "M0050"
+            },
+            {
+              "field": "事故类型",
+              "term": "触电",
+              "excerpt": "触电",
+              "record_id": "8ba8aea57eff4dad94e55ac28975d82a",
+              "number": "M0057"
+            }
+          ]
+        },
+        {
+          "key": "space",
+          "label": "有限空间与窒息",
+          "count": 4,
+          "share": 3.846154,
+          "weight": 0.041666666666666664,
+          "weight_numerator": 5,
+          "weight_denominator": 120,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "淹溺",
+              "excerpt": "淹溺",
+              "record_id": "eaac0283f448484286cdcece6f125706",
+              "number": "M0023"
+            },
+            {
+              "field": "直接原因",
+              "term": "窒息",
+              "excerpt": "放情况， 雨布拉开过程中货物散 落，将其掩埋最终窒息死亡。 2. 徐明对风险预判不足，在货物装卸前使用雨布铺至平板板 面，降低了货物",
+              "record_id": "78236deaebfa40b0833e33dee55cb3f1",
+              "number": "M0068"
+            },
+            {
+              "field": "事故名称",
+              "term": "有限空间",
+              "excerpt": "查报告：保山隆阳某某集团有限公司“6·27”一般有限空间作业死亡1人事故",
+              "record_id": "68524b42abe3453d8e7e947c23ab5948",
+              "number": "M0147"
+            }
+          ]
+        },
+        {
+          "key": "thermal",
+          "label": "粉尘与高温",
+          "count": 3,
+          "share": 2.884615,
+          "weight": 0.03333333333333333,
+          "weight_numerator": 4,
+          "weight_denominator": 120,
+          "trend": null,
+          "evidence": [
+            {
+              "field": "事故类型",
+              "term": "灼烫",
+              "excerpt": "灼烫",
+              "record_id": "7baa7823728a4c4cbaae16abb1f9dc1f",
+              "number": "M0021"
+            },
+            {
+              "field": "事故类型",
+              "term": "灼烫",
+              "excerpt": "灼烫",
+              "record_id": "c85de5a597784314b76187791b5c2799",
+              "number": "M0032"
+            },
+            {
+              "field": "直接原因",
+              "term": "高温",
+              "excerpt": "空间作业现场监护、管理不到位，致使王某某在缺氧、高温有限空间超规定时间作业窒息死亡。",
+              "record_id": "68524b42abe3453d8e7e947c23ab5948",
+              "number": "M0147"
+            }
+          ]
+        }
+      ],
+      "trend_status": "insufficient",
+      "trend_reason": "相邻两个半年均需至少5起事故、覆盖至少3个月；当前不足，未推算时间趋势。",
+      "initial": 51.243589,
+      "final": {
+        "基准场景": 42.33272,
+        "生产压力增大": 48.252751,
+        "安全投入减少": 43.940133
+      },
+      "source_manifest_sha256": "07583a7ef4321116b2e3f2f9a0d18557776ebb26cf6134de26a2b767d00d6e3e",
+      "count_forecast": "unavailable"
+    }
+  ]
+}

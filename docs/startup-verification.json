@@ -1,0 +1,24 @@
+{
+  "verified_at": "2026-10-13T11:45:23.518711+00:00",
+  "service_url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "ok",
+    "version": "1.0.0",
+    "model_engine_version": "industry-report/2.0",
+    "simulation_samples_per_month": 20
+  },
+  "simulation_id": "c39070c173dc4e23be23b9f90bfd5023",
+  "source_sha256": "07583a7ef4321116b2e3f2f9a0d18557776ebb26cf6134de26a2b767d00d6e3e",
+  "months": 3,
+  "points_per_scenario": [
+    61,
+    61,
+    61
+  ],
+  "browser_checks": "layout-refinement-results.json",
+  "launcher_check": "Both current CMD entries and native PowerShell shortcut target passed non-mutating -Check.",
+  "reported_batch_error": "Not reproduced with current files; original failing file was not identified.",
+  "shortcut": "打开风险研判智能体.lnk",
+  "shortcut_uses_cmd": false,
+  "restart_performed_by_agent": false
+}

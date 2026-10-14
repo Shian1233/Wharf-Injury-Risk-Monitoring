@@ -1,22 +1,77 @@
-# Wharf-Injury-Risk-Monitoring
-**A YOLOv5-based system for mechanical injury risk monitoring in wharf yard construction, integrating fuzzy logic and object detection.**
+# 安全生产风险研判与预测智能体
 
-## 📘 Project Overview
-This repository provides the code used in the paper:
-> *"Based on Fuzzy Logic and Object Identification of Wharf Yard Construction Mechanical Injury Risk Monitoring and Warning"*
+可运行的业务框架，按用户提供的技术对接 PPT、四表 Excel、七章 HTML 模板和矿大设计资料实现。广场卡片整页跳转至独立智能体工作台，顶部显示真实业务概览，左侧切换数据库管理、SD 模型库、报告生成，常驻记录、说明与设置入口。工作台不包含平台侧栏或学校标识。
 
-The system combines **YOLOv5-based object detection** and **fuzzy logic-based risk reasoning** to monitor and warn of potential mechanical injury risks during wharf construction.
+页面按用户布局图组织：居中标题下保留一句业务简介，顶部显示实际存储量与条目数、行业数、模型数、报告数，三个业务入口位于左侧。查看记录、使用说明、系统设置在三个功能页的左侧底部常驻；报告配置与右侧预览等高。SD仿真模型按行业放在预测设置中，配置底部的应用模型下拉选择连接到实际可用的文字生成模型，并与一键生成并排。数据库顶部首个标签为原始资料，与事故报告等四类数据独立切换；记录列表按可用高度自动确定每页条数，分页栏贴近底部，SD结构与参数区底部对齐，任务进度在服务端返回的实际进度之间连续变化，完成任务后才显示100%。预测设置第一行为预测周期和SD模型，第二行为仿真场景和参数入口；参数在场景下方展开，66项报告指标按六类直接在页面勾选，移动端主要内容上下排列，功能入口横向展示。工程配置状态与章节序号不进入日常业务页面。
 
-## 🧩 Main Files
-| File | Function |
-|------|-----------|
-| `data_gen.py` | Generate and convert VOC-format dataset to YOLO format. |
-| `detect.py` | Perform object detection on images/videos using YOLOv5. |
-| `export.py` | Export trained YOLOv5 model to ONNX / TorchScript / CoreML formats. |
-| `hubconf.py` | Register YOLOv5 models for PyTorch Hub. |
+模型图下始终显示只读的中文变量与计算规则，规则区高度扩大后可直接浏览更多行，右侧情景参数面板与左侧底部对齐。模型图省略“××专业因素”分组标题，各行业因素先接入汇流线，再以清晰箭头指向隐患形成速度和相对事故强度；其余关系使用带正负号的直线段表达促进和抑制。图形按画布高宽比自动切换宽、中、高三种排布，避免高窗口挤在中间或矮窗口压缩变形。仿真曲线每0.05个月保存一个实际计算点（三个月61点），默认按实际数据范围缩放，支持切换从零开始、悬停查看各情景数值及放大查看。放大窗口随桌面和移动屏幕调整尺寸，历史基准仅绘制已有时间点；显示缩放不改变模型计算结果。
 
-## 🔧 Environment Setup
-```bash
-conda create -n wharf python=3.8
-conda activate wharf
-pip install -r requirements.txt
+
+界面参考 awesome-design-md 的 Linear、IBM 页面层级与交互方式，并沿用矿大品牌色和设计 Token。更新包括浅色标题背景、本地中文与数字字体、清晰选中态、悬停及键盘反馈、弹窗和切页动效；整体布局保持原样，支持系统减少动态效果。设计依据见 [DESIGN.md](DESIGN.md)。
+
+面向师生的页面中，每个行业对应一个当前业务风险模型，不显示版本、代码或内部变量标识。用户可通过中文“调整模型”表单修改名称、参数、公式和关系，校验后保存并保留历史快照；日常情景参数仍可直接调整后运行。计算结果通过曲线与导出文件查看，事故因素依据可追溯报告编号和原文片段；相关连线支持悬停与键盘聚焦。刷新页面可恢复本页提交的报告任务，文字生成失败时明确显示草稿原因和重试入口。
+
+## 本机启动
+
+预览地址为 **http://127.0.0.1:8001/agent**。Windows 可以直接双击根目录的 **启动智能体.cmd**；首次启动会创建 Python 环境和本机配置。也可以按 [部署说明](docs/DEPLOYMENT.md) 手工启动。
+
+源码仓库不包含 `.env`、运行数据、数据库凭据或虚拟环境。本机已提供 PostgreSQL 结构化数据库和 SeaweedFS S3 对象存储安装脚本；首次执行 `scripts/local_stores.ps1 -Action install` 会生成本机专用凭据。缺少的业务数据表可以保持为空，后续从页面导入。
+
+`重启智能体.cmd` 与 `停止智能体.cmd` 只操作当前项目，检查端口8001和进程中的本项目目录。运行 `启动智能体.cmd -Check` 可检查入口语法，`powershell -File preview.ps1 -Check` 检查独立启动器。
+
+## 设置访问密码
+
+双击根目录的 **设置访问密码.cmd**，在本机终端中输入两次密码，再重启服务。密码至少12个字符，只以 PBKDF2-SHA256 哈希写入被 Git 忽略的 `.env`；明文不会显示、写入日志或提交到仓库。启用后，接口数据需要先登录，浏览器使用 HttpOnly、SameSite 会话 Cookie；同一来源连续登录失败5次会暂时限流。
+
+也可以在终端执行：
+
+```powershell
+.venv\Scripts\python.exe scripts\set_password.py
+.\重启智能体.cmd
+```
+
+新机器安装 Python 3.12+、Node.js 22+，执行 `npm install --omit=dev`；Windows使用Edge导出PDF，其他系统需安装Playwright浏览器。首次启动可建立Python环境和初始化数据；报告文字生成需在服务端 `.env` 配置密钥。详细部署步骤见 `docs/DEPLOYMENT.md`。
+
+## 当前实现与边界
+
+- 四个原始 Sheet 共 254 个业务字段保持原名与原顺序，支持 Excel/CSV 预览、校验、导入、查询、编辑、下载和删除。PDF、DOCX、HTML、图片等原件保存并记录实际大小。
+- 六行业使用统一的隐患形成—隐患治理—事故信息滞后反馈结构，并分别配置行业专业因素。事故报告用于因素参考值和初始状态，风险线索保留报告编号及原文片段。支持三种实际计算场景、1/3/6/12个月仿真、四类曲线、历史比较和中文模型编辑；事故数据不足时只输出相对风险情景推演，不预测事故起数。
+- 六类共 66 个报告候选指标，按实际有效样本计算；缺数据的指标明确标记。七章报告含真实统计、关联网络、实际 SD 曲线及证据快照，支持 HTML/PDF 下载，按排入模板的实际正文汉字数校验不少于 3000。
+- 应用模型已实际接通，当前配置的 `deepseek-flash`、`deepseek-v4-pro` 均通过真实接口连接测试。按每次报告或问答请求传递所选模型，密钥仅存服务端，SD模型独立选择。报告文字使用服务端绑定的定量证据；不合格输出重试后转为明确标记的规则草稿。工具问答可查询数据库和运行 SD 模型。
+- 本机使用 SQLite 与本地对象目录；DM8/MinIO 适配器及 DDL 已提供，尚无生产连接，未完成实际联调。当前六行业模型为事故报告驱动的情景推演模型，动态系数仍是假设；正式行业机理模型和专家标定尚待接入。
+
+原工作簿包含 **165 条事故报告记录**，按报告名称、行业、地区和日期合并重复调查报告后为 **160 个事故样本**；其余三个 Sheet 当前只有字段和说明。原件大小为 **1,060,279 字节**。未达到 20 万条、3TB、专家一致性及预测验收条件；详见 [验收说明](docs/ACCEPTANCE.md)。
+
+## 源码导航
+
+| 目录 | 内容 |
+|---|---|
+| `app/` | FastAPI 接口、DM8/SQLite、对象存储、导入、统计、SD、LLM、报告、权限与任务 |
+| `frontend/` | 页面、交互、规范 Token 和字体；无需前端打包即可运行 |
+| `config/` | 从原 Excel 和报告模板提取的字段、66 项候选指标 |
+| `models/` | 六行业事故风险模型定义 |
+| `database/dm8.sql` | DM8 数据库脚本 |
+| `integration/` | 广场卡片、应用清单、ChatFlow 接口适配、专家评价示例 |
+| `reference/` | 原 PPT、工作簿、HTML 模板及选取的设计资料 |
+| `tests/` | 后端测试与真实浏览器交互测试 |
+| `docs/` | API、算法、部署、测试结果、验收说明与样例报告 |
+| `runtime/` | 本机数据库、原件、任务中间文件、报告、日志；不打入源码包 |
+
+## 验证
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -m pytest tests/test_system.py -q --junitxml=docs/test-results.xml
+$env:QA_BASE_URL='http://127.0.0.1:8001'
+node tests/browser.cjs
+node tests/fixed-models.cjs
+node tests/inline-workbench.cjs
+node tests/layout-refinement.cjs
+node tests/adaptive-records.cjs
+node tests/design-edition.cjs
+.venv\Scripts\python.exe -m pytest tests/test_generation.py tests/test_industry_risk.py -q
+```
+
+设计副本已在8001完成原业务、设计布局和六行业SD模型专项检查。最新后端完整回归88项通过，SD工作台8项、布局/密集采样4项、报告预览与专家验证4项真实浏览器检查通过且无页面脚本错误。报告生成完成后直接在右侧预览，预览下方可保存研判结论与指标专家验证。PDF导出已实际验证；本轮没有重新调用语言模型生成新报告。细项见 `docs/TEST_RESULTS.md`、`docs/feedback-browser-results.json` 和 `docs/layout-refinement-results.json`。
+
+更多文档：[六行业反馈模型](docs/SD_FEEDBACK_MODELS.md)、[接口说明](docs/API.md)、[算法与模型](docs/ALGORITHMS.md)、[测试结果](docs/TEST_RESULTS.md)、[平台部署](docs/DEPLOYMENT.md)。

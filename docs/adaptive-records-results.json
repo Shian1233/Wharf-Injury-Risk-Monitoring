@@ -1,0 +1,23 @@
+{
+  "passed": 4,
+  "results": [
+    {
+      "name": "大屏按可用高度增加条目且分页贴底",
+      "passed": true
+    },
+    {
+      "name": "改变高度保留当前记录位置及未提交筛选输入",
+      "passed": true
+    },
+    {
+      "name": "末页和空表保留分页位置且不填造记录",
+      "passed": true
+    },
+    {
+      "name": "离开数据页后未完成查询不会重绘新页面",
+      "passed": true
+    }
+  ],
+  "browserErrors": [],
+  "base_url": "http://127.0.0.1:8001"
+}

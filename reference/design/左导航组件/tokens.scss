@@ -1,0 +1,15 @@
+/* 接入设计系统的令牌层。
+ *
+ * 按「严禁拷贝式接入」的要求，这里是 @use 指向设计规范仓库的源文件，
+ * 不复制任何一行定义 —— 源头更新，本项目随之同步。
+ *
+ * 引入全部七层：字体、色板、间距圆角、亮色语义、暗色色板、暗色语义、品牌。
+ * 暗色两层是暗黑模式的基础：切换只需在 <html> 上打 data-theme="dark"。
+ */
+@use '../../../设计规范/design-spec/design-token/css/font.scss';
+@use '../../../设计规范/design-spec/design-token/css/palette.scss';
+@use '../../../设计规范/design-spec/design-token/css/spacing.scss';
+@use '../../../设计规范/design-spec/design-token/css/semantic.scss';
+@use '../../../设计规范/design-spec/design-token/css/palette-dark.scss';
+@use '../../../设计规范/design-spec/design-token/css/semantic-dark.scss';
+@use '../../../设计规范/design-spec/design-token/css/animation.scss';

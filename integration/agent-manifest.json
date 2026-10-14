@@ -1,0 +1,11 @@
+{
+  "id": "safety-risk-analysis",
+  "name": "安全生产风险研判与预测",
+  "description": "事故数据分析、风险演化仿真与研判报告生成",
+  "category": "安全生产",
+  "entry_path": "/agent",
+  "launch_mode": "navigate",
+  "api_base_path": "/api",
+  "modules": ["database", "sd-models", "reports"],
+  "auth": {"mode": "platform-bearer-adapter", "roles": ["viewer", "editor", "admin"]}
+}

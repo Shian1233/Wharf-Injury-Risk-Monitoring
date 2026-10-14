@@ -1,0 +1,334 @@
+{
+  "date": "2026-10-13",
+  "backend_tests": 45,
+  "browser_groups": 42,
+  "report": {
+    "id": "24950f20db904b9b9832abffb689d68d",
+    "title": "广东省工贸安全生产风险研判及预测分析报告",
+    "actor": "local-admin",
+    "created_at": "2026-10-12T18:50:47.245848+00:00",
+    "status": "待业务审核",
+    "body_hanzi": 6539,
+    "count": 74,
+    "llm": {
+      "provider": "DeepSeek",
+      "model": "deepseek-chat",
+      "status": "generated",
+      "qualitative_only": true,
+      "excluded_sentences": 7,
+      "grounding": "LLM仅生成定性正文；定量段落由服务器按指标名、实际结果、单位、有效样本和口径直接填入",
+      "attempts": 1
+    },
+    "parameters": {
+      "industry": "工贸",
+      "region": "广东省",
+      "start": "2011-01-01",
+      "end": "2026-07-31",
+      "q": "",
+      "months": 3,
+      "scenario": "基准场景",
+      "model_id": "8d9c6d02d6844044924c89f689875b66",
+      "parameters": {},
+      "indicators": [
+        "事故总数",
+        "月度分布",
+        "事故类型分布",
+        "管理因素频次",
+        "死亡人数",
+        "直接经济损失",
+        "当前综合风险指数",
+        "预测末期风险指数",
+        "重点风险治理任务数"
+      ],
+      "threshold": 60,
+      "coverage_confirmed": false,
+      "use_llm": true
+    },
+    "simulation_error": "",
+    "forecast_status": "unavailable"
+  },
+  "pdf_pages": 12,
+  "pdf_size_mm": [
+    209.9,
+    297.0
+  ],
+  "toc_verified": true,
+  "actual_body_hanzi": 6539,
+  "data": {
+    "records": 165,
+    "bytes": 1060279,
+    "incidents": 160,
+    "duplicate_reports": 5,
+    "unknown_dates": 24,
+    "basic_field_coverage_percent": 80.62,
+    "source_manifest_sha256": "c8418d8a1bd512eec81559ed36a685d5fe37c6bf01bd29b3f9719f0097ce3f2c"
+  },
+  "object_verification": {
+    "objects": [
+      {
+        "id": "e93d23de8d2b4a0298060ada3d26aa02",
+        "name": "事故调查报告结构化表-字段已填写(1).xlsx",
+        "bytes": 1060279,
+        "matches": true
+      }
+    ],
+    "verified_bytes": 1060279,
+    "all_verified": true
+  },
+  "sample_hashes": {
+    ".html": "7cb65e9c0369a3fef80d324822eaf6918a60840286ca1146da132a7fdd3dceff",
+    ".pdf": "099399951c147edcb8a19f5ca7de695924e9c20ecd4d251702bce790b7f77935",
+    ".json": "308ace0fdec23401ce6e9e45ed76ad11c88ed2c00cad2ee26f5bc5135d4ed000"
+  },
+  "unverified": [
+    "DM8",
+    "MinIO",
+    "formal industry models",
+    "Docker",
+    "200k records capacity",
+    "3TB object capacity",
+    "prediction acceptance",
+    "expert consistency"
+  ],
+  "frontend": {
+    "standalone_agent_page": true,
+    "whole_page_gallery_navigation": true,
+    "platform_sidebar": false,
+    "responsive_widths": [
+      1920,
+      1440,
+      1024,
+      768,
+      767,
+      393,
+      320
+    ],
+    "browser_groups": 42,
+    "browser_errors": [],
+    "content_hashed_assets": true,
+    "startup_failure_recovery": [
+      "script-load",
+      "script-execute",
+      "api"
+    ],
+    "report_layout": "configuration_and_preview",
+    "reference_workbench_layout": true,
+    "overview_cards_match_actual_api_values": true,
+    "business_navigation": {
+      "desktop": "vertical",
+      "mobile": "horizontal",
+      "keyboard": true
+    },
+    "report_operations_below_configuration": false,
+    "model_selection": "application_model_dropdown_in_generation_footer",
+    "selected_model_preserved_in_submission": true,
+    "indicator_selection": "inline_categories_and_checkboxes",
+    "vendor_labels_visible": false,
+    "numbered_section_labels": false,
+    "historical_report_configuration_restored": true,
+    "simulation_chart": {
+      "default_axis": "actual_data_range",
+      "zero_origin_toggle": true,
+      "expanded_view": true,
+      "point_values_match_saved_simulations": true,
+      "plotted_coordinates_verified": true,
+      "historical_baseline_extrapolated": false,
+      "hover_actual_values": true,
+      "expanded_viewports": [
+        [
+          1440,
+          1100
+        ],
+        [
+          393,
+          850
+        ],
+        [
+          320,
+          850
+        ]
+      ],
+      "samples_per_month": 20,
+      "three_month_points": 61,
+      "explanation_disclosure_visible": false,
+      "high_risk_duration": "time_integral_with_linear_crossings"
+    },
+    "title_subtitle": true,
+    "permanent_rail_operations": [
+      "查看记录",
+      "使用说明",
+      "系统设置"
+    ],
+    "sd_model_selection": "one_fixed_model_per_industry_in_prediction_settings",
+    "application_model_ids": [
+      "deepseek-flash",
+      "deepseek-v4-pro"
+    ],
+    "application_model_names_visible_in_selector": true,
+    "database_page_size": "adaptive_to_available_height",
+    "sd_columns_bottom_aligned": true,
+    "icons": "consistent_outline_icons_with_subtle_containers",
+    "progress": {
+      "smooth_interpolation": true,
+      "bounded_by_actual_returned_progress": true,
+      "complete_only_after_server_completion": true,
+      "retained_across_view_changes": true,
+      "failed_job_retry_enabled": true
+    },
+    "asset_sha256": {
+      "app.js": "548d531fc4407dfc667f89528490c2551d172b79bc5ab14e5d967ebcc9091036",
+      "style.css": "bdf2f0ce36e5cf482faf687b8fcb126609edffe57ee7c20384af73e673995975",
+      "vendor/tokens.css": "ef4d44357eb898fce6b51ee19cf9b73624df9ece8e1292ef80a6fda082df9598",
+      "index.html": "87b456b87a8b1d0b8280d0f33d2f8ad345eae873a938b4f2925b401f30fd2a31"
+    },
+    "visual_refinement": {
+      "guide": "DESIGN.md",
+      "original_workbench_layout_retained": true,
+      "font_files_loaded": [
+        "PuHui",
+        "douyinNum"
+      ],
+      "sampled_text_contrast_min": 5.01,
+      "reduced_motion": true
+    },
+    "model_editor": {
+      "visible": false,
+      "raw_json_visible": false,
+      "version_selection_visible": false,
+      "maintenance_toolbar_visible": false
+    },
+    "raw_evidence_views": "business_tables_and_steps",
+    "report_resume_after_refresh": true,
+    "draft_failure_reason_and_retry": true,
+    "fixed_models": {
+      "industries": 6,
+      "scenario_parameters_editable": true,
+      "model_save_requests_during_ui_checks": 0,
+      "graph_focus_highlights_relationships": true
+    },
+    "database_raw_files_tab": "first_independent_tab",
+    "model_rules": "read_only_chinese_table_below_diagram",
+    "database_pagination": {
+      "fills_available_height": true,
+      "compact_rows": true,
+      "preserves_record_anchor_and_filter_draft": true,
+      "stale_responses_cancelled_on_navigation": true
+    }
+  },
+  "application_models": {
+    "verified_at": "2026-10-13",
+    "results": [
+      {
+        "model": "deepseek-flash",
+        "connected": true,
+        "reply": "连接成功",
+        "elapsed_seconds": 0.72
+      },
+      {
+        "model": "deepseek-v4-pro",
+        "connected": true,
+        "reply": "连接成功",
+        "elapsed_seconds": 0.94
+      }
+    ]
+  },
+  "backend_test_suites": {
+    "system": 27,
+    "generation": 5,
+    "industry_risk": 13
+  },
+  "latest_generation_verification": {
+    "elapsed_seconds": 35.2,
+    "job_id": "60091a90ab1043ed9dcf41ec869c1342",
+    "status": "completed",
+    "error": null,
+    "id": "03e036d76aa24288ad0c8baf372dc07c",
+    "title": "全国工贸安全生产风险研判及预测分析报告",
+    "body_hanzi": 7746,
+    "llm": {
+      "provider": "DeepSeek",
+      "model": "deepseek-flash",
+      "status": "generated",
+      "qualitative_only": true,
+      "excluded_sentences": 11,
+      "grounding": "LLM仅生成定性正文；定量段落由服务器按指标名、实际结果、单位、有效样本和口径直接填入",
+      "attempts": 1
+    },
+    "execution": "updated source in independent worker; no service restart"
+  },
+  "local_service_update": {
+    "frontend": "served from updated files",
+    "report_generation_backend": "updated source loaded by current process; previous real report tests retained",
+    "restart_applied": true,
+    "reason": "Current service verified after user-managed restart; actual three-month simulation has 61 computed points per scenario.",
+    "manual_entry": "重启智能体.cmd",
+    "launcher_repair": {
+      "batch_encoding": "ASCII with CRLF",
+      "powershell_encoding": "UTF-8 BOM with CRLF",
+      "actual_cmd_check_mode": "passed for project restart entry and parent start entry",
+      "service_restart_executed_by_check": false,
+      "last_observed_health": {
+        "status": "ok",
+        "version": "1.0.0",
+        "model_engine_version": "industry-report/2.0",
+        "simulation_samples_per_month": 20
+      }
+    },
+    "previous_industry_restart_verified": true,
+    "last_observed_health": {
+      "status": "ok",
+      "version": "1.0.0",
+      "model_engine_version": "industry-report/2.0",
+      "simulation_samples_per_month": 20
+    },
+    "current_sampling_restart_pending": false,
+    "direct_start_shortcut": "打开风险研判智能体.lnk",
+    "live_verification": "startup-verification.json"
+  },
+  "industry_update": {
+    "profile_version": "industry-report/2.0",
+    "report": {
+      "report_id": "b45d0dd327f0487f958352b4a7c4f0d3",
+      "llm_status": "generated",
+      "body_hanzi": 5527,
+      "elapsed_seconds": 27.3,
+      "model_version": 2,
+      "model_name": "工贸事故风险演化模型",
+      "records": 104,
+      "environment": "独立联调服务，使用已有数据库的一致性副本；未写入8000端口的运行数据",
+      "industry_evidence_in_report": true,
+      "trend_status": "insufficient"
+    },
+    "six_industries_computed": true,
+    "trend_available_industries": 0,
+    "runtime_restart_pending": false,
+    "ui": [
+      "inline-indicators",
+      "two-row-prediction",
+      "inline-scenario-parameters",
+      "direct-utility-buttons",
+      "compact-mobile-table",
+      "industry-specific-graph",
+      "fixed-industry-models",
+      "no-version-toolbar",
+      "no-diagram-explanation-pill"
+    ]
+  },
+  "source_hashes_current": {
+    "frontend/app.js": "548d531fc4407dfc667f89528490c2551d172b79bc5ab14e5d967ebcc9091036",
+    "frontend/style.css": "bdf2f0ce36e5cf482faf687b8fcb126609edffe57ee7c20384af73e673995975",
+    "app/industry_risk.py": "2ba3074986ef05d2ec16ee1d99ca7bbec4fb09f48d56211a52d8204181ecfda1",
+    "app/sd.py": "fe321bea9b4851adaa708eed128c36313f7751ab8c5a50b8de799630efa59f2d",
+    "app/analytics.py": "e3c281f661b6302f74ddd31447cc71b71ed3dcb712b23387801d0bc1ca92bf15",
+    "app/reports.py": "f3a1cb9edcf949b532fccaac149444abd91fc52a7cbb294fde6bdae6d48705a3",
+    "app/llm.py": "19ab23770fe74d9f1e0adb4ff52f6dd9de191e0416e00d5dc29af0cbd590349f",
+    "app/main.py": "ff1896c992dd646d39b78ce0970433ea779c87868e9984a88c4f380a877c35e2",
+    "run.ps1": "40848ae4b562597f25b6a9077cd85a89c00dfc8ba8d98b8804b1eb70048a204a",
+    "启动智能体.cmd": "4b68ce9497a8bcb2a5677fc27e238ead65345af84aa4424f1422ae0340f2f0f9",
+    "重启智能体.cmd": "83e5bebc567bc316025e7f5b08727977fb5f208de28a46b1f524202bdaab8ba7",
+    "停止智能体.cmd": "db5f190f347f0792e26d266a0ed40d0ee5115c0f8f15d701d5263ef69de2a035",
+    "启动智能体.ps1": "66b4f84045dc46686dd18de2f7708710ccc50bf494b8e28729dbaff0d0f10666",
+    "重启智能体.ps1": "cb94ccc444d3c7d4b3b3d7e719c91acbb5239cee90c0d4d97215fce710413f4c",
+    "停止智能体.ps1": "025fc979593734b33ad2c605d457d0a15b982244ec8d4ddb1986a78629743a62"
+  }
+}

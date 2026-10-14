@@ -1,0 +1,174 @@
+{
+  "samples_per_month": 20,
+  "environment": "独立联调服务，真实数据库一致性副本",
+  "industries": [
+    {
+      "industry": "工贸",
+      "model_id": "8d9c6d02d6844044924c89f689875b66",
+      "source_sha256": "07583a7ef4321116b2e3f2f9a0d18557776ebb26cf6134de26a2b767d00d6e3e",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 51.243589,
+          "final": 45.477068
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 51.243589,
+          "final": 49.313782
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 51.243589,
+          "final": 46.567522
+        }
+      ]
+    },
+    {
+      "industry": "烟花爆竹",
+      "model_id": "16b540a15a0142abbf5646dbb66303f6",
+      "source_sha256": "00406c8b2a8bbec43ec9e45a1021f941a75d9a59d0baa529941a6c2fa199fd8e",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 67.272727,
+          "final": 59.678246
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 67.272727,
+          "final": 62.109421
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 67.272727,
+          "final": 61.114263
+        }
+      ]
+    },
+    {
+      "industry": "化工",
+      "model_id": "46c97db4a57d4b428d25aafa88ab2561",
+      "source_sha256": "edb3387b198df5cb52e76e9d304992e98e8c141701cef469548bcca6bceb3aa3",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 58.461538,
+          "final": 51.87143
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 58.461538,
+          "final": 56.255371
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 58.461538,
+          "final": 53.117575
+        }
+      ]
+    },
+    {
+      "industry": "石油天然气开采",
+      "model_id": "e4420bfa547b4b1fa58f6cc722583a3a",
+      "source_sha256": "76c5a90a1d7b09dcf6067ce5376a0cdd8c2aa41a5e5ac1702323d8a53344d015",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 46.666667,
+          "final": 41.421036
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 46.666667,
+          "final": 44.911561
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 46.666667,
+          "final": 42.413014
+        }
+      ]
+    },
+    {
+      "industry": "金属非金属矿山",
+      "model_id": "c2701189e7794985aa7be887391a048e",
+      "source_sha256": "f71bd6f9dcf7c0d9dd2d22b182c87ef3b93b659173bcbd2c146c8009c5b3c3eb",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 80.909091,
+          "final": 71.760224
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 80.909091,
+          "final": 73.521183
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 80.909091,
+          "final": 73.490089
+        }
+      ]
+    },
+    {
+      "industry": "煤矿",
+      "model_id": "61f0e939267e48daa200a49ed5c41a42",
+      "source_sha256": "317975c16a7840b2e5afa22e8ddced7bd39b2e243e46a4c0eeac200fc71fec35",
+      "scenarios": [
+        {
+          "name": "基准场景",
+          "points": 61,
+          "months": 3.0,
+          "initial": 48.571429,
+          "final": 43.108677
+        },
+        {
+          "name": "生产压力增大",
+          "points": 61,
+          "months": 3.0,
+          "initial": 48.571429,
+          "final": 46.743481
+        },
+        {
+          "name": "安全投入减少",
+          "points": 61,
+          "months": 3.0,
+          "initial": 48.571429,
+          "final": 44.141701
+        }
+      ]
+    }
+  ]
+}
