@@ -9,7 +9,7 @@ _login_failures={}
 _login_lock=threading.Lock()
 def encode(value): return base64.urlsafe_b64encode(value).decode().rstrip('=')
 def hash_password(password,salt=None,iterations=PASSWORD_ITERATIONS):
-    if not isinstance(password,str) or len(password)<12: raise ValueError('访问密码至少需要12个字符')
+    if not isinstance(password,str) or len(password)<6: raise ValueError('访问密码至少需要6个字符')
     salt=salt or os.urandom(18)
     digest=hashlib.pbkdf2_hmac('sha256',password.encode('utf-8'),salt,iterations)
     return f'{PASSWORD_SCHEME}${iterations}${encode(salt)}${encode(digest)}'

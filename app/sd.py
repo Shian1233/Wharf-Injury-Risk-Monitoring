@@ -85,7 +85,7 @@ def legacy_model(industry):
     params={'production_pressure':{'value':1.,'min':0.1,'max':3.,'label':'生产压力','unit':'倍','source':'情景假设'},
             'safety_effort':{'value':1.,'min':0.,'max':3.,'label':'安全投入强度','unit':'倍','source':'情景假设'},
             'response_time':{'value':6.,'min':1.,'max':36.,'label':'风险调整时间','unit':'月','source':'待专家标定假设'},
-            'prevention_rate':{'value':.05,'min':0.,'max':1.,'label':'治理速率','unit':'1/月','source':'待专家标定假设'}}
+            'prevention_rate':{'value':.05,'min':0.,'max':1.,'label':'治理速率','unit':'月⁻¹','source':'待专家标定假设'}}
     variables=[]
     for name,label in [('personnel','人员'),('equipment','设备设施'),('process','工艺技术'),('environment','环境'),('management','管理')]:
         params[name+'_initial']={'value':0.,'min':0.,'max':100.,'label':label+'初始指数','unit':'指数','source':'运行时事故原因标记比例标定','calibrate':CAUSE_FIELDS[label]}

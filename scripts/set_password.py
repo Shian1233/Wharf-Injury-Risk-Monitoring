@@ -15,7 +15,7 @@ def put(text,key,value):
     return re.sub(pattern,line,text) if re.search(pattern,text) else text.rstrip()+f'\n{line}\n'
 
 def main():
-    password=getpass('请输入访问密码（至少12个字符）: ')
+    password=getpass('请输入访问密码（至少6个字符）: ')
     confirm=getpass('请再次输入访问密码: ')
     if password!=confirm: raise SystemExit('两次输入不一致，未修改配置。')
     encoded=hash_password(password)

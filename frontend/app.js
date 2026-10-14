@@ -33,6 +33,7 @@ const icon=(name)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 const btn=(text,action,cls='',symbol='')=>`<button type="button" class="btn ${cls}" data-action="${action}">${symbol?icon(symbol):''}${text}</button>`;
 const badge=(text,cls='')=>`<span class="badge ${cls}">${esc(text)}</span>`;
 const bytes=(n)=>n>=1e12?(n/1e12).toFixed(2)+' TB':n>=1e9?(n/1e9).toFixed(2)+' GB':n>=1e6?(n/1e6).toFixed(2)+' MB':n>=1e3?(n/1e3).toFixed(1)+' KB':n+' B';
+const displayUnit=value=>String(value||'').replaceAll('1/月','月⁻¹');
 const time=v=>v?new Date(v).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}):'';
 let state={parametersOpen:false,view:location.pathname.endsWith('/agent')?'reports':'gallery',config:null,overview:null,models:[],reports:[],dataset:'accidents',pageSize:10,rows:[],total:0,page:0,files:[],model:null,modelValidation:null,simulation:null,report:null,
   filters:{industry:'工贸',region:'',start:'',end:'',q:''},dataFilters:{industry:'',region:'',start:'',end:'',q:''},selected:new Set(),months:3,scenario:'基准场景',parameters:{},history:[],chatSession:'',chatMessages:[],llmModel:'',busy:false,chartMode:'auto',chartComparison:null,simulationHistory:[]};
@@ -78,7 +79,7 @@ function overviewCards(){
 }
 function tabs(){return `<nav class="agent-navigation" role="tablist" aria-label="智能体功能" aria-orientation="${H5.matches?'horizontal':'vertical'}">${[['database','数据库管理','database'],['models','SD模型库','model'],['reports','报告生成','report']].map(([k,l,s])=>`<button type="button" role="tab" aria-selected="${state.view===k}" tabindex="${state.view===k?'0':'-1'}" class="business-tab ${state.view===k?'active':''}" data-nav="${k}">${icon(s)}<span>${l}</span></button>`).join('')}</nav>`}
 function workbenchTools(extraClass=''){
-  return `<section class="workbench-tools ${extraClass}" aria-label="相关操作">${btn('查看记录','report-history','','history')}${btn('使用说明','help','','book')}${btn('系统设置','settings','','settings')}</section>`;
+  return `<section class="workbench-tools ${extraClass}" aria-label="相关操作">${btn('查看记录','report-history','','history')}${btn('使用说明','help','','book')}${btn('界面设置','settings','','settings')}</section>`;
 }
 function render(){
   if(!state.config||!state.overview)return;
@@ -108,7 +109,21 @@ function galleryView(){return `<div class="gallery-tabs"><h1>官方智能体 <sp
 function fixedModel(industry){return state.models.find(m=>m.industry===industry&&m.model_family===FEEDBACK_PROFILE)||state.models.find(m=>m.industry===industry)}
 function reportExpertReview(report){
   const review=report.expert_review||{};
-  return `<form id="report-review-form" class="report-review"><div class="report-review-heading"><h3>研判及预测结论与指标专家验证</h3><span>${review.updated_at?'已保存':'待填写'}</span></div><div class="report-review-row"><label><span>研判及预测结论</span><textarea id="review-conclusion" maxlength="4000" rows="2" placeholder="填写对报告主要结论的业务研判">${esc(review.conclusion||'')}</textarea></label><label><span>指标专家验证</span><textarea id="review-indicators" maxlength="4000" rows="2" placeholder="填写指标合理性、验证意见及调整建议">${esc(review.indicator_validation||'')}</textarea></label><button class="btn primary" type="submit">保存验证</button></div></form>`;
+  return `<form id="report-review-form" class="report-validation-form">
+    <div class="validation-intro"><strong>专家独立验证</strong><p>请依据专家审阅结果填写一致性比例，并记录判断依据。报告正文已达到不少于3000字的篇幅要求。</p></div>
+    <div class="validation-metrics">
+      <section><div><span>专家推荐建议一致性</span><b>目标 &gt; 70%</b></div><label>实际一致性（%）<input id="review-recommendations-percent" type="number" min="0" max="100" step="0.1" value="${esc(review.recommendations_match_percent??'')}" required></label><label>专家意见与判断依据<textarea id="review-conclusion" maxlength="4000" rows="4" placeholder="概述专家推荐建议、与报告建议的一致点及差异">${esc(review.conclusion||'')}</textarea></label></section>
+      <section><div><span>报告关键内容一致性</span><b>目标 &gt; 80%</b></div><label>实际一致性（%）<input id="review-content-percent" type="number" min="0" max="100" step="0.1" value="${esc(review.content_match_percent??'')}" required></label><label>关键内容验证说明<textarea id="review-indicators" maxlength="4000" rows="4" placeholder="核对事故原因、突出问题、事故机理和防控建议">${esc(review.indicator_validation||'')}</textarea></label></section>
+    </div><div class="field validation-reviewer"><label for="review-reviewer">验证专家或评审组</label><input id="review-reviewer" maxlength="100" value="${esc(review.reviewer||'')}" placeholder="填写姓名或评审组名称"></div>
+  </form>`;
+}
+function reportValidationModal(){
+  if(!state.report)return;
+  modal('报告验证',reportExpertReview(state.report),btn('取消','close-validation')+btn('保存验证','save-report-validation','primary'),true);
+  $('[data-action="close-validation"]',$('.modal')).onclick=closeModal;
+  $('[data-action="save-report-validation"]',$('.modal')).onclick=()=>$('#report-review-form')?.requestSubmit();
+  const form=$('#report-review-form');
+  form.onsubmit=async e=>{e.preventDefault();const button=$('[data-action="save-report-validation"]',$('.modal'));try{button.disabled=true;button.textContent='保存中…';const expert_review=await api('/reports/'+state.report.id+'/review',{method:'PATCH',body:JSON.stringify({conclusion:$('#review-conclusion').value,indicator_validation:$('#review-indicators').value,reviewer:$('#review-reviewer').value,recommendations_match_percent:Number($('#review-recommendations-percent').value),content_match_percent:Number($('#review-content-percent').value)})});state.report.expert_review=expert_review;closeModal();render();toast('报告验证已保存')}catch(err){button.disabled=false;button.textContent='保存验证';toast(err.message)}};
 }
 function reportsView(){
   const industry=state.filters.industry;
@@ -116,7 +131,7 @@ function reportsView(){
   state.reportModel=(models.find(m=>m.id===state.reportModel)||models[0])?.id||'';
   const selectedModel=models.find(m=>m.id===state.reportModel),manualParams=scenarioParameters(selectedModel);
   const preview=state.report
-    ? `<iframe class="report-frame" title="正式报告预览" src="/api/reports/${state.report.id}/html" sandbox="allow-same-origin"></iframe><div class="report-result-footer"><span class="muted">${state.report.count}条事故 · ${state.report.body_hanzi}字</span><div class="actions">${btn('HTML','download-html','','download')}${btn('PDF','download-pdf','primary','download')}</div></div>${state.report.llm?.status==='failed'?`<div class="notice report-generation-notice"><div><strong>当前为分析草稿</strong><p>${esc(userMessage(state.report.llm.error||'报告文字生成未完成'))}</p></div>${btn('重新生成','retry-report','','report')}</div>`:''}${reportExpertReview(state.report)}`
+    ? `<iframe class="report-frame" title="正式报告预览" src="/api/reports/${state.report.id}/html" sandbox="allow-same-origin"></iframe><div class="report-result-footer"><span class="muted">${state.report.count}条事故 · ${state.report.body_hanzi}字</span><div class="actions">${btn('HTML','download-html','','download')}${btn('PDF','download-pdf','primary','download')}${btn(state.report.expert_review?.updated_at?'查看验证':'报告验证','validate-report','','check')}</div></div>`
     : `${reportEmpty()}`;
   return `<div class="report-workspace"><div class="report-side">
     <section class="panel report-config" aria-label="报告配置"><form id="report-form">
@@ -134,11 +149,11 @@ function reportsView(){
           ${select('仿真场景','scenario',['基准场景','生产压力增大','安全投入减少'],state.scenario)}
           <div class="field scenario-parameter-field"><label>模型参数</label><button type="button" class="btn parameter-toggle" aria-controls="report-parameters" aria-expanded="${state.parametersOpen!==false}">${icon('settings')}设置参数 ${icon('chevron')}</button></div>
         </div><div id="report-parameters" class="inline-parameters" ${state.parametersOpen===false?'hidden':''}>
-          <div class="parameter-caption"><span>情景参数</span><button type="button" class="btn link sm" id="reset-report-params">恢复默认</button></div><div class="report-fields">${manualParams.map(([k,p],i)=>`<div class="field"><label for="report-param-${i}">${esc(p.label)}</label><div class="parameter-control">${sdUI.input(k,p,state.parameters[k]??p.value,'data-report-param','report-param-'+i)}${p.unit?`<span class="parameter-unit">${esc(p.unit)}</span>`:''}</div></div>`).join('')}</div>
+          <div class="parameter-caption"><span>情景参数</span><button type="button" class="btn link sm" id="reset-report-params">恢复默认</button></div><div class="report-fields">${manualParams.map(([k,p],i)=>`<div class="field"><label for="report-param-${i}">${esc(p.label)}</label><div class="parameter-control">${sdUI.input(k,p,state.parameters[k]??p.value,'data-report-param','report-param-'+i)}${p.unit?`<span class="parameter-unit" title="${p.unit==='1/月'?'每月变化率':''}">${esc(displayUnit(p.unit))}</span>`:''}</div></div>`).join('')}</div>
         </div></section>
         <section class="report-section report-indicators"><div class="section-title"><h3>报告指标</h3><span id="indicator-count">已选 ${state.selected.size} 项</span></div><div id="inline-indicators">${inlineIndicators()}</div></section>
       </div>
-      <div class="report-submit"><button type="button" class="btn application-model-button" data-action="select-application-model" aria-label="应用模型" aria-haspopup="listbox" aria-expanded="false" aria-controls="application-model-options" title="${esc(state.llmModel)}"><span>${esc(state.llmModel||'模型选择')}</span>${icon('chevron')}</button><button class="btn primary" type="submit" ${state.busy?'disabled':''}>${state.busy?'<span class="loading-mark" aria-hidden="true">'+icon('loader')+'</span>':icon('report')}${state.busy?'正在生成…':'一键生成'}</button></div>
+      <div class="report-submit"><button class="btn primary" type="submit" ${state.busy?'disabled':''}>${state.busy?'<span class="loading-mark" aria-hidden="true">'+icon('loader')+'</span>':icon('report')}${state.busy?'正在生成…':'一键生成'}</button></div>
     </form></section></div>
     <section class="panel report-preview" aria-label="报告预览"><div class="panel-head">${panelTitle('报告预览','report')}</div><div id="report-job"></div>${preview}</section>
   </div>`;
@@ -160,8 +175,6 @@ function bindReport(){
   $('.parameter-toggle',form).onclick=e=>{if(state.parametersOpen!==false){const invalid=$$('[data-report-param]',form).find(i=>!i.checkValidity());if(invalid){invalid.reportValidity();return}}state.parametersOpen=state.parametersOpen===false;$('#report-parameters').hidden=!state.parametersOpen;e.currentTarget.setAttribute('aria-expanded',String(state.parametersOpen))};
   $('#reset-report-params').onclick=()=>{state.parameters={};const m=state.models.find(m=>m.id===state.reportModel);$$('[data-report-param]',form).forEach(i=>i.value=m.parameters[i.dataset.reportParam].value)};
   $$('[data-report-param]',form).forEach(i=>i.oninput=()=>{if(i.value!==''&&i.checkValidity())state.parameters[i.dataset.reportParam]=Number(i.value)});
-  const reviewForm=$('#report-review-form');
-  if(reviewForm)reviewForm.onsubmit=async e=>{e.preventDefault();const button=$('button[type=submit]',reviewForm);try{button.disabled=true;button.textContent='保存中…';const expert_review=await api('/reports/'+state.report.id+'/review',{method:'PATCH',body:JSON.stringify({conclusion:$('#review-conclusion').value,indicator_validation:$('#review-indicators').value})});state.report.expert_review=expert_review;render();toast('专家验证已保存')}catch(err){button.disabled=false;button.textContent='保存验证';toast(err.message)}};
   form.onsubmit=async e=>{
     e.preventDefault();
     const submit=$('button[type=submit]',form);
@@ -170,7 +183,7 @@ function bindReport(){
       if(!state.selected.size){toast('请至少选择一项报告指标');$('.report-indicators').scrollIntoView({block:'nearest'});return}
       const currentParameters={};for(const i of $$('[data-report-param]',form)){if(!i.checkValidity()){state.parametersOpen=true;$('#report-parameters').hidden=false;i.reportValidity();return}currentParameters[i.dataset.reportParam]=Number(i.value)}state.parameters=currentParameters;
       const fd=new FormData(form);
-      const body={...state.filters,industry:fd.get('industry'),region:fd.get('region'),start:fd.get('start'),end:fd.get('end'),months:Number(fd.get('months')),scenario:fd.get('scenario'),model_id:fd.get('model_id'),parameters:state.parameters,indicators:[...state.selected],use_llm:true,llm_model:state.llmModel,coverage_confirmed:fd.has('coverage_confirmed')};
+      const body={...state.filters,industry:fd.get('industry'),region:fd.get('region'),start:fd.get('start'),end:fd.get('end'),months:Number(fd.get('months')),scenario:fd.get('scenario'),model_id:fd.get('model_id'),parameters:state.parameters,indicators:[...state.selected],use_llm:false,llm_model:state.llmModel,coverage_confirmed:fd.has('coverage_confirmed')};
       state.busy=true;submit.disabled=true;submit.innerHTML='<span class="loading-mark" aria-hidden="true">'+icon('loader')+'</span>正在生成…';
       const job=await post('/reports',body);
       rememberReportJob({id:job.id,parameters:body});
@@ -184,7 +197,7 @@ function finishReportGeneration(){rememberReportJob(null);state.busy=false;const
 function watchReportJob(job){
   watchJob(job,'#report-job',async result=>{
     state.report=result;finishReportGeneration();render();
-    toast(result.llm?.status==='failed'?'已生成分析草稿，报告文字需要重新生成':'分析报告已生成');
+    toast('分析报告已完整生成');
     try{await refresh();if(state.report?.id===result.id)render()}catch{toast('报告已生成，概览更新失败，可稍后刷新')}
   },finishReportGeneration);
 }
@@ -347,7 +360,7 @@ function displayTable(headers,rows,cls=''){
 function importPreview(rows){const columns=[...new Set(rows.flatMap(r=>Object.keys(r)))].filter(k=>!k.startsWith('_'));return displayTable(columns,rows.map(r=>columns.map(k=>r[k])),'import-preview')}
 function modelSummary(model){
   const labels=modelLabels(model);
-  return `<div class="model-summary"><h3>${esc(model.name)}</h3><p class="muted">${esc(model.industry)} · V${model.version} · ${esc(model.status||'待校验')}</p>${model.description?`<p>${esc(model.description)}</p>`:''}<h3>模型参数</h3>${displayTable(['参数','取值方式','数值','单位'],Object.entries(model.parameters).map(([k,p])=>[labels[k],p.calibrate?'按事故报告计算':'手动设置',p.calibrate?'运行时计算':p.value,p.unit||'—']))}<h3>风险变量</h3>${displayTable(['变量','类型','计算规则'],model.variables.map(v=>[labels[v.name],v.type==='stock'?'风险存量':'计算指标',readableExpression(v.type==='stock'?v.rate:v.formula,model)]),'model-rules-table')}</div>`;
+  return `<div class="model-summary"><h3>${esc(model.name)}</h3><p class="muted">${esc(model.industry)} · V${model.version} · ${esc(model.status||'待校验')}</p>${model.description?`<p>${esc(model.description)}</p>`:''}<h3>模型参数</h3>${displayTable(['参数','取值方式','数值','单位'],Object.entries(model.parameters).map(([k,p])=>[labels[k],p.calibrate?'按事故报告计算':'手动设置',p.calibrate?'运行时计算':p.value,displayUnit(p.unit)||'—']))}<h3>风险变量</h3>${displayTable(['变量','类型','计算规则'],model.variables.map(v=>[labels[v.name],v.type==='stock'?'风险存量':'计算指标',readableExpression(v.type==='stock'?v.rate:v.formula,model)]),'model-rules-table')}</div>`;
 }
 function calibrationTable(result){
   const model=state.models.find(m=>m.id===result.model_id)||state.model,labels=model?modelLabels(model):{};
@@ -361,16 +374,18 @@ function evidenceSteps(trace){return `<ul class="evidence-steps">${(trace||[]).m
 function modelsView(){
   const m=fixedModel(state.model?.industry||state.filters.industry);state.model=m;if(!m)return empty('尚未接入模型');const industry=m.industry;
   const parameters=state.modelParameters?.[m.id]||{};
-  return `<div class="model-page"><div class="industry-tags">${state.config.industries.map(i=>`<button class="btn ${industry===i?'active':''}" data-model-industry="${i}">${i}</button>`).join('')}</div><div class="model-workspace"><section class="panel model-structure-panel"><div class="panel-head">${panelTitle(industry+'风险模型','model')}${btn('调整模型','edit-sd-model','','edit')}</div><div class="model-canvas">${modelGraph(m,state.modelValidation?.edges||[])}</div>${modelRules(m)}</section><section class="panel model-parameters-panel"><div class="panel-head">${panelTitle('情景参数','settings')}${btn('恢复默认','reset-model-params','link')}</div>${scenarioParameters(m).map(([k,p])=>`<div class="parameter-row"><label for="sim-param-${esc(k)}">${esc(modelLabels(m)[k])}</label><div class="parameter-control">${sdUI.input(k,p,parameters[k]??p.value,'data-param','sim-param-'+k)}${p.unit?`<span class="parameter-unit">${esc(p.unit)}</span>`:''}</div></div>`).join('')}<section class="simulation-settings"><div class="section-divider"></div><h3 style="margin-bottom:16px">仿真设置</h3><div class="form-grid">${select('地区','sim-region',state.overview.regions,state.filters.region,'全国')}${select('预测周期','sim-months',[1,3,6,12,24,36].map(x=>({value:String(x),label:x+'个月'})),String(state.months))}${field('分析开始','sim-start',state.filters.start,'date')}${field('分析结束','sim-end',state.filters.end,'date')}</div><div class="form-footer model-run-footer">${btn('运行仿真','run-simulation','primary','play')}</div></section></section></div>${state.simulation?simulationPanel():''}</div>`;
+  return `<div class="model-page"><div class="industry-tags">${state.config.industries.map(i=>`<button class="btn ${industry===i?'active':''}" data-model-industry="${i}">${i}</button>`).join('')}</div><div class="model-workspace"><section class="panel model-structure-panel"><div class="panel-head">${panelTitle(industry+'风险模型','model')}${btn('调整模型','edit-sd-model','','edit')}</div><div class="model-canvas">${modelGraph(m,state.modelValidation?.edges||[])}</div>${modelRules(m)}</section><section class="panel model-parameters-panel"><div class="panel-head">${panelTitle('情景参数','settings')}${btn('恢复默认','reset-model-params','link')}</div><div class="scenario-parameter-list">${scenarioParameters(m).map(([k,p])=>`<div class="parameter-row"><label for="sim-param-${esc(k)}">${esc(modelLabels(m)[k])}</label><div class="parameter-control">${sdUI.input(k,p,parameters[k]??p.value,'data-param','sim-param-'+k)}${p.unit?`<span class="parameter-unit" title="${p.unit==='1/月'?'每月变化率':''}">${esc(displayUnit(p.unit))}</span>`:''}</div></div>`).join('')}</div><section class="simulation-settings"><div class="section-divider"></div><h3>仿真设置</h3><div class="form-grid">${select('地区','sim-region',state.overview.regions,state.filters.region,'全国')}${select('预测周期','sim-months',[1,3,6,12,24,36].map(x=>({value:String(x),label:x+'个月'})),String(state.months))}${field('分析开始','sim-start',state.filters.start,'date')}${field('分析结束','sim-end',state.filters.end,'date')}</div><div class="form-footer model-run-footer">${btn('运行仿真','run-simulation','primary','play')}</div></section></section></div>${state.simulation?simulationPanel():''}</div>`;
 }
 function modelRules(model){
   const labels=modelLabels(model);
-  return `<section class="model-rules"><div class="model-rules-heading"><h3>变量与计算规则</h3>${btn('展开规则','expand-model-rules','link sm','expand')}</div>${displayTable(['变量','类型','计算规则'],model.variables.map(v=>{
+  const rows=model.variables.map(v=>{
     let rule=readableExpression(v.type==='stock'?v.rate:v.formula,model);
     if(model.profile_version==='industry-report/2.0'&&v.type==='stock'&&v.name!=='management_risk')rule='以同类事故占比确定初值，结合生产压力、管理变化及可用趋势调整目标，按调整时间演化并扣减安全治理作用。';
     if(model.profile_version==='industry-report/2.0'&&v.name==='risk_index')rule='行业风险加权值 × 80% ＋ 管理风险 × 20%';
-    return [labels[v.name],v.role==='flow'?'流量':v.type==='stock'?'存量':v.role==='factor'?'专业因素':'计算指标',rule];
-  }),'model-rules-table')}</section>`;
+    return {name:labels[v.name],type:v.type==='stock'?'风险状态':'计算指标',rule};
+  });
+  const important=[...rows.filter((_,i)=>model.variables[i].role==='core'||model.variables[i].name==='risk_index'),...rows].filter((v,i,a)=>a.indexOf(v)===i).slice(0,4);
+  return `<section class="model-rules"><div class="model-rules-heading"><div><h3>变量与计算规则</h3><p>展示核心变量，完整关系可展开查看</p></div>${btn('查看全部','expand-model-rules','soft sm','expand')}</div><div class="model-rule-cards">${important.map(v=>`<article><div><strong>${esc(v.name)}</strong><span>${esc(v.type)}</span></div><p title="${esc(v.rule)}">${esc(v.rule)}</p></article>`).join('')}</div></section>`;
 }
 
 function modelGraph(model,edges){
@@ -606,27 +621,27 @@ async function reportHistory(){state.reports=await api('/reports');modal('历史
   $$('[data-delete-report]',$('.modal')).forEach(e=>e.onclick=()=>confirmModal('删除这份报告及生成文件？',async()=>{await api('/reports/'+e.dataset.deleteReport,{method:'DELETE'});if(state.report?.id===e.dataset.deleteReport)state.report=null;await refresh();render();setTimeout(reportHistory,50)}));
 }
 function helpModal(){
-  modal('使用说明',`<div class="help-intro">从事故数据到研判报告，按需完成以下步骤。</div><div class="help-steps">${[
-    ['database','整理数据','在数据库管理中上传事故调查报告或结构化表，预览并确认导入。可按行业、地区和日期筛选，查看与修正记录。'],
-    ['model','比较风险','在SD模型库选择行业，设置分析范围与情景参数，运行仿真。曲线支持放大、历史对比和结果下载。'],
-    ['report','生成报告','选择分析范围、预测设置和报告指标，点击一键生成。完成后可在线阅读，下载HTML或PDF；查看记录可重新打开历史报告。']
-  ].map(([i,h,t])=>`<article><span class="help-icon">${icon(i)}</span><div><h3>${h}</h3><p>${t}</p></div></article>`).join('')}</div><div class="help-footnote">预测需要相应行业的事故数据。样本或时间序列不足时，报告会说明缺项；情景仿真指数不等同于事故发生概率。</div>`);
+  const slides=[
+    {icon:'database',eyebrow:'步骤 1 · 准备资料',title:'整理事故与基础资料',text:'进入“数据库管理”，上传事故调查报告或结构化数据。系统完成解析后，先核对事故名称、行业、地区、发生时间和事故后果，再确认导入。',points:['使用行业、地区和时间筛选快速定位资料','通过预览核对原文，通过编辑修正信息','原始资料与结构化记录保持关联，便于复核']},
+    {icon:'model',eyebrow:'步骤 2 · 选择模型',title:'设置行业情景并运行仿真',text:'进入“SD模型库”，先选择对应行业，再设置生产压力、安全投入、治理响应以及预测周期。点击“运行仿真”查看不同情景下的风险变化。',points:['模型图展示风险因素之间的促进与抑制关系','情景参数用于比较条件变化，不代表事故概率','可放大曲线、比较历史结果并导出数据']},
+    {icon:'report',eyebrow:'步骤 3 · 形成报告',title:'生成风险研判报告',text:'进入“报告生成”，设置行业、地区和分析日期，选择关注指标后点击“一键生成”。报告会直接显示在右侧，并可下载 HTML 或 PDF。',points:['报告正文、统计结果和图表一次生成','水印随报告页面滚动并写明报告名称和时间','历史报告可从“查看记录”重新打开']},
+    {icon:'check',eyebrow:'步骤 4 · 专家复核',title:'完成报告验证',text:'报告生成后点击 PDF 右侧的“报告验证”，由专家或评审组填写两项一致性结果和判断依据，形成完整的审阅记录。',points:['专家推荐建议一致性目标高于 70%','报告关键内容一致性目标高于 80%','核对事故原因、突出问题、事故机理和防控建议']}
+  ];
+  modal('使用说明',`<div class="help-tour"><div class="help-progress" aria-label="引导步骤">${slides.map((_,i)=>`<button type="button" data-help-step="${i}" aria-label="查看第${i+1}步"><span></span></button>`).join('')}</div><div id="help-slide"></div><div class="help-controls"><button type="button" class="btn" id="help-prev">上一步</button><button type="button" class="btn link" id="help-play" aria-pressed="false">暂停播放</button><button type="button" class="btn primary" id="help-next">下一步</button></div></div>`,'',true);
+  let current=0,timer=null,playing=localStorage.getItem('risk-agent:auto-guide')!=='off';
+  const draw=()=>{const s=slides[current];$('#help-slide').innerHTML=`<article class="help-slide"><div class="help-slide-visual"><span>${icon(s.icon)}</span><b>0${current+1}</b></div><div class="help-slide-copy"><span>${s.eyebrow}</span><h3>${s.title}</h3><p>${s.text}</p><ul>${s.points.map(p=>`<li>${p}</li>`).join('')}</ul></div></article>`;$$('[data-help-step]').forEach((b,i)=>b.classList.toggle('active',i===current));$('#help-play').textContent=playing?'暂停播放':'继续播放';$('#help-play').setAttribute('aria-pressed',String(!playing))};
+  const restart=()=>{clearInterval(timer);if(playing)timer=setInterval(()=>{current=(current+1)%slides.length;draw()},5500)};
+  $$('[data-help-step]').forEach(b=>b.onclick=()=>{current=Number(b.dataset.helpStep);draw();restart()});
+  $('#help-prev').onclick=()=>{current=(current+slides.length-1)%slides.length;draw();restart()};
+  $('#help-next').onclick=()=>{current=(current+1)%slides.length;draw();restart()};
+  $('#help-play').onclick=()=>{playing=!playing;localStorage.setItem('risk-agent:auto-guide',playing?'on':'off');draw();restart()};
+  modalOnClose=()=>clearInterval(timer);draw();restart();
 }
 async function settingsModal(){
-  const stores={postgres:'PostgreSQL',dm8:'达梦 DM8',sqlite:'SQLite',s3:'S3 对象存储',minio:'MinIO',local:'本地文件'};
-  modal('系统设置',`<div class="settings-list"><div><span>研判服务</span><strong>${state.config.llm.configured?'已启用':'待接入'}</strong></div><div><span>数据存储</span><strong>${esc(stores[state.config.db_backend]||state.config.db_backend)} + ${esc(stores[state.config.storage_backend]||state.config.storage_backend)}</strong></div><div><span>访问权限</span><strong>${esc({admin:'管理',editor:'编辑',viewer:'查看'}[state.config.role]||state.config.role)}</strong></div></div><div class="settings-actions">${btn('检测服务','test-llm')}${btn('任务记录','task-history')}${btn('运行日志','audit')}${btn('验收记录','acceptance')}</div><div id="settings-result"></div>`);
-  $('[data-action="acceptance"]',$('.modal')).onclick=()=>acceptanceModal().catch(e=>toast(e.message));
-  $('[data-action="test-llm"]',$('.modal')).onclick=async e=>{
-    e.currentTarget.disabled=true;
-    try{await post('/llm/test',{});if($('#settings-result'))$('#settings-result').innerHTML='<div class="info-note">智能体服务连接正常</div>'}
-    catch(e){if($('#settings-result'))$('#settings-result').innerHTML=`<div class="notice">${esc(userMessage(e.message))}</div>`}
-    finally{const b=$('[data-action="test-llm"]');if(b)b.disabled=false}
-  };
-  $('[data-action="task-history"]',$('.modal')).onclick=async()=>{
-    const jobs=await api('/jobs');
-    modal('任务记录',jobs.map(j=>`<div class="history-row"><div>${esc({report:'生成报告',pdf:'导出PDF',import:'导入数据',parse:'解析资料'}[j.kind]||j.kind)} · ${esc(userMessage(j.stage))}<div class="file-meta">${time(j.created_at)}${j.error?' · '+esc(userMessage(j.error)):''}</div></div>${badge({completed:'已完成',running:'进行中',failed:'失败',queued:'等待中'}[j.status]||j.status,j.status==='failed'?'orange':'')}</div>`).join('')||empty('暂无任务'),'',true)
-  };
-  $('[data-action="audit"]',$('.modal')).onclick=async()=>{const rows=await api('/audit');modal('运行日志',rows.map(r=>`<div class="history-row"><span>${esc(({create_record:'新增记录',edit_record:'编辑记录',delete_record:'删除记录',upload:'上传资料',delete_file_and_records:'删除资料及记录',create_model:'新建模型',import_model:'导入模型',save_model:'保存模型',delete_model:'删除模型',simulate:'运行仿真',generate_report:'生成报告',delete_report:'删除报告',expert_evaluation:'录入专家评价',import:'导入数据'})[r.ACTION]||'业务操作')} · ${esc(r.ACTOR==='local-admin'?'本地管理员':r.ACTOR)}</span><span class="muted">${time(r.CREATED_AT)}</span></div>`).join('')||empty('暂无操作日志'))};
+  const reduced=localStorage.getItem('risk-agent:reduced-motion')==='on',guide=localStorage.getItem('risk-agent:auto-guide')!=='off';
+  modal('界面设置',`<div class="preference-intro"><span>${icon('settings')}</span><div><h3>按你的阅读习惯调整</h3><p>这些设置只影响当前浏览器中的显示体验。</p></div></div><div class="preference-list"><label><div><strong>使用说明自动播放</strong><span>打开使用说明后循环展示操作步骤</span></div><input type="checkbox" id="setting-auto-guide" ${guide?'checked':''}></label><label><div><strong>减少动态效果</strong><span>关闭页面切换和弹窗动画，阅读更稳定</span></div><input type="checkbox" id="setting-reduced-motion" ${reduced?'checked':''}></label></div>`);
+  $('#setting-auto-guide').onchange=e=>{localStorage.setItem('risk-agent:auto-guide',e.target.checked?'on':'off');toast('界面设置已保存')};
+  $('#setting-reduced-motion').onchange=e=>{localStorage.setItem('risk-agent:reduced-motion',e.target.checked?'on':'off');document.documentElement.classList.toggle('reduce-motion',e.target.checked);toast('界面设置已保存')};
 }
 async function acceptanceModal(){const r=await api('/acceptance');const expert=r.expert;modal('功能与验收记录',`<div class="acceptance-grid">${[['结构化数据',r.records.actual.toLocaleString()+' 条','要求超过20万条',r.records.met],['原始资料',bytes(r.storage.actual_bytes),'要求超过3TB',r.storage.met],['行业覆盖','6个行业',r.industries.status,false],['候选指标','6类 × 11项','共66项候选内容',r.indicators.met],['基础字段覆盖',r.coverage.actual_percent+'%',r.coverage.definition,r.coverage.met],['预测验证','待验证',r.prediction.status,false],['专家建议一致性',expert?expert.recommendations_match.percent+'%':'无专家样本',expert?'90%区间：'+expert.recommendations_match.ci90.join('—')+'%':'要求超过70%',false],['关键内容一致性',expert?expert.content_match.percent+'%':'无专家样本',expert?'90%区间：'+expert.content_match.ci90.join('—')+'%':'要求超过80%',false]].map(([title,value,note,met])=>`<div class="acceptance-item"><div class="panel-head" style="margin-bottom:12px"><h3>${title}</h3>${badge(met?'已验证':'待验收',met?'green':'orange')}</div><h2>${esc(value)}</h2><p>${esc(note)}</p></div>`).join('')}</div><div class="actions" style="margin-top:24px">${btn('录入专家评价','expert-upload','primary')}${btn('核验存储字节','storage-verify')}</div><div id="acceptance-result"></div>`,'',true);
   $('[data-action="expert-upload"]',$('.modal')).onclick=()=>{modal('导入专家评价',`<div class="field"><label>专家评价文件</label><input type="file" id="expert-file" accept=".json"></div><p class="muted">包含审核人、样本编号、建议一致性、关键内容一致性和审核证据。</p><div id="expert-result"></div>`);$('#expert-file').onchange=async e=>{try{let body;try{body=JSON.parse(await e.target.files[0].text())}catch{throw new Error('评价文件格式不正确，请选择有效的评价文件')}const result=await post('/acceptance/expert',body);$('#expert-result').innerHTML=`<div class="info-note">已录入 ${result.sample_count} 个专家样本</div>`}catch(e){toast(e.message)}}};
@@ -653,11 +668,12 @@ async function chatModal(){
   };
 }
 async function action(name,element){try{
-  if(name==='expand-model-rules'){const m=state.model;modal('变量与计算规则',m.variables.map(v=>`<article class="full-model-rule"><h3>${esc(v.label)} <small>${esc(v.unit||'')}</small></h3>${v.type==='stock'?`<p><span>初始状态</span>${esc(readableExpression(v.initial,m))}</p>`:''}<p><span>${v.type==='stock'?'变化速度':'计算公式'}</span>${esc(readableExpression(v.type==='stock'?v.rate:v.formula,m))}</p></article>`).join(''),'',true);return}
+  if(name==='expand-model-rules'){const m=state.model;modal('变量与计算规则',`<div class="rule-guide"><strong>阅读提示</strong><span>先看变量用途，再查看初始状态和变化关系。</span></div><div class="full-model-rule-grid">${m.variables.map(v=>`<article class="full-model-rule"><header><h3>${esc(v.label)}</h3><span>${esc({stock:'风险存量',aux:'计算指标'}[v.type]||'模型变量')}${v.unit?' · '+esc(displayUnit(v.unit)):''}</span></header>${v.type==='stock'?`<div><b>初始状态</b><p>${esc(readableExpression(v.initial,m))}</p></div>`:''}<div><b>${v.type==='stock'?'变化关系':'计算关系'}</b><p>${esc(readableExpression(v.type==='stock'?v.rate:v.formula,m))}</p></div></article>`).join('')}</div>`,'',true);$('.modal').classList.add('rules-modal');return}
   if(name==='edit-sd-model'){await sdUI.editModel();return}
   if(name==='factor-evidence'){await sdUI.showEvidence();return}
   if(name==='reset-model-params'){state.modelParameters=state.modelParameters||{};state.modelParameters[state.model.id]={};$$('[data-param]').forEach(i=>i.value=state.model.parameters[i.dataset.param].value);return}
   if(name==='settings')return settingsModal();if(name==='acceptance')return acceptanceModal();if(name==='chat')return chatModal();if(name==='report-history')return reportHistory();if(name==='upload')return uploadModal();if(name==='new-record')return recordModal({},false);
+  if(name==='validate-report')return reportValidationModal();
   if(name==='retry-report'){$('#report-form')?.requestSubmit();return}
   if(name==='help')return helpModal();if(name==='expand-chart')return expandSimulationChart();
   if(name==='select-application-model')return openApplicationModels(element);
@@ -684,11 +700,12 @@ document.addEventListener('click',event=>$$('.more-menu[open]').forEach(menu=>{i
 document.addEventListener('touchstart',()=>{},{passive:true});
 window.onpopstate=()=>{state.view=location.pathname.endsWith('/agent')?'reports':'gallery';render()};
 async function init(){try{
+  document.documentElement.classList.toggle('reduce-motion',localStorage.getItem('risk-agent:reduced-motion')==='on');
   [state.config,state.overview,state.models,state.reports]=await Promise.all([api('/config'),api('/overview'),api('/models'),api('/reports')]);
   state.filters.start=state.filters.start||state.overview.dates.START_DATE||'2020-01-01';state.filters.end=state.filters.end||state.overview.dates.END_DATE||'2026-10-13';
   state.llmModel=state.llmModel||state.config.llm.model;
   if(!state.selected.size)state.selected=new Set(['企业数量','事故总数','月度分布','事故类型分布','人员因素频次','管理因素频次','因素关联强度','死亡人数','直接经济损失','当前综合风险指数','预测末期风险指数','重点风险治理任务数']);
   state.model=fixedModel(state.filters.industry)||state.models[0];render();window.agentStartup?.complete();if(state.view!=='gallery')await resumeReportJob();
 }catch(e){window.agentStartup?.fail('应用连接失败：'+e.message);toast(e.message)}}
-sdUI=createSdWorkbench({state,api,post,modal,closeModal,toast,esc,btn,icon,$,$$,modelLabels,readableExpression,expressionTokens,render,refresh,loadModelValidation});
+sdUI=createSdWorkbench({state,api,post,modal,closeModal,toast,esc,btn,icon,$,$$,modelLabels,readableExpression,expressionTokens,displayUnit,render,refresh,loadModelValidation});
 init();

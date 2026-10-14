@@ -11,16 +11,23 @@ const BASE=process.env.QA_BASE_URL||'http://127.0.0.1:8001';
  await page.route('**/api/reports/review-preview-test/html',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>报告</title><h1>风险研判与预测分析报告</h1>'}));
  await page.route('**/api/reports/review-preview-test/review',async route=>{const body=route.request().postDataJSON();saved.push(body);await route.fulfill({contentType:'application/json',body:JSON.stringify({...body,updated_at:'2026-10-14T00:10:00+08:00',updated_by:'test'})})});
  try{
-  await page.goto(BASE+'/agent');await page.waitForSelector('#report-form');assert.equal(await page.locator('.identity-mark').count(),0);
+  await page.goto(BASE+'/agent');
+  if(await page.locator('#login-credential').count()){
+   assert(process.env.QA_PASSWORD,'QA_PASSWORD is required when access protection is enabled');
+   await page.locator('#login-credential').fill(process.env.QA_PASSWORD);await page.getByRole('button',{name:'登录',exact:true}).click();
+  }
+  await page.waitForSelector('#report-form');assert.equal(await page.locator('.identity-mark').count(),0);
   await page.getByRole('button',{name:'查看记录',exact:true}).click();await page.getByRole('button',{name:'打开',exact:true}).click();
   await page.waitForSelector('.report-frame');assert(await page.locator('.report-frame').isVisible());
   assert.equal(await page.locator('.report-status').count(),0);assert(!(await page.locator('.report-preview').innerText()).includes('待业务审核'));
-  assert.equal(await page.locator('#report-review-form').count(),1);
+  assert.equal(await page.locator('#report-review-form').count(),0);assert(await page.getByRole('button',{name:'报告验证',exact:true}).isVisible());
   const directory=path.resolve(__dirname,'results');fs.mkdirSync(directory,{recursive:true});
-  await page.screenshot({path:path.join(directory,'report-preview-review.png'),fullPage:true});
+  await page.getByRole('button',{name:'报告验证',exact:true}).click();await page.waitForSelector('#report-review-form');
   await page.locator('#review-conclusion').fill('结论经现场复核后采用');await page.locator('#review-indicators').fill('指标方向和量纲已验证');
-  await page.getByRole('button',{name:'保存验证',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.toast')?.textContent.includes('专家验证已保存'));
-  assert.deepEqual(saved[0],{conclusion:'结论经现场复核后采用',indicator_validation:'指标方向和量纲已验证'});
-  assert.deepEqual(errors,[]);console.log(JSON.stringify({passed:4,checks:['页头无盾牌','报告直接预览','矮版专家验证表单','验证意见保存'],errors}));
+  await page.locator('#review-recommendations-percent').fill('75');await page.locator('#review-content-percent').fill('85');await page.locator('#review-reviewer').fill('测试评审组');
+  await page.screenshot({path:path.join(directory,'report-preview-review.png')});
+  await page.getByRole('button',{name:'保存验证',exact:true}).click();await page.waitForFunction(()=>document.querySelector('.toast')?.textContent.includes('报告验证已保存'));
+  assert.deepEqual(saved[0],{conclusion:'结论经现场复核后采用',indicator_validation:'指标方向和量纲已验证',reviewer:'测试评审组',recommendations_match_percent:75,content_match_percent:85});
+  assert.deepEqual(errors,[]);console.log(JSON.stringify({passed:4,checks:['页头无盾牌','报告直接预览','验证按钮弹窗','两项一致性指标保存'],errors}));
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

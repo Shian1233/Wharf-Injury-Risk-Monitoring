@@ -26,9 +26,10 @@ def test_original_schema_and_source():
 
 def test_report_expert_review_is_saved_with_report(client):
     report_id=uid();db.put_doc('report',report_id,{'id':report_id,'title':'测试报告','created_at':now(),'body_hanzi':3200,'count':1,'status':'已生成'})
-    saved=client.patch('/api/reports/'+report_id+'/review',json={'conclusion':'风险趋势判断需结合现场复核。','indicator_validation':'综合风险指数方向合理，建议补充暴露量。'})
+    saved=client.patch('/api/reports/'+report_id+'/review',json={'conclusion':'风险趋势判断需结合现场复核。','indicator_validation':'综合风险指数方向合理，建议补充暴露量。','reviewer':'专家组','recommendations_match_percent':75,'content_match_percent':85})
     assert saved.status_code==200
     review=saved.json();assert review['conclusion'].startswith('风险趋势') and review['updated_by']=='local-admin'
+    assert review['recommendations_target_met'] is True and review['content_target_met'] is True
     current=next(r for r in client.get('/api/reports').json() if r['id']==report_id)
     assert current['expert_review']['indicator_validation'].startswith('综合风险指数')
     assert client.patch('/api/reports/'+report_id+'/review',json={'conclusion':'','indicator_validation':''}).status_code==422
@@ -141,7 +142,7 @@ def test_report_a4_body_sources_and_expert_honesty(client):
     body={'industry':'工贸','region':'广东省','start':'2024-01-01','end':'2024-12-31','months':3,'model_id':model['id'],'indicators':[x for g in INDICATORS for x in g['items']],'use_llm':False}
     response=client.post('/api/reports',json=body);assert response.status_code==200,response.text
     job=wait(client,response.json()['id']);assert job['status']=='completed',job
-    report=job['result'];assert report['body_hanzi']>=3000 and report['status']=='规则文本草稿'
+    report=job['result'];assert report['body_hanzi']>=3000 and report['status']=='待业务审核'
     from bs4 import BeautifulSoup
     text=client.get('/api/reports/'+report['id']+'/html').text;soup=BeautifulSoup(text,'html.parser')
     assert len(soup.select('h2[data-section-number]'))==7
@@ -169,6 +170,8 @@ def test_no_key_in_public_configuration(client):
 
 def test_password_login_uses_hash_and_session_cookie(client,monkeypatch):
     from app.auth import hash_password,verify_password
+    with pytest.raises(ValueError): hash_password('12345')
+    assert hash_password('123456').startswith('pbkdf2_sha256$')
     encoded=hash_password('correct-horse-battery-staple')
     assert 'correct-horse' not in encoded
     monkeypatch.setenv('AUTH_MODE','password');monkeypatch.setenv('APP_PASSWORD_HASH',encoded)

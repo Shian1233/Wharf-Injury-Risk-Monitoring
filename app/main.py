@@ -108,10 +108,14 @@ class ReportInput(Filters):
 class ReportReviewInput(BaseModel):
     conclusion:str=Field(default='',max_length=4000)
     indicator_validation:str=Field(default='',max_length=4000)
+    reviewer:str=Field(default='',max_length=100)
+    recommendations_match_percent:float|None=Field(default=None,ge=0,le=100)
+    content_match_percent:float|None=Field(default=None,ge=0,le=100)
     @model_validator(mode='after')
     def check_review(self):
         self.conclusion=self.conclusion.strip();self.indicator_validation=self.indicator_validation.strip()
-        if not self.conclusion and not self.indicator_validation: raise ValueError('请至少填写一项研判或验证意见')
+        self.reviewer=self.reviewer.strip()
+        if not self.conclusion and not self.indicator_validation and self.recommendations_match_percent is None and self.content_match_percent is None: raise ValueError('请至少填写一项验证结果')
         return self
 
 @app.get('/api/health')
@@ -378,7 +382,10 @@ def report_evidence(id:str):
 @app.patch('/api/reports/{id}/review')
 def report_review(id:str,body:ReportReviewInput,request:Request):
     actor=authorize(request,'editor'); report=get_or_404('report',id)
-    review={**body.model_dump(),'updated_at':now(),'updated_by':actor['sub']}
+    values=body.model_dump(exclude_none=True)
+    if 'recommendations_match_percent' in values: values['recommendations_target_met']=values['recommendations_match_percent']>70
+    if 'content_match_percent' in values: values['content_target_met']=values['content_match_percent']>80
+    review={**values,'updated_at':now(),'updated_by':actor['sub']}
     report['expert_review']=review;db.put_doc('report',id,report)
     db.audit(actor['sub'],'review_report',id,{'fields':[k for k,v in body.model_dump().items() if v]})
     return review

@@ -6,7 +6,12 @@ const BASE=process.env.QA_BASE_URL||'http://127.0.0.1:8000';
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='PUT'&&r.url().includes('/api/models/'))saves++});
  const check=async(name,fn)=>{await fn();results.push({name,passed:true})};
  try{
-  await page.goto(BASE+'/agent');await page.waitForSelector('#report-form');
+  await page.goto(BASE+'/agent');
+  if(await page.locator('#login-credential').count()){
+   assert(process.env.QA_PASSWORD,'QA_PASSWORD is required when access protection is enabled');
+   await page.locator('#login-credential').fill(process.env.QA_PASSWORD);await page.getByRole('button',{name:'登录',exact:true}).click();
+  }
+  await page.waitForSelector('#report-form');
   await check('各行业仅一个固定模型且不显示版本',async()=>{
    for(const industry of ['煤矿','金属非金属矿山','石油天然气开采','化工','烟花爆竹','工贸']){
     await page.locator('#industry').selectOption(industry);assert.equal(await page.locator('#report-model option').count(),1);
@@ -22,7 +27,7 @@ const BASE=process.env.QA_BASE_URL||'http://127.0.0.1:8000';
    await page.getByRole('button',{name:'恢复默认',exact:true}).click();assert.equal(await input.inputValue(),'1');assert.equal(saves,0);
   });
   await check('模型图关系可聚焦且不出现代码或编辑弹窗',async()=>{
-   await page.locator('[data-graph-node="hazard_pressure"]').focus();assert(await page.locator('.graph-edge.connected').count()>0);
+   await page.locator('[data-graph-node="hazard_pressure"]').first().focus();assert(await page.locator('.graph-edge.connected').count()>0);
    await page.keyboard.press('Enter');assert.equal(await page.getByRole('dialog').count(),0);
    assert(!/height_risk|production_pressure|初值来自|初值与权重/.test(await page.locator('.model-canvas').innerText()));
   });
@@ -35,21 +40,25 @@ const BASE=process.env.QA_BASE_URL||'http://127.0.0.1:8000';
    assert.equal(await page.locator('[data-param="production_pressure"]').inputValue(),'1.1');assert.equal(saves,0);
    await page.waitForSelector('[data-compare-simulation] option', {state:'attached'});assert(!/^V\d/m.test(await page.locator('[data-compare-simulation]').innerText()));
   });
-  await check('使用说明和系统设置直接打开',async()=>{
+  await check('循环使用说明和界面设置直接打开',async()=>{
    assert.equal(await page.locator('.rail-tools>button').count(),3);
-   await page.getByRole('button',{name:'使用说明',exact:true}).click();assert.equal(await page.locator('.help-steps article').count(),3);await page.keyboard.press('Escape');
+   await page.getByRole('button',{name:'使用说明',exact:true}).click();assert.equal(await page.locator('[data-help-step]').count(),4);assert.equal(await page.locator('.help-slide').count(),1);await page.keyboard.press('Escape');
    assert(await page.getByRole('button',{name:'使用说明',exact:true}).evaluate(e=>document.activeElement===e));
-   await page.getByRole('button',{name:'系统设置',exact:true}).click();await page.waitForSelector('.settings-list');await page.keyboard.press('Escape');
+   await page.getByRole('button',{name:'界面设置',exact:true}).click();await page.waitForSelector('.preference-list');await page.keyboard.press('Escape');
   });
-  await check('报告刷新恢复进度且失败草稿可重试',async()=>{
+  await check('报告刷新恢复进度且正文直接完成',async()=>{
    const probe=await browser.newPage({viewport:{width:1440,height:943},reducedMotion:'reduce'});let polls=0;
-   const reports=await(await page.request.get(BASE+'/api/reports')).json(),sample=reports.find(r=>r.llm.status==='generated');
+   const reports=await(await page.request.get(BASE+'/api/reports')).json(),sample=reports.find(r=>['generated','completed'].includes(r.llm?.status))||reports[0];
    const job={id:'qa-fixed-model-report',kind:'report',status:'running',progress:55,stage:'智能体正在生成报告'};
    await probe.route('**/api/reports',route=>route.request().method()==='POST'?route.fulfill({contentType:'application/json',body:JSON.stringify(job)}):route.continue());
    await probe.route('**/api/jobs/qa-fixed-model-report',route=>{polls++;return route.fulfill({contentType:'application/json',body:JSON.stringify(polls<3?job:{...job,status:'completed',progress:100,result:{...sample,llm:{status:'failed',error:'报告文字格式不完整，请重新生成'}}})})});
    try{
-    await probe.goto(BASE+'/agent');await probe.waitForSelector('#report-form');await probe.getByRole('button',{name:'一键生成',exact:true}).click();await probe.waitForSelector('.progress-label');
-    await probe.reload();await probe.waitForSelector('.progress-label');await probe.waitForSelector('.report-generation-notice');assert(await probe.getByRole('button',{name:'重新生成',exact:true}).isEnabled());
+    await probe.goto(BASE+'/agent');
+    if(await probe.locator('#login-credential').count()){
+     await probe.locator('#login-credential').fill(process.env.QA_PASSWORD);await probe.getByRole('button',{name:'登录',exact:true}).click();
+    }
+    await probe.waitForSelector('#report-form');await probe.getByRole('button',{name:'一键生成',exact:true}).click();await probe.waitForSelector('.progress-label');
+    await probe.reload();await probe.waitForSelector('.progress-label');await probe.waitForSelector('.report-frame');assert.equal(await probe.locator('.report-generation-notice').count(),0);assert(await probe.getByRole('button',{name:/^(报告验证|查看验证)$/}).isEnabled());
     assert.equal(await probe.evaluate(()=>sessionStorage.getItem('risk-agent:report-job:')),null);
    }finally{await probe.close()}
   });

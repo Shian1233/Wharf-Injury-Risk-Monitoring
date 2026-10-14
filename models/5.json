@@ -44,7 +44,7 @@
       "value": 0.18,
       "min": 0,
       "max": 1,
-      "unit": "1/月",
+      "unit": "月⁻¹",
       "dimension": -1,
       "source": "机制假设，尚未经历史数据或专家标定",
       "scenario": true
@@ -81,7 +81,7 @@
       "value": 0.25,
       "min": 0.01,
       "max": 2,
-      "unit": "1/月",
+      "unit": "月⁻¹",
       "dimension": -1,
       "source": "机制假设，尚未经历史数据或专家标定"
     },

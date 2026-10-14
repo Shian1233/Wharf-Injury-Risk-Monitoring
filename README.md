@@ -21,7 +21,7 @@
 
 ## 设置访问密码
 
-双击根目录的 **设置访问密码.cmd**，在本机终端中输入两次密码，再重启服务。密码至少12个字符，只以 PBKDF2-SHA256 哈希写入被 Git 忽略的 `.env`；明文不会显示、写入日志或提交到仓库。启用后，接口数据需要先登录，浏览器使用 HttpOnly、SameSite 会话 Cookie；同一来源连续登录失败5次会暂时限流。
+双击根目录的 **设置访问密码.cmd**，在本机终端中输入两次密码，再重启服务。密码至少6个字符，只以 PBKDF2-SHA256 哈希写入被 Git 忽略的 `.env`；明文不会显示、写入日志或提交到仓库。启用后，接口数据需要先登录，浏览器使用 HttpOnly、SameSite 会话 Cookie；同一来源连续登录失败5次会暂时限流。
 
 也可以在终端执行：
 
@@ -29,6 +29,10 @@
 .venv\Scripts\python.exe scripts\set_password.py
 .\重启智能体.cmd
 ```
+
+## 临时公网分享
+
+设置密码并重启后，双击 **分享公网链接.cmd** 可建立 Cloudflare Quick Tunnel，并在窗口中显示一个 HTTPS 分享链接；双击 **停止公网分享.cmd** 可立即停止访问。Quick Tunnel 不需要 Cloudflare 账号，链接会在隧道重启后变化，并且只在本机、应用和隧道进程保持运行时有效。
 
 新机器安装 Python 3.12+、Node.js 22+，执行 `npm install --omit=dev`；Windows使用Edge导出PDF，其他系统需安装Playwright浏览器。首次启动可建立Python环境和初始化数据；报告文字生成需在服务端 `.env` 配置密钥。详细部署步骤见 `docs/DEPLOYMENT.md`。
 

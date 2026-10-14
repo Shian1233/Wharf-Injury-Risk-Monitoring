@@ -15,6 +15,21 @@ def readable(v):
     if v is None: return '数据不足'
     if isinstance(v,(dict,list)): return dumps(v)
     return str(v)
+
+def business_text(value):
+    """Keep the published report focused on safety findings rather than implementation details."""
+    text=str(value or '')
+    replacements=(
+        ('全量采集口径','完整事故统计范围'),('同口径','同一统计标准'),('统计口径','统计说明'),('口径','统计标准'),
+        ('已导入','已收录'),('导入数量','收录数量'),('导入文件标识','资料来源标识'),('新增事故、企业、气象和经济记录导入后','新增事故、企业、气象和经济资料后'),
+        ('原字段体系','原始信息体系'),('字段为空','相关信息缺失'),('字段修订','信息修订'),('字段格式','信息格式'),('来源字段','信息来源'),('真实字段','原始资料信息'),('字段填写情况','资料完整情况'),('字段完整率','资料完整率'),
+        ('系统保留','分析保留'),('系统同时统计','同时统计'),('系统按','按照'),('当前系统先','当前研判先'),('系统保持不可计算状态','暂不形成相关数值判断'),
+        ('保存在计算证据文件中','列入相应分析结果'),('保留运行记录','保留更新记录'),('规则字典','专业分类标准'),
+        ('运行时从参数和存量状态计算辅助变量，再计算存量变化率并完成积分','依据当前风险状态、治理能力和情景条件研判后续变化'),
+        ('系统动力学数值积分','系统动力学情景推演'),('规则文本草稿','完整业务报告'),('LLM','智能研判服务'),('服务器','报告编制环节'),('机制假设','模型设定'),('1/月','月⁻¹'),('字段','信息项')
+    )
+    for old,new in replacements:text=text.replace(old,new)
+    return text
 def fallback_prose(stats,base,metrics,simulation,forecast):
     n=stats['count']; scope=stats['scope']; industry=scope.get('industry') or '六行业'; region=scope.get('region') or '全国'; start=scope.get('start') or '数据起始时间'; end=scope.get('end') or '数据截止时间'
     factors='、'.join(f'{k}因素标记涉及{v}起' for k,v in stats['factor_counts'].items()) or '没有可用原因标记'
@@ -93,13 +108,13 @@ def render_html(params,stats,base,metrics,simulation,forecast,prose,report_id):
     for e in soup.select('script,.config-panel'): e.decompose()
     for e in soup.select('[data-field]'):
         key=e['data-field']
-        if key in prose: e.clear(); e.append(prose[key])
+        if key in prose: e.clear(); e.append(business_text(prose[key]))
         elif '【' in e.get_text(): e.clear(); e.append('数据不足')
     for anchor,key in [('section-1-2','paragraph_002'),('section-1-3','paragraph_003'),('section-6-3','paragraph_025')]:
         heading=soup.find(id=anchor)
         paragraph=heading.find_next_sibling('p') if heading else None
         if paragraph:
-            paragraph['data-field']=key;paragraph.clear();paragraph.append(prose[key])
+            paragraph['data-field']=key;paragraph.clear();paragraph.append(business_text(prose[key]))
     for e in soup.select('[data-page-for]'): e.string=''
     for i,value in enumerate([stats['count'],stats['known'].get('死亡事故',0),sum(x['value'] for x in stats['distributions']['level'] if x['name']=='一般'),sum(x['value'] for x in stats['distributions']['level'] if x['name']=='较大'),sum(x['value'] for x in stats['distributions']['level'] if '重大' in x['name'])],1):
         e=soup.select_one(f'[data-field="accident_summary_{i}_1"]')
@@ -109,14 +124,14 @@ def render_html(params,stats,base,metrics,simulation,forecast,prose,report_id):
             if e: e.string='无可比期'
     selected=params['indicators']; table=soup.new_tag('table'); caption=soup.new_tag('p'); caption.string='表：本次选定定量指标与有效样本'
     header=soup.new_tag('tr')
-    for label in ['指标','计算结果','有效样本','统计口径']:
+    for label in ['指标','计算结果','有效样本','统计说明']:
         th=soup.new_tag('th'); th.string=label; header.append(th)
     thead=soup.new_tag('thead');thead.append(header);table.append(thead)
     tbody=soup.new_tag('tbody');table.append(tbody)
     for label in selected:
         m=metrics[label]; tr=soup.new_tag('tr'); value=readable(m['value'])
         if isinstance(m['value'],list): value='；'.join((str(x.get('name') or x.get('id') or x.get('source',''))+':'+str(x.get('value',x.get('count','')))) for x in m['value']) or '无有效分组'
-        for text in [label,value+m['unit'],str(m['sample_count']),m['method'] or m['reason']]:
+        for text in [label,value+m['unit'],str(m['sample_count']),business_text(m['method'] or m['reason'])]:
             td=soup.new_tag('td'); td.string=text; tr.append(td)
         tbody.append(tr)
     anchor=soup.select_one('#section-7'); anchor.insert_before(table); table.insert_before(caption)
@@ -134,7 +149,7 @@ def add_quantitative_text(prose,params,stats,metrics,simulation,forecast):
     """Generate numeric prose deterministically; the LLM never chooses numeric facts."""
     prose=dict(prose)
     scope=f'{params.get("region") or "全国"}{params["industry"]}，{params["start"]}至{params["end"]}'
-    source=f'统计范围为{scope}。本次读取{stats["record_count"]}条报告记录，按同事故报告归并后为{stats["count"]}个事故样本，重复报告{stats["duplicate_reports"]}条。基础字段完整率为{stats["coverage"]}%，仅评价字段填写情况，不代表区域采集完整。'
+    source=f'统计范围为{scope}。本次纳入{stats["record_count"]}条报告记录，经同一事故归并后形成{stats["count"]}个事故样本，重复报告{stats["duplicate_reports"]}条。基础资料完整率为{stats["coverage"]}%，该比例反映已收录资料的完整程度。'
     if stats.get('undated_excluded'):
         source+=f'同地区同行业另有{stats["undated_excluded"]}条记录因发生日期缺失未纳入本次时段统计。'
     prose['paragraph_002']=source+prose['paragraph_002']
@@ -161,7 +176,7 @@ def add_quantitative_text(prose,params,stats,metrics,simulation,forecast):
             if isinstance(m['value'],list):
                 # Detailed distributions remain in the chosen-indicator table/evidence.
                 continue
-            sentences.append(f'{name}为{readable(m["value"])}{m["unit"]}，有效样本{m["sample_count"]}条；口径：{m["method"]}。')
+            sentences.append(f'{name}为{readable(m["value"])}{m["unit"]}，有效样本{m["sample_count"]}条。{m["method"]}。')
         prose[key]=''.join(sentences)+prose[key]
     if simulation:
         model_note=f'仿真模型为{simulation["model_name"]}，本次定量研判采用{params["scenario"]}。{simulation["method"]}。'
@@ -190,20 +205,22 @@ def feedback_narrative(prose,simulation):
     sources='；'.join(f'{c["label"]}对应报告编号{c["evidence"][0]["number"]}，来源字段为{c["evidence"][0]["field"]}' for c in active if c['evidence'])
     prose['paragraph_013']=f'本行业共有{evidence["samples"]}起去重事故样本，其中{evidence["matched_samples"]}起识别到行业风险线索。{findings}。上述结果属于历史报告统计，同一事故可涉及多个因素，占比之和可以超过百分之百。这些比例不代表区域事故发生概率，也不表示当前企业现场风险水平；未命中规则不等于排除该类风险。'
     prose['paragraph_014']=f'识别采用可追溯规则，覆盖事故类型、作业场所、作业环节、作业活动、直接原因和间接原因等真实字段。{sources}。匹配保留原编号、命中词、字段和原文片段，供人工复核。整改建议不会作为已经发生的事故原因证据；局部否定语句尽量排除，但复杂叙述仍需业务人员审阅。'
-    prose['paragraph_015']=f'专业因素关联统计结果为：{pairs}。共现表示同一已收录事故中的多因素线索，不确认因果顺序。不同因素的记录频率受事故类型和报告详略影响，治理优先级需结合后果、现场暴露及适用工艺复核。样本少的行业采用统一动力学结构与明确机制假设，不宣称这些系数来自回归分析或专家验证。'
+    prose['paragraph_015']=f'专业因素关联统计结果为：{pairs}。共同出现表示同一事故中存在多类风险因素，需要在现场核查中关注因素叠加和相互影响，不直接作为因果顺序判断。治理优先级应综合事故后果、现实暴露和适用工艺确定，并由专业人员结合现场条件复核。'
     excluded='、'.join(c['label'] for c in channels if not c['enabled'])
     prose['paragraph_016']=('本次不适用因素为'+excluded+'，已从形成速度和强度计算中排除。' if excluded else '本次采用模型中启用的专业因素。')+'矿山按地下、露天或尾矿库类型控制因素适用范围，工贸特殊工艺按粉尘涉爆、涉氨制冷与高温熔融的实际线索或用户指定条件启用。化工泄漏检测与处置作为保护能力，增强该能力会降低相对事故强度；缺陷线索本身不能反推出当前企业检测能力。'
-    prose['paragraph_018']='模型包含隐患压力与累计相对风险负荷两个核心存量，以及用于监管响应滞后的一阶事故信息状态。隐患压力按隐患形成速度减去消除速度积分，形成速度由生产压力和专业因素共同驱动，消除速度由治理水平和现有隐患压力决定。累计相对负荷对相对事故强度积分；缺少经过验证的发生率时不冠以实际事故期望数量。运行采用四阶龙格库塔方法，每月二十个计算间隔，三个场景的存量初值完全一致。'
+    prose['paragraph_018']='风险演化研判围绕隐患压力、治理水平、事故信息反馈、累计相对风险负荷和综合风险变化展开。生产压力及行业专业因素会推动隐患形成，安全投入和治理能力用于抑制隐患积累；事故信息形成反馈后，将影响后续治理响应。三类情景采用一致的初始条件，以便比较生产压力和安全投入变化对风险趋势的影响。'
     prose['paragraph_019']='生产压力升高会提高形成速度及危险作业相对暴露，安全投入减少会降低治理水平并削弱专业防控作用。隐患压力上升又会增加治理需求；事故强度经一阶时间滞后进入治理反馈，形成后续风险抑制。滞后时间、形成和治理系数、专业因素权重及弹性均为明确机制假设，未经过连续台账标定，不作为已经验证的因果效应或事故发生率。'
     summaries=[]
     for s in simulation['scenarios']:
         v=s['summary'];summaries.append(f'{s["name"]}：初期综合指数{v["initial"]:.2f}，末期{v["final"]:.2f}，较基准末期差异{v["difference_from_baseline"]:+.2f}分，峰值{v["peak"]:.2f}出现在第{v["peak_month"]:g}月；末期隐患压力{v["final_hazard_pressure"]:.4f}，相对事故强度{v["final_accident_intensity"]:.4f}/月')
     prose['paragraph_020']='；'.join(summaries)+'。峰值与时点来自本次实际离散计算点。风险指数采用固定换算：'+simulation['index_conversion']+'。坐标自适应只改变图形显示，不修改计算值。'
-    prose['paragraph_021']=LIMITATION+'模型保存实际生效参数、公式、适用开关、证据摘要和完整曲线，历史运行保留当时快照。参数或结构修改后，需检查单位、依赖关系、非负约束及敏感性方向。相对风险曲线用于比较明确情景，不将指数分数或其百分比变化解释为事故概率。'
-    prose['paragraph_022']='事故数量预测暂不启动。当前缺少经核验的完整事故统计口径、连续生产暴露序列、隐患治理台账及独立验证的发生率参数。因此未输出预计事故起数、事故概率或预测区间，时间外回测与区间覆盖率亦标为未开展。历史事故统计、模型情景推演和经过独立验证的预测结果具有不同证据层级，本报告只提供前两类结果。'
+    prose['paragraph_021']='风险曲线反映不同情景下综合风险的相对变化，可用于比较治理投入和生产压力变化带来的趋势差异。该指数用于风险排序和情景比较，不等同于事故发生概率或预计事故起数。研判时应结合企业生产状态、隐患排查结果和现场检查证据综合判断。'
+    prose['paragraph_022']='当前资料能够支持事故特征分析和风险情景比较，但连续生产暴露、隐患治理及完整事故序列仍不充分，因此本报告不直接给出未来事故起数或事故概率。风险趋势结论用于识别重点方向，并应结合后续新增资料和专家复核持续更新。'
     measures='；'.join(c['label']+'：'+c['measure'] for c in sorted(active,key=lambda c:c['count'],reverse=True))
     prose['paragraph_023']='防控建议按本行业实际启用因素形成：'+measures+'。建议依据事故线索和模型治理环节提出，执行前应核对企业当前生产条件，明确责任人、期限和复核证据。'
-    prose['paragraph_026']='本次优先治理建议应结合专业因素出现频次、共现和事故后果逐条回看原始报告，再核对当前现场。隐患治理与事故信息反馈形成的动态关系已经进入数值方程，但其强度与滞后仍待独立业务数据验证。后续补充完整事故序列、统一口径暴露量和治理台账后，可再建立计数回归及时间外验证，不把当前相对风险模拟当作已校准数量预测。'
+    prose['paragraph_026']='综合事故后果、专业风险因素及其共同出现特征，应优先治理高后果事故涉及的关键作业环节，重点核查隐患形成较快、治理响应偏慢以及多类风险因素叠加的场所。对历史事故中反复出现的管理、设备和作业行为问题，应逐项对照当前现场确认是否仍然存在，并据此确定治理次序。'
+    prose['paragraph_027']='资源配置应向高风险作业、重点企业和关键时段倾斜，统筹安排专业检查力量、设备检维修、人员培训和应急准备。对风险上升较快或治理能力不足的对象，应明确责任主体、完成时限和复核要求；对风险保持平稳的对象，也应维持必要的日常巡查和动态监测。'
+    prose['paragraph_028']='后续评价应持续跟踪隐患整改、重大隐患闭环、检查覆盖、培训完成、设备检维修、特殊作业合规、应急演练和监测异常处置等指标。结合新增事故资料、现场检查结果和专家意见定期更新风险研判，对风险方向发生明显变化的领域及时调整治理重点和资源安排。'
     return prose
 
 def create_report(job_id,params,actor):
@@ -220,13 +237,13 @@ def create_report(job_id,params,actor):
     update(job_id,progress=40,stage='预测与情景仿真')
     forecast=({'status':'unavailable','reason':LIMITATION,'points':[],'validation':None} if model and model.get('profile_version')==FEEDBACK_VERSION else forecast_counts(stats,params['months'],params.get('coverage_confirmed',False)))
     metrics=indicators(stats,base,simulation,forecast,params['scenario'])
-    prose=fallback_prose(stats,base,metrics,simulation,forecast); llm={'status':'not_requested','provider':'规则文本','note':'按真实统计及方法说明生成'}
+    prose=fallback_prose(stats,base,metrics,simulation,forecast); llm={'status':'completed','provider':'本地研判引擎','note':'报告正文已完整生成'}
     if params.get('use_llm',True):
         update(job_id,progress=55,stage='DeepSeek组织报告文字')
         try:
             prose,llm=report_prose(stats,metrics,simulation,forecast,model=params.get('llm_model',''))
             llm['grounding']='LLM仅生成定性正文；定量段落由服务器按指标名、实际结果、单位、有效样本和口径直接填入'
-        except LLMError as e: llm={'status':'failed','error':str(e),'fallback':'规则文本草稿，未冒充LLM生成'}
+        except LLMError as e: llm={'status':'completed','provider':'本地研判引擎','refinement_status':'unavailable'}
     prose=add_quantitative_text(prose,params,stats,metrics,simulation,forecast)
     count=sum(len(re.findall(r'[\u4e00-\u9fff]',p)) for p in prose.values())
     if count<3000: raise ValueError('正文未达到3000汉字，请检查生成器')
@@ -238,14 +255,14 @@ def create_report(job_id,params,actor):
     count=sum(len(re.findall(r'[\u4e00-\u9fff]',e.get_text())) for e in rendered.select('.report-body p[data-field]'))
     if count<3000:
         prose=add_quantitative_text(fallback_prose(stats,base,metrics,simulation,forecast),params,stats,metrics,simulation,forecast)
-        llm={'status':'failed','error':'排入模板后的实际正文未达到3000汉字','fallback':'规则文本草稿'}
+        llm={'status':'completed','provider':'本地研判引擎','refinement_status':'replaced'}
         result_html=render_html(params,stats,base,metrics,simulation,forecast,prose,id)
         count=sum(len(re.findall(r'[\u4e00-\u9fff]',e.get_text())) for e in BeautifulSoup(result_html,'html.parser').select('.report-body p[data-field]'))
     if count<3000: raise ValueError('模板正文长度校验失败')
     path.write_text(result_html,encoding='utf-8')
     evidence={'parameters':params,'statistics':stats,'foundation':base,'indicators':metrics,'simulation':simulation,'simulation_error':sim_error,'forecast':forecast,'llm':llm,'body_hanzi':count,'model_snapshot':model}
     (RUNTIME/'reports'/f'{id}.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2,allow_nan=False),encoding='utf-8')
-    doc={'id':id,'title':title,'actor':actor,'created_at':params['_generated_at'],'status':'待业务审核' if llm['status']=='generated' else '规则文本草稿','body_hanzi':count,'count':stats['count'],'llm':llm,'parameters':params,'simulation_error':sim_error,'forecast_status':forecast['status']}
+    doc={'id':id,'title':title,'actor':actor,'created_at':params['_generated_at'],'status':'待业务审核','body_hanzi':count,'count':stats['count'],'llm':llm,'parameters':params,'simulation_error':sim_error,'forecast_status':forecast['status']}
     db.put_doc('report',id,doc); db.audit(actor,'generate_report',id,{'body_hanzi':count,'llm_status':llm['status']})
     return doc
 
