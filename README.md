@@ -72,6 +72,6 @@ node tests/design-edition.cjs
 .venv\Scripts\python.exe -m pytest tests/test_generation.py tests/test_industry_risk.py -q
 ```
 
-设计副本已在8001完成原业务、设计布局和六行业SD模型专项检查。最新后端完整回归88项通过，SD工作台8项、布局/密集采样4项、报告预览与专家验证4项真实浏览器检查通过且无页面脚本错误。报告生成完成后直接在右侧预览，预览下方可保存研判结论与指标专家验证。PDF导出已实际验证；本轮没有重新调用语言模型生成新报告。细项见 `docs/TEST_RESULTS.md`、`docs/feedback-browser-results.json` 和 `docs/layout-refinement-results.json`。
+当前项目已在8001完成原业务、设计布局和六行业SD模型专项检查。最新后端完整回归91项通过，SD工作台8项、布局/密集采样4项、报告预览与专家验证4项真实浏览器检查通过且无页面脚本错误。报告生成完成后直接在右侧预览，预览下方可保存研判结论与指标专家验证。PDF导出已实际验证；本轮没有重新调用语言模型生成新报告。细项见 `docs/TEST_RESULTS.md`、`docs/feedback-browser-results.json` 和 `docs/layout-refinement-results.json`。
 
 更多文档：[六行业反馈模型](docs/SD_FEEDBACK_MODELS.md)、[接口说明](docs/API.md)、[算法与模型](docs/ALGORITHMS.md)、[测试结果](docs/TEST_RESULTS.md)、[平台部署](docs/DEPLOYMENT.md)。

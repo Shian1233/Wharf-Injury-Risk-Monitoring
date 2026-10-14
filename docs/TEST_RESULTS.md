@@ -2,7 +2,7 @@
 
 ## 2026-10-14 六行业反馈模型与界面收尾
 
-- 后端完整回归：88 项通过、1 个第三方弃用警告，JUnit 见 `feedback-tests.xml`。
+- 后端完整回归：91 项通过、1 个第三方弃用警告；本轮命令行结果已复核，历史 JUnit 见 `feedback-tests.xml`。
 - SD 工作台专项：8 项通过，无页面 JavaScript 错误，见 `feedback-browser-results.json`。
 - 一屏布局、模型图、规则和密集采样：4 项通过，无页面 JavaScript 错误，见 `layout-refinement-results.json`。
 - 当前 8001 服务健康接口返回 `model_engine_version: industry-feedback/3.0`、`simulation_samples_per_month: 20`。
