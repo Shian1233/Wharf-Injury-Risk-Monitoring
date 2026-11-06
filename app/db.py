@@ -57,7 +57,9 @@ class Database:
         statements=[
             f'CREATE TABLE RISK_DOCUMENTS (KIND VARCHAR(40), ID VARCHAR(64), PAYLOAD {large}, CREATED_AT VARCHAR(40), PRIMARY KEY(KIND,ID))',
             'CREATE TABLE RISK_FILES (ID VARCHAR(64) PRIMARY KEY, NAME VARCHAR(512), SIZE_BYTES BIGINT, OBJECT_KEY VARCHAR(512), SHA256 VARCHAR(64) UNIQUE, STATUS VARCHAR(40), CREATED_AT VARCHAR(40))',
-            f'CREATE TABLE RISK_AUDIT (ID VARCHAR(64) PRIMARY KEY, ACTOR VARCHAR(100), ACTION VARCHAR(100), TARGET VARCHAR(100), DETAIL {large}, CREATED_AT VARCHAR(40))']
+            f'CREATE TABLE RISK_AUDIT (ID VARCHAR(64) PRIMARY KEY, ACTOR VARCHAR(100), ACTION VARCHAR(100), TARGET VARCHAR(100), DETAIL {large}, CREATED_AT VARCHAR(40))',
+            'CREATE TABLE RISK_CAS_SESSION (JTI VARCHAR(64) PRIMARY KEY, SERVICE_TICKET VARCHAR(512), USER_ID VARCHAR(200), ROLE VARCHAR(20), CREATED_AT VARCHAR(40), EXPIRES_AT VARCHAR(40), REVOKED_AT VARCHAR(40))',
+            'CREATE TABLE RISK_CAS_USER_ROLE (USER_ID VARCHAR(200) PRIMARY KEY, ROLE VARCHAR(20), UPDATED_BY VARCHAR(100), UPDATED_AT VARCHAR(40))']
         for schema in SCHEMAS:
             columns=[]
             for f in schema['fields']:
@@ -77,6 +79,11 @@ class Database:
                     if DB_BACKEND in {'sqlite','postgres'}: self.execute(f'CREATE INDEX IF NOT EXISTS {name} ON {s["table"]} ({quote(field)})',conn=c)
                     elif not self.query('SELECT INDEX_NAME FROM USER_INDEXES WHERE INDEX_NAME=?',[name],c):
                         self.execute(f'CREATE INDEX {name} ON {s["table"]} ({quote(field)})',conn=c)
+            # 单点登出按服务票据反查会话，必须有索引。
+            for name,table,column in [('RISK_CAS_SESSION_TICKET_IDX','RISK_CAS_SESSION','SERVICE_TICKET')]:
+                if DB_BACKEND in {'sqlite','postgres'}: self.execute(f'CREATE INDEX IF NOT EXISTS {name} ON {table} ({column})',conn=c)
+                elif not self.query('SELECT INDEX_NAME FROM USER_INDEXES WHERE INDEX_NAME=?',[name],c):
+                    self.execute(f'CREATE INDEX {name} ON {table} ({column})',conn=c)
 
     def put_doc(self,kind,id,payload,conn=None):
         if conn is None:

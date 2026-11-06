@@ -642,13 +642,29 @@ async function settingsModal(){
   modal('界面设置',`<div class="preference-intro"><span>${icon('settings')}</span><div><h3>按你的阅读习惯调整</h3><p>这些设置只影响当前浏览器中的显示体验。</p></div></div><div class="preference-list"><label><div><strong>使用说明自动播放</strong><span>打开使用说明后循环展示操作步骤</span></div><input type="checkbox" id="setting-auto-guide" ${guide?'checked':''}></label><label><div><strong>减少动态效果</strong><span>关闭页面切换和弹窗动画，阅读更稳定</span></div><input type="checkbox" id="setting-reduced-motion" ${reduced?'checked':''}></label></div>`);
   $('#setting-auto-guide').onchange=e=>{localStorage.setItem('risk-agent:auto-guide',e.target.checked?'on':'off');toast('界面设置已保存')};
   $('#setting-reduced-motion').onchange=e=>{localStorage.setItem('risk-agent:reduced-motion',e.target.checked?'on':'off');document.documentElement.classList.toggle('reduce-motion',e.target.checked);toast('界面设置已保存')};
+  if(state.config?.auth_mode==='cas'){
+    $('.modal .modal-body').insertAdjacentHTML('beforeend',`<div class="actions" style="margin-top:16px">${btn('退出统一身份认证','cas-logout')}</div>`);
+    $('[data-action="cas-logout"]',$('.modal')).onclick=()=>{(window.top||window).location.href=localURL('/api/auth/cas/logout')};
+  }
 }
 async function acceptanceModal(){const r=await api('/acceptance');const expert=r.expert;modal('功能与验收记录',`<div class="acceptance-grid">${[['结构化数据',r.records.actual.toLocaleString()+' 条','要求超过20万条',r.records.met],['原始资料',bytes(r.storage.actual_bytes),'要求超过3TB',r.storage.met],['行业覆盖','6个行业',r.industries.status,false],['候选指标','6类 × 11项','共66项候选内容',r.indicators.met],['基础字段覆盖',r.coverage.actual_percent+'%',r.coverage.definition,r.coverage.met],['预测验证','待验证',r.prediction.status,false],['专家建议一致性',expert?expert.recommendations_match.percent+'%':'无专家样本',expert?'90%区间：'+expert.recommendations_match.ci90.join('—')+'%':'要求超过70%',false],['关键内容一致性',expert?expert.content_match.percent+'%':'无专家样本',expert?'90%区间：'+expert.content_match.ci90.join('—')+'%':'要求超过80%',false]].map(([title,value,note,met])=>`<div class="acceptance-item"><div class="panel-head" style="margin-bottom:12px"><h3>${title}</h3>${badge(met?'已验证':'待验收',met?'green':'orange')}</div><h2>${esc(value)}</h2><p>${esc(note)}</p></div>`).join('')}</div><div class="actions" style="margin-top:24px">${btn('录入专家评价','expert-upload','primary')}${btn('核验存储字节','storage-verify')}</div><div id="acceptance-result"></div>`,'',true);
   $('[data-action="expert-upload"]',$('.modal')).onclick=()=>{modal('导入专家评价',`<div class="field"><label>专家评价文件</label><input type="file" id="expert-file" accept=".json"></div><p class="muted">包含审核人、样本编号、建议一致性、关键内容一致性和审核证据。</p><div id="expert-result"></div>`);$('#expert-file').onchange=async e=>{try{let body;try{body=JSON.parse(await e.target.files[0].text())}catch{throw new Error('评价文件格式不正确，请选择有效的评价文件')}const result=await post('/acceptance/expert',body);$('#expert-result').innerHTML=`<div class="info-note">已录入 ${result.sample_count} 个专家样本</div>`}catch(e){toast(e.message)}}};
   $('[data-action="storage-verify"]',$('.modal')).onclick=async()=>{const result=await post('/storage/verify',{});$('#acceptance-result').innerHTML=`<div class="info-note">实测 ${bytes(result.verified_bytes)} · ${result.all_verified?'全部文件大小一致':'存在文件异常'}</div>`};
 }
-function loginModal(){
-  if($('#login-credential'))return;
+async function authMode(){
+  if(state.config?.auth_mode)return state.config.auth_mode;
+  // /api/config 需要鉴权，未登录时用免鉴权的模式探测接口决定登录方式。
+  try{const res=await fetch(BASE+'/api/auth/mode');if(res.ok)return (await res.json()).auth_mode||''}catch{}
+  return '';
+}
+async function loginModal(){
+  if($('#login-credential')||$('[data-action="cas-login"]'))return;
+  if(await authMode()==='cas'){
+    modal('统一身份认证',`<p class="muted">本系统使用学校统一身份认证登录，请前往认证页面完成身份校验。</p>`,btn('前往统一身份认证','cas-login','primary','shield'));
+    // 单点登录需要整页跳转；嵌入平台页面时同样跳转顶层窗口。
+    $('[data-action="cas-login"]',$('.modal')).onclick=()=>{(window.top||window).location.href=localURL('/api/auth/cas/login?next='+encodeURIComponent(location.pathname+location.search))};
+    return;
+  }
   modal('访问验证',`<form id="login-form"><p class="muted">请输入管理员设置的访问密码。</p>${field('访问密码','login-credential','','password','autocomplete="current-password" required')}</form>`,btn('登录','login','primary'));
   const submit=async()=>{const credential=$('#login-credential')?.value||'';if(!credential)return;try{await post('/auth/session',{password:credential,token:credential});closeModal();await init()}catch(e){toast(e.message)}};
   $('[data-action="login"]',$('.modal')).onclick=submit;$('#login-form').onsubmit=e=>{e.preventDefault();submit()};

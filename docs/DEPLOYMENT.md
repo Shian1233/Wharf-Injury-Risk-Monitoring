@@ -149,3 +149,40 @@ compose 的可选 MinIO Profile 需要部署方在 `.env.production` 指定已�
 原件流式上传，默认单文件上限 10GB，导入分批写入 500 条，查询分页且筛选字段有索引。3TB 是实际原件总量目标，需配置足够的 MinIO 容量和备份；本地模式不是生产 3TB 验证环境。统计和模型标定会读取所选样本，20万条及更大规模必须做实际性能测试，必要时采用平台批计算与统计缓存。不得通过复制文件、填充空白或生成假记录提高验收量。
 
 定期备份数据库、MinIO、模型版本、报告和审计记录；凭据独立保存。日志在 `runtime/logs`，健康检查 `/api/health`，任务状态 `/api/jobs/{id}`。应用默认不记录 Authorization 或请求正文。原件解析不是恶意软件扫描；公开上传应复用平台已有扫描能力。图片已保存，未配置 OCR，扫描 PDF 不会伪称已经结构化。旧版 `.doc` 需先转换为 `.docx`。
+
+## 6. 接入统一身份认证平台（CAS 单点登录）
+
+平台侧为金智 IDS6.0 统一身份认证，认证接口即 CAS。接入前先在 IDS 管控台（imp）注册应用并授权用户，且把回调地址登记为该应用的 service 地址——未登记的 service 会被平台拒绝。应用侧只用到一次服务端 GET 校验和一段 XML 解析，不引入第三方 CAS 库。
+
+```dotenv
+AUTH_MODE=cas
+CAS_SERVER_URL_PREFIX=https://authserver.实际域名/authserver
+CAS_SERVICE_URL=https://实际域名/risk-agent/api/auth/cas/callback
+CAS_VERIFY_SSL=true
+CAS_ATTR_ID=alias
+CAS_ATTR_NAME=cn
+CAS_DEFAULT_ROLE=viewer
+CAS_NEXT_ALLOWLIST=/risk-agent/
+SESSION_SECRET=至少32字符的独立随机会话密钥
+```
+
+流程：`GET /api/auth/cas/login` 跳转 IDS 登录页并携带 `service`；认证后 IDS 回跳 `GET /api/auth/cas/callback?ticket=...`；服务端调用 `{CAS_SERVER_URL_PREFIX}/serviceValidate` 校验票据，成功即签发本地 `risk_session` 并 302 到不含票据的干净地址（服务票据一次性，刷新页面不能再带 `ticket`）。`GET /api/auth/cas/logout` 撤销本地会话后跳转 IDS 登出地址。单点登出由 IDS 反向推送 `logoutRequest` 实现——**通知送达的是 service 地址，也就是回调地址本身**，因此 `POST /api/auth/cas/callback` 与 `POST /api/auth/cas/slo`（等价别名，便于联调）都会按 `SessionIndex` 撤销对应会话。
+
+角色不取自信任域外的 CAS 属性，一律来自本地授权表 `RISK_CAS_USER_ROLE`；未登记用户使用 `CAS_DEFAULT_ROLE`，将其设为 `none` 可改为仅允许已登记账号登录。
+
+```sql
+INSERT INTO RISK_CAS_USER_ROLE (USER_ID, ROLE, UPDATED_BY, UPDATED_AT) VALUES ('zhangsan', 'editor', 'local-admin', '2026-10-16T00:00:00+00:00');
+```
+
+| 变量 | 说明 |
+| --- | --- |
+| `CAS_SERVER_URL_PREFIX` | 必填。IDS 地址，含 `/authserver` 上下文，**不带** `login` |
+| `CAS_SERVICE_URL` | 与平台登记的 service 完全一致。反代加 `PUBLIC_BASE_PATH` 时由请求头推导容易不一致，生产必须显式配置 |
+| `CAS_SERVICE_ORIGIN` / `CAS_SERVICE_HOSTS` | 未配置 `CAS_SERVICE_URL` 时的推导依据；用于阻止伪造 Host 头导致票据外泄 |
+| `CAS_VALIDATE_SUFFIX` | 平台为 CAS 3.0 时改为 `p3/serviceValidate` |
+| `CAS_VERIFY_SSL` | 保持 `true`。IDS 使用自签证书时把证书链装入系统或容器信任库，不要关闭校验 |
+| `CAS_LOGOUT_SERVICE` | 登出后 IDS 的回跳地址，默认应用首页 |
+| `CAS_SESSION_TTL` | 本地会话有效期，与 IDS 会话相互独立 |
+| `CAS_NEXT_ALLOWLIST` | 登录后回跳地址白名单，留空表示允许本应用内任意路径 |
+
+票据等同口令：日志只记录校验失败原因，不记录票据内容；`next` 只允许站内路径，`service` 由服务端配置生成而不采纳请求参数；校验请求不跟随跳转，`logoutRequest` 用 `defusedxml` 解析以阻断外部实体。`AUTH_MODE=cas` 同时接受平台签发的 HS256 JWT（`Authorization: Bearer`），因此门户嵌入与独立访问可以并存。会话 Cookie 使用 `SameSite=strict`，门户与应用跨站部署时需评估改为 `lax`。

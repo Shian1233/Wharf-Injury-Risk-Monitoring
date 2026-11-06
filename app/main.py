@@ -3,10 +3,11 @@ from pathlib import Path
 from typing import Any
 import os, re, json, hashlib, logging, csv, io, tempfile, shutil
 import threading
+from urllib.parse import quote as url_quote
 from starlette.concurrency import run_in_threadpool
 from starlette._utils import get_route_path
-from fastapi import FastAPI, Request, HTTPException, UploadFile, File, Form, Query
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse, HTMLResponse
+from fastapi import FastAPI, Request, Response, HTTPException, UploadFile, File, Form, Query
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field, model_validator
 from .config import ROOT,RUNTIME,SCHEMAS,SCHEMA,INDICATORS,INDUSTRIES,ALLOWED_EXT,MAX_UPLOAD_BYTES,DB_BACKEND,STORAGE_BACKEND
@@ -19,7 +20,8 @@ from .sd import initialize_models,validate,simulate,import_vensim
 from .sd_feedback import PROFILE_VERSION as FEEDBACK_VERSION
 from .sd_factors import extract as extract_sd_factors
 from .reports import create_report,render_pdf
-from .auth import authorize, token_role, session_token, platform_identity, verify_password, login_retry_after, record_login
+from .auth import authorize, token_role, session_token, platform_identity, verify_password, login_retry_after, record_login, decode_session, cas_user_role, cas_session_active, cas_session_create, cas_session_revoke, cas_session_revoke_ticket, cas_session_ttl
+from . import cas
 from .llm import ask,configured,complete,LLMError,available_models,resolve_model
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s %(levelname)s %(name)s %(message)s',handlers=[logging.FileHandler(RUNTIME/'logs/app.log',encoding='utf-8'),logging.StreamHandler()])
@@ -32,11 +34,14 @@ async def lifespan(app):
 
 app=FastAPI(title='安全生产风险研判与预测智能体',version='1.0.0',lifespan=lifespan,docs_url='/api/docs',openapi_url='/api/openapi.json',root_path=os.getenv('PUBLIC_BASE_PATH','').rstrip('/'))
 import_lock=threading.Lock()
+# 认证入口自身必须免鉴权，否则回调还没建立会话就被拦截。
+PUBLIC_API={'/api/auth/session','/api/health','/api/auth/mode'}
+PUBLIC_API_PREFIX=('/api/auth/cas/',)
 @app.middleware('http')
 async def guard(request,call_next):
     route_path=get_route_path(request.scope)
     try:
-        if route_path.startswith('/api/') and route_path not in ['/api/auth/session','/api/health']:
+        if route_path.startswith('/api/') and route_path not in PUBLIC_API and not route_path.startswith(PUBLIC_API_PREFIX):
             authorize(request)
         response=await call_next(request)
     except HTTPException as e: response=JSONResponse({'detail':e.detail},status_code=e.status_code)
@@ -145,6 +150,92 @@ async def login(request:Request):
     else: raise HTTPException(503,'当前认证模式不支持登录')
     if not role: raise HTTPException(401,'访问凭据无效')
     response=JSONResponse({'role':role}); response.set_cookie('risk_session',session_token(role,subject),httponly=True,secure=request.url.scheme=='https',samesite='strict',max_age=8*3600,path=os.getenv('PUBLIC_BASE_PATH','') or '/')
+    return response
+def cookie_path(): return os.getenv('PUBLIC_BASE_PATH','') or '/'
+def cookie_secure(request):
+    """反向代理终止 TLS 时按 X-Forwarded-Proto 判定，避免安全属性丢失。"""
+    forwarded=str(request.headers.get('x-forwarded-proto','') or '').split(',')[0].strip().lower()
+    return request.url.scheme=='https' or forwarded=='https'
+def cas_logged_in(request):
+    """CAS 模式下是否存在仍然有效的本地会话：已登记、未过期、未被单点登出撤销。"""
+    claims=decode_session(request.cookies.get('risk_session',''))
+    return bool(claims and cas_session_active(claims.get('jti','')))
+@app.get('/api/auth/mode')
+def auth_mode(): return {'auth_mode':os.getenv('AUTH_MODE','local')}
+@app.get('/api/auth/cas/login')
+def cas_login(request:Request,next:str=''):
+    """跳转统一身份认证平台；回跳地址暂存于短时 cookie，不放进 service。"""
+    try: target=cas.safe_next(next)
+    except cas.CasError as e: raise HTTPException(400,str(e))
+    try: response=RedirectResponse(cas.login_redirect_url(cas.service_url(request)),status_code=302)
+    except cas.CasError as e: raise HTTPException(503,str(e))
+    response.set_cookie('cas_next',target,httponly=True,secure=cookie_secure(request),samesite='lax',max_age=600,path=cookie_path())
+    return response
+@app.get('/api/auth/cas/entry')
+def cas_entry(request:Request,next:str='/agent'):
+    """返回本环境的认证入口、IDS 登录地址与 service，供门户配置和 imp 登记核对。
+
+    service 是给 IDS 回跳用的回调地址，不是前端页面地址；next 才是登录后的落地页。
+    """
+    try: target=cas.safe_next(next)
+    except cas.CasError as e: raise HTTPException(400,str(e))
+    try:
+        service=cas.service_url(request)
+        ids_login_url=cas.login_redirect_url(service)
+    except cas.CasError as e: raise HTTPException(503,str(e))
+    base=os.getenv('PUBLIC_BASE_PATH','').rstrip('/')
+    return {'login_url':f'{base}/api/auth/cas/login?next={url_quote(target,safe="")}',
+            'ids_login_url':ids_login_url,'service':service,'next':target}
+@app.get('/api/auth/cas/callback')
+def cas_callback(request:Request,ticket:str=''):
+    """接收服务票据：服务端校验后签发本地会话，再跳回不含票据的干净地址。"""
+    if not ticket: raise HTTPException(400,'缺少统一身份认证票据')
+    try: assertion=cas.validate_ticket(ticket,cas.service_url(request))
+    except cas.CasError as e:
+        # 票据等同口令，只记录失败原因，不记录票据内容。
+        logging.getLogger('risk').warning('统一身份认证票据校验失败：%s',e)
+        raise HTTPException(401,'统一身份认证未通过，请重新登录') from None
+    subject=cas.subject(assertion)
+    if not subject: raise HTTPException(401,'统一身份认证未返回用户标识')
+    role=cas_user_role(subject)
+    if not role:
+        logging.getLogger('risk').warning('统一身份认证账号未授权：%s',subject)
+        raise HTTPException(403,'该账号未开通本系统访问权限')
+    try: target=cas.safe_next(request.cookies.get('cas_next',''))
+    except cas.CasError: target=cas.safe_next('')
+    ttl=cas_session_ttl(); jti=uid()
+    cas_session_create(jti,ticket,subject,role,ttl)
+    db.audit(subject,'cas-login','risk-agent',{'role':role})
+    response=RedirectResponse(target,status_code=302)
+    response.set_cookie('risk_session',session_token(role,subject,jti=jti,ttl=ttl),httponly=True,secure=cookie_secure(request),samesite='strict',max_age=ttl,path=cookie_path())
+    response.delete_cookie('cas_next',path=cookie_path())
+    return response
+# IDS 把单点登出通知推送到 service 地址（即回调地址），/slo 作为等价别名保留便于联调。
+@app.post('/api/auth/cas/callback')
+@app.post('/api/auth/cas/slo')
+async def cas_single_logout(request:Request):
+    """CAS 反向单点登出通知：按 SessionIndex 撤销本地会话，始终返回 200。"""
+    ticket=cas.logout_ticket(await request.form())
+    if ticket:
+        revoked=cas_session_revoke_ticket(ticket)
+        if revoked: logging.getLogger('risk').info('统一身份认证单点登出：撤销 %d 个会话',revoked)
+    return Response('ok',media_type='text/plain')
+@app.get('/api/auth/cas/logout')
+def cas_logout(request:Request):
+    """登出。
+
+    默认（global）跳转 IDS 结束全局单点会话；若门户等其他系统共用同一 IDS，
+    这会把门户一并注销。需要互不影响时设 CAS_LOGOUT_MODE=local，只清本机会话。
+    """
+    claims=decode_session(request.cookies.get('risk_session',''))
+    if claims: cas_session_revoke(claims.get('jti',''))
+    if os.getenv('CAS_LOGOUT_MODE','global').strip().lower()=='local':
+        # 带 sso=off 回首页，避免未登录页面再次自动跳转认证，出现"退出即登录"。
+        response=RedirectResponse(f'{cas.base_path()}/?sso=off',status_code=302)
+    else:
+        try: response=RedirectResponse(cas.logout_redirect_url(cas.home_url(request)),status_code=302)
+        except cas.CasError as e: raise HTTPException(503,str(e))
+    response.delete_cookie('risk_session',path=cookie_path())
     return response
 @app.get('/api/config')
 def config(request:Request):
@@ -466,9 +557,16 @@ def audit(request:Request):
 app.mount('/assets',StaticFiles(directory=ROOT/'frontend'),name='assets')
 @app.get('/agent')
 @app.get('/')
-def page():
+def page(request:Request):
     base=os.getenv('PUBLIC_BASE_PATH','').rstrip('/')
     if base and not re.fullmatch(r'(?:/[A-Za-z0-9_-]+)+',base): raise ValueError('PUBLIC_BASE_PATH格式无效')
+    # CAS 模式下未登录访问页面直接跳认证：门户/邮件里的链接点开即可免密进入。
+    # sso=off 由本地登出使用，避免"退出后立刻又被自动登录"。
+    if os.getenv('AUTH_MODE','local')=='cas' and request.query_params.get('sso')!='off' and not cas_logged_in(request):
+        path=request.url.path
+        target=path if base and (path==base or path.startswith(base+'/')) else base+path
+        if request.url.query: target+='?'+request.url.query
+        return RedirectResponse(f'{base}/api/auth/cas/login?next={url_quote(target,safe="")}',status_code=302)
     text=(ROOT/'frontend/index.html').read_text(encoding='utf-8').replace('content="APP_BASE"',f'content="{base}"')
     def asset_link(match):
         attribute,relative=match.groups()

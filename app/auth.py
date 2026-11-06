@@ -1,6 +1,8 @@
 import os, json, hmac, hashlib, base64, time, threading
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 from fastapi import HTTPException, Request
+from .db import db, now
 
 ROLES={'viewer':0,'editor':1,'admin':2}
 PASSWORD_SCHEME='pbkdf2_sha256'
@@ -39,8 +41,10 @@ def signing_key():
     key=os.getenv('SESSION_SECRET','')
     if len(key)<32: raise RuntimeError('SESSION_SECRET必须配置至少32字符')
     return key.encode()
-def session_token(role,subject):
-    body=encode(json.dumps({'role':role,'sub':subject,'exp':time.time()+8*3600}).encode())
+def session_token(role,subject,jti='',ttl=8*3600):
+    payload={'role':role,'sub':subject,'exp':time.time()+int(ttl)}
+    if jti: payload['jti']=jti
+    body=encode(json.dumps(payload).encode())
     return body+'.'+encode(hmac.new(signing_key(),body.encode(),hashlib.sha256).digest())
 def decode_session(token):
     try:
@@ -85,6 +89,12 @@ def authorize(request:Request,minimum='viewer'):
         actor=platform_identity(header[7:]) if header.startswith('Bearer ') else decode_session(request.cookies.get('risk_session',''))
     elif mode=='password':
         actor=decode_session(request.cookies.get('risk_session',''))
+    elif mode=='cas':
+        header=request.headers.get('authorization','')
+        actor=platform_identity(header[7:]) if header.startswith('Bearer ') else None
+        if not actor:
+            claims=decode_session(request.cookies.get('risk_session',''))
+            if claims and cas_session_active(claims.get('jti','')): actor={'role':claims['role'],'sub':claims['sub']}
     else: raise HTTPException(503,'AUTH_MODE配置无效')
     if not actor: raise HTTPException(401,'请先完成访问验证')
     if ROLES[actor['role']]<ROLES[minimum]: raise HTTPException(403,'当前账号无权执行此操作')
@@ -93,4 +103,53 @@ def authorize(request:Request,minimum='viewer'):
         allowed={request.url.scheme+'://'+request.url.netloc,*os.getenv('ALLOWED_ORIGINS','').split(',')}
         if origin and origin not in allowed: raise HTTPException(403,'请求来源未授权')
     return actor
+
+def cas_session_ttl():
+    try: seconds=int(os.getenv('CAS_SESSION_TTL','28800'))
+    except ValueError: raise RuntimeError('CAS_SESSION_TTL 必须是整数秒') from None
+    return max(60,min(seconds,7*24*3600))
+def cas_user_role(user_id):
+    """CAS 用户的本地授权角色；未登记时回落到 CAS_DEFAULT_ROLE，返回 None 表示拒绝登录。"""
+    user_id=str(user_id or '').strip()[:200]
+    if not user_id: return None
+    rows=db.query('SELECT ROLE FROM RISK_CAS_USER_ROLE WHERE USER_ID=?',[user_id])
+    if rows:
+        role=str(rows[0].get('ROLE') or '').strip().lower()
+        return role if role in ROLES else None
+    fallback=str(os.getenv('CAS_DEFAULT_ROLE','viewer') or '').strip().lower()
+    if fallback in ['','none','deny']: return None
+    if fallback not in ROLES: raise RuntimeError('CAS_DEFAULT_ROLE 必须是 viewer、editor 或 admin')
+    return fallback
+def cas_set_user_role(user_id,role,updated_by=''):
+    """登记或更新 CAS 用户角色。角色只能由本地授权表产生，不取自信任域外属性。"""
+    user_id=str(user_id or '').strip()[:200]; role=str(role or '').strip().lower()
+    if not user_id or role not in ROLES: raise ValueError('用户标识或角色无效')
+    operator=str(updated_by or '')[:100]
+    if db.query('SELECT USER_ID FROM RISK_CAS_USER_ROLE WHERE USER_ID=?',[user_id]):
+        db.execute('UPDATE RISK_CAS_USER_ROLE SET ROLE=?,UPDATED_BY=?,UPDATED_AT=? WHERE USER_ID=?',[role,operator,now(),user_id])
+    else: db.execute('INSERT INTO RISK_CAS_USER_ROLE (USER_ID,ROLE,UPDATED_BY,UPDATED_AT) VALUES (?,?,?,?)',[user_id,role,operator,now()])
+    return {'user_id':user_id,'role':role}
+def cas_session_create(jti,ticket,user_id,role,ttl=None):
+    ttl=cas_session_ttl() if ttl is None else int(ttl)
+    expires=(datetime.now(timezone.utc)+timedelta(seconds=ttl)).isoformat()
+    db.execute('INSERT INTO RISK_CAS_SESSION (JTI,SERVICE_TICKET,USER_ID,ROLE,CREATED_AT,EXPIRES_AT,REVOKED_AT) VALUES (?,?,?,?,?,?,?)',
+        [str(jti)[:64],str(ticket)[:512],str(user_id)[:200],role,now(),expires,''])
+    return {'jti':str(jti)[:64],'expires_at':expires}
+def cas_session_active(jti):
+    """会话是否仍然有效：必须已登记、未过期、未被单点登出撤销。"""
+    jti=str(jti or '')
+    if not jti: return False
+    rows=db.query('SELECT EXPIRES_AT,REVOKED_AT FROM RISK_CAS_SESSION WHERE JTI=?',[jti])
+    if not rows: return False
+    if str(rows[0].get('REVOKED_AT') or ''): return False
+    return str(rows[0].get('EXPIRES_AT') or '') > now()
+def cas_session_revoke(jti):
+    jti=str(jti or '')
+    if not jti: return 0
+    return db.execute("UPDATE RISK_CAS_SESSION SET REVOKED_AT=? WHERE JTI=? AND REVOKED_AT=''",[now(),jti])
+def cas_session_revoke_ticket(ticket):
+    """单点登出：按 CAS 回推的服务票据撤销对应会话。"""
+    ticket=str(ticket or '')
+    if not ticket: return 0
+    return db.execute("UPDATE RISK_CAS_SESSION SET REVOKED_AT=? WHERE SERVICE_TICKET=? AND REVOKED_AT=''",[now(),ticket])
 
