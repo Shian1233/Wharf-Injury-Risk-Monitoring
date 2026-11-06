@@ -62,7 +62,7 @@ cmd_check() {
   if command -v node >/dev/null 2>&1; then
     ok "node $(node --version)"
   else
-    miss "未安装 Node（仅 PDF 导出需要，不影响登录）"
+    miss "未安装 Node（报告图表渲染与 PDF 导出需要，不影响登录与数据浏览）"
   fi
 
   info "服务"
